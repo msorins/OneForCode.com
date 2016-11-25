@@ -37,8 +37,8 @@ export class AuthService {
             return this.auth$.login({
             provider: AuthProviders.Github,
             method: AuthMethods.Redirect,
-  });
-  
+        });
+   }
   signInWithGoogle(): firebase.Promise<FirebaseAuthState> {
     return this.signIn(AuthProviders.Google);
   }

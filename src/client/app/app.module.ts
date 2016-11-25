@@ -18,8 +18,6 @@ const FIREBASE_APP_CONFIG = {
       databaseURL: "https://oneforcode.firebaseio.com",
       storageBucket: "oneforcode.appspot.com",
       messagingSenderId: "486217715467",
-      method: AuthProviders.Github,
-      method: AuthMethods.Popup,
       remember: 'default',
       scope: ['email']
 };
