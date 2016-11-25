@@ -20,6 +20,11 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
+
+      //AngularFire & FireBase Stuff
+      { pattern: 'node_modules/firebase/**/*.js', included: false, watched: false },
+      { pattern: 'node_modules/angularfire2/bundles/angularfire2.umd.js', included: false, watched: false },
+
       // Polyfills.
       'node_modules/core-js/client/shim.min.js',
       'node_modules/intl/dist/Intl.min.js',

@@ -32,6 +32,25 @@ export class ProjectConfig extends SeedConfig {
       // {src: `${this.CSS_SRC}/path-to-lib/test-lib.css`, inject: true, vendor: false},
     ];
 
+    this.addPackageBundles({
+      name: 'firebase',
+      path: 'node_modules/firebase/firebase.js',
+      packageMeta: {
+        main: 'firebase.js',
+        defaultExtension: 'js'
+      }
+    });
+
+    // Add AngularFire configuration to SystemJS
+    this.addPackageBundles({
+      name: 'angularfire2',
+      path: 'node_modules/angularfire2/bundles/angularfire2.umd.js',
+      packageMeta: {
+        main: 'angularfire2.js',
+        defaultExtension: 'js'
+      }
+    });
+
     // Add packages (e.g. lodash)
     // let additionalPackages: ExtendPackages[] = [{
     //   name: 'lodash',

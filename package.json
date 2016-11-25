@@ -57,6 +57,7 @@
     "@types/jasmine": "^2.5.35",
     "@types/node": "^6.0.45",
     "@types/protractor": "^1.5.20",
+    "@types/request": "0.0.32",
     "@types/rimraf": "0.0.28",
     "@types/run-sequence": "^0.0.28",
     "@types/selenium-webdriver": "2.44.*",
@@ -106,6 +107,7 @@
     "karma-mocha-reporter": "^2.2.0",
     "karma-remap-istanbul": "^0.2.1",
     "merge-stream": "^1.0.0",
+    "minimatch": "^3.0.3",
     "open": "0.0.5",
     "protractor": "^4.0.9",
     "remap-istanbul": "^0.7.0",
@@ -122,8 +124,7 @@
     "tslint": "^3.15.1",
     "typescript": "^2.0.3",
     "walk": "^2.3.9",
-    "yargs": "^6.0.0",
-    "minimatch": "^3.0.3"
+    "yargs": "^6.0.0"
   },
   "dependencies": {
     "@angular/common": "~2.2.3",
@@ -134,8 +135,10 @@
     "@angular/platform-browser": "~2.2.3",
     "@angular/platform-browser-dynamic": "~2.2.3",
     "@angular/router": "~3.2.0",
-    "intl": "^1.2.5",
+    "angularfire2": "^2.0.0-beta.6",
     "core-js": "^2.4.1",
+    "firebase": "^3.4.0",
+    "intl": "^1.2.5",
     "reflect-metadata": "^0.1.8",
     "rxjs": "5.0.0-beta.12",
     "systemjs": "0.19.40",
