@@ -21,6 +21,7 @@ export class ProjectConfig extends SeedConfig {
     // Add `NPM` third-party libraries to be injected/bundled.
     this.NPM_DEPENDENCIES = [
       ...this.NPM_DEPENDENCIES,
+
       // {src: 'jquery/dist/jquery.min.js', inject: 'libs'},
       // {src: 'lodash/lodash.min.js', inject: 'libs'},
     ];
@@ -32,6 +33,27 @@ export class ProjectConfig extends SeedConfig {
       // {src: `${this.CSS_SRC}/path-to-lib/test-lib.css`, inject: true, vendor: false},
     ];
 
+    //MATERIALIZE STUFF
+    this.addPackageBundles({
+      name: 'materialize-css',
+      path: 'node_modules/materialize-css/dist/js/materialize.js',
+      packageMeta: {
+        main: 'materialize.js',
+        defaultExtension: 'js',
+        format: 'global'
+      }
+    });
+
+    this.addPackageBundles({
+      name: 'angular2-materialize',
+      path: 'node_modules/angular2-materialize/dist/index.js',
+      packageMeta: {
+        main: 'materialize-directive.js',
+        defaultExtension: 'js'
+      }
+    });
+
+    //FIREBASE STUFF
     this.addPackageBundles({
       name: 'firebase',
       path: 'node_modules/firebase/firebase.js',

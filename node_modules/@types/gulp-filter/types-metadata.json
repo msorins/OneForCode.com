@@ -1,0 +1,30 @@
+{
+    "authors": "Tanguy Krotoff <https://github.com/tkrotoff>",
+    "definitionFilename": "index.d.ts",
+    "libraryDependencies": [
+        "node"
+    ],
+    "moduleDependencies": [
+        "minimatch",
+        "vinyl"
+    ],
+    "libraryMajorVersion": "3",
+    "libraryMinorVersion": "0",
+    "libraryName": "gulp-filter v3.0.1",
+    "typingsPackageName": "gulp-filter",
+    "projectName": "https://github.com/sindresorhus/gulp-filter",
+    "sourceRepoURL": "https://www.github.com/DefinitelyTyped/DefinitelyTyped",
+    "sourceBranch": "types-2.0",
+    "kind": "ProperModule",
+    "globals": [
+        "filter"
+    ],
+    "declaredModules": [
+        "gulp-filter"
+    ],
+    "files": [
+        "index.d.ts"
+    ],
+    "hasPackageJson": false,
+    "contentHash": "700e783ecfa12c686f58aa157cdf4e424b7f33123d94243f7392a5710c416bf6"
+}

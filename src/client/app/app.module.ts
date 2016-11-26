@@ -7,6 +7,10 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AngularFireModule } from 'angularfire2';
 
+import "materialize-css";
+import "angular2-materialize";
+import { MaterializeModule } from 'angular2-materialize';
+
 import { AboutModule } from './about/about.module';
 import { HomeModule } from './home/home.module';
 import { SharedModule } from './shared/shared.module';
@@ -24,7 +28,7 @@ const FIREBASE_APP_CONFIG = {
 
 @NgModule({
   imports: [BrowserModule, HttpModule, AppRoutingModule, AboutModule, HomeModule, AuthModule, SharedModule.forRoot(),
-  AngularFireModule.initializeApp(FIREBASE_APP_CONFIG)
+  AngularFireModule.initializeApp(FIREBASE_APP_CONFIG), MaterializeModule
   ],
   declarations: [AppComponent],
   providers: [{

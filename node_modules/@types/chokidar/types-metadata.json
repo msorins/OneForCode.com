@@ -1,0 +1,26 @@
+{
+    "authors": "Stefan Steinhart <https://github.com/reppners/>",
+    "definitionFilename": "index.d.ts",
+    "libraryDependencies": [
+        "node"
+    ],
+    "moduleDependencies": [],
+    "libraryMajorVersion": "1",
+    "libraryMinorVersion": "4",
+    "libraryName": "chokidar 1.4.3",
+    "typingsPackageName": "chokidar",
+    "projectName": "https://github.com/paulmillr/chokidar",
+    "sourceRepoURL": "https://www.github.com/DefinitelyTyped/DefinitelyTyped",
+    "sourceBranch": "types-2.0",
+    "kind": "MultipleModules",
+    "globals": [],
+    "declaredModules": [
+        "fs",
+        "chokidar"
+    ],
+    "files": [
+        "index.d.ts"
+    ],
+    "hasPackageJson": false,
+    "contentHash": "9b180f5c071253665131f2360c088639670aa76c16053de49249e720c662da53"
+}

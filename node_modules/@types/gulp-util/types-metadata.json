@@ -1,0 +1,31 @@
+{
+    "authors": "jedmao <https://github.com/jedmao>",
+    "definitionFilename": "index.d.ts",
+    "libraryDependencies": [
+        "chalk",
+        "node",
+        "vinyl"
+    ],
+    "moduleDependencies": [
+        "chalk",
+        "through2",
+        "vinyl"
+    ],
+    "libraryMajorVersion": "3",
+    "libraryMinorVersion": "0",
+    "libraryName": "gulp-util v3.0.x",
+    "typingsPackageName": "gulp-util",
+    "projectName": "https://github.com/gulpjs/gulp-util",
+    "sourceRepoURL": "https://www.github.com/DefinitelyTyped/DefinitelyTyped",
+    "sourceBranch": "types-2.0",
+    "kind": "ProperModule",
+    "globals": [],
+    "declaredModules": [
+        "gulp-util"
+    ],
+    "files": [
+        "index.d.ts"
+    ],
+    "hasPackageJson": false,
+    "contentHash": "5226994532f8c2a90ccc1aba66e34bac83e800538aa40419e6527929ccc1d02d"
+}

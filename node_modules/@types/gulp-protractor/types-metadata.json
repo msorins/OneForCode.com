@@ -1,0 +1,29 @@
+{
+    "authors": "Tanguy Krotoff <https://github.com/tkrotoff>",
+    "definitionFilename": "index.d.ts",
+    "libraryDependencies": [
+        "node"
+    ],
+    "moduleDependencies": [
+        "gulp"
+    ],
+    "libraryMajorVersion": "1",
+    "libraryMinorVersion": "0",
+    "libraryName": "gulp-protractor v1.0.0",
+    "typingsPackageName": "gulp-protractor",
+    "projectName": "https://github.com/mllrsohn/gulp-protractor",
+    "sourceRepoURL": "https://www.github.com/DefinitelyTyped/DefinitelyTyped",
+    "sourceBranch": "types-2.0",
+    "kind": "ProperModule",
+    "globals": [
+        "protractor"
+    ],
+    "declaredModules": [
+        "gulp-protractor"
+    ],
+    "files": [
+        "index.d.ts"
+    ],
+    "hasPackageJson": false,
+    "contentHash": "79818184a448b078f3aab3ee78effd0b4e1b69b26ca2352e5ffc1bbe2a5ccc11"
+}

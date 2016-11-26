@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="/">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Welcome to angular2-seed!</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Materialize -->
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+  <!--Import jQuery before materialize.js-->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.6/hammer.js"></script>
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>  
+
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/css/main.css?1480182668687">
+  <!-- endinject -->
+</head>
+<body>
+
+  <sd-app>Loading...</sd-app>
+
+  <script>
+  // Fixes undefined module function in SystemJS bundle
+  function module() {}
+  </script>
+
+  <!-- shims:js -->
+  <script src="/node_modules/core-js/client/shim.min.js?1480182668685"></script>
+  <script src="/node_modules/intl/dist/Intl.min.js?1480182668685"></script>
+  <script src="/node_modules/systemjs/dist/system.src.js?1480182668685"></script>
+  <!-- endinject -->
+
+  
+  <script src="/app/system-config.js"></script>
+  
+
+  <!-- libs:js -->
+  <script src="/node_modules/zone.js/dist/zone.js?1480182668686"></script>
+  <script src="/node_modules/.tmp/Rx.min.js?1480182668686"></script>
+  <!-- endinject -->
+
+  <!-- inject:js -->
+  <!-- endinject -->
+
+  
+  <script>
+  System.import('app/main')
+    .catch(function (e) {
+      console.error(e.stack || e,
+        'Not expecting this error? Report it at https://github.com/mgechev/angular-seed/issues');
+    });
+  </script>
+  
+
+</body>
+</html>
