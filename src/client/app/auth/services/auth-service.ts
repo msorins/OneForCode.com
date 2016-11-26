@@ -9,7 +9,12 @@ export class AuthService {
   constructor(public auth$: FirebaseAuth) {
     auth$.subscribe((state: FirebaseAuthState) => {
       this.authState = state;
+      console.log(state);
     });
+  }
+
+  isAuthenticated(): boolean {
+      return this.authState !== null;
   }
 
   get authenticated(): boolean {
