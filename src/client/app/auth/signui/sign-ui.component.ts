@@ -8,14 +8,12 @@ import { AuthService } from '../services/auth-service';
   styles: [
 
   ],
-  selector: 'ofc-signin',
-  template: `
-    <button *ngIf="auth.getUserName() == ''" class="sign-in__button" (click)="signInWithGithub()" type="button">GitHub Login</button>
-  `
+  selector: 'ofc-sign-ui',
+  templateUrl: 'sign-ui.component.html'
 })
 
-export class SignInComponent {
-  constructor(private auth: AuthService, private router: Router) {}
+export class SignUiComponent {
+  constructor(private auth: AuthService, private router: Router) { }
 
   signInAnonymously(): void {
     this.auth.signInAnonymously()

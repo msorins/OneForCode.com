@@ -12,6 +12,7 @@ import "angular2-materialize";
 import { MaterializeModule } from 'angular2-materialize';
 
 import { AuthModule } from './auth/auth.module';
+import { ApiModule } from './api/api.module';
 import { AboutModule } from './about/about.module';
 import { HomeModule } from './home/home.module';
 import { SharedModule } from './shared/shared.module';

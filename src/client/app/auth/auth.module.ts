@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 //import { Routes, RouterModule } from '@angular/router';
 
-import { SignInComponent } from './components/sign-in';
+import { SignUiComponent } from './signui/sign-ui.component';
 import { AuthGuard } from './guards/auth-guard';
 import { UnauthGuard } from './guards/unauth-guard';
 import { AuthService } from './services/auth-service';
@@ -14,7 +14,7 @@ import { AuthService } from './services/auth-service';
 
 @NgModule({
   declarations: [
-    SignInComponent
+    SignUiComponent
   ],
   imports: [
     CommonModule
@@ -24,7 +24,7 @@ import { AuthService } from './services/auth-service';
     UnauthGuard
   ],
   exports: [
-      SignInComponent
+      SignUiComponent
   ]
 })
 
