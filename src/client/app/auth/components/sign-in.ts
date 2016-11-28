@@ -10,14 +10,7 @@ import { AuthService } from '../services/auth-service';
   ],
   selector: 'ofc-signin',
   template: `
-    <div class="g-row sign-in">
-      <div class="g-col">
-        <h1 class="sign-in__heading">Sign in</h1>
-        <button class="sign-in__button" (click)="signInWithGithub()" type="button">GitHub</button>
-      </div>
-    </div>
-    {{auth.isAuthenticated()}}
-    {{auth.authState?.auth?.displayName}}
+    <button *ngIf="auth.getUserName() == ''" class="sign-in__button" (click)="signInWithGithub()" type="button">GitHub Login</button>
   `
 })
 

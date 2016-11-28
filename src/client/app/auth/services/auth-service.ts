@@ -27,7 +27,7 @@ export class AuthService {
 
   getUserName():string {
       if(this.authState == null)
-        return "";
+        return '';
 
       return this.authState.auth.displayName;
   }

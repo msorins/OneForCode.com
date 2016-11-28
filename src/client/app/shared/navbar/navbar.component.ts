@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-//import { AuthService } from '../../auth/services/auth-service'
+import { AuthService } from '../../auth/services/auth-service'
+
 /**
  * This class represents the navigation bar component.
  */
@@ -10,11 +11,13 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: 'navbar.component.html'
 })
 export class NavbarComponent{
-     //userName:string = ''
-     //constructor(public authService: AuthService) {}
+     userName:string = ''
 
 
-     //ngOnInit() {
-         //this.userName = authService.getUserName()
-     //}
+     constructor(public auth: AuthService){}
+
+
+     ngOnInit() {
+         this.userName = this.auth.getUserName()
+     }
 }

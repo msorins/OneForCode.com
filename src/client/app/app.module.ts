@@ -11,10 +11,13 @@ import "materialize-css";
 import "angular2-materialize";
 import { MaterializeModule } from 'angular2-materialize';
 
+import { AuthModule } from './auth/auth.module';
 import { AboutModule } from './about/about.module';
 import { HomeModule } from './home/home.module';
 import { SharedModule } from './shared/shared.module';
-import { AuthModule } from './auth/auth.module';
+
+import { AuthService } from './auth/services/auth-service'
+
 
 const FIREBASE_APP_CONFIG = {
       apiKey: "AIzaSyCHjQQFCgiQPyMBNC2zX7p_mJwWgSb8Ycg",
@@ -27,11 +30,12 @@ const FIREBASE_APP_CONFIG = {
 };
 
 @NgModule({
-  imports: [BrowserModule, HttpModule, AppRoutingModule, AboutModule, HomeModule, AuthModule, SharedModule.forRoot(),
+  imports: [BrowserModule, HttpModule, AppRoutingModule, AuthModule.forRoot(), AboutModule, HomeModule, SharedModule.forRoot(),
   AngularFireModule.initializeApp(FIREBASE_APP_CONFIG), MaterializeModule
   ],
   declarations: [AppComponent],
-  providers: [AuthModule,
+  providers: [
+  AuthService,
   {
     provide: APP_BASE_HREF,
     useValue: '<%= APP_BASE %>'
