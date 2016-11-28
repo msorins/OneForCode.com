@@ -25,6 +25,13 @@ export class AuthService {
     return this.authenticated ? this.authState.uid : '';
   }
 
+  getUserName():string {
+      if(this.authState == null)
+        return "";
+
+      return this.authState.auth.displayName;
+  }
+
   signIn(provider: number): firebase.Promise<FirebaseAuthState> {
     return this.auth$.login({provider})
       .catch(error => console.log('ERROR @ AuthService#signIn() :', error));

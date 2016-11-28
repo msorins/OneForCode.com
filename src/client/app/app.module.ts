@@ -31,7 +31,8 @@ const FIREBASE_APP_CONFIG = {
   AngularFireModule.initializeApp(FIREBASE_APP_CONFIG), MaterializeModule
   ],
   declarations: [AppComponent],
-  providers: [{
+  providers: [AuthModule,
+  {
     provide: APP_BASE_HREF,
     useValue: '<%= APP_BASE %>'
   }],

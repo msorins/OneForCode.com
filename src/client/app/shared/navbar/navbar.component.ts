@@ -1,12 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
+//import { AuthService } from '../../auth/services/auth-service'
 /**
  * This class represents the navigation bar component.
  */
 @Component({
   moduleId: module.id,
   selector: 'sd-navbar',
-  templateUrl: 'navbar.component.html',
-  styleUrls: ['navbar.component.css'],
+  templateUrl: 'navbar.component.html'
 })
-export class NavbarComponent { }
+export class NavbarComponent{
+     //userName:string = ''
+     //constructor(public authService: AuthService) {}
+
+
+     //ngOnInit() {
+         //this.userName = authService.getUserName()
+     //}
+}
