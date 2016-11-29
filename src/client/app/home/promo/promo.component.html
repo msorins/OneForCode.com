@@ -4,7 +4,8 @@
     <div class="col-md-6">
       <h2 class="h2-responsive flex-item text-center">Contribute & Get PH points</h2>
       <div class="card-columns">
-        <ofc-projectView></ofc-projectView>
+
+        <ofc-projectView [post]="post" *ngFor="let post of posts"></ofc-projectView>
       </div>
     </div>
     <!--/.Second column-->

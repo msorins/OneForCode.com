@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 
 @Component({
@@ -8,4 +8,6 @@ import { Component } from '@angular/core';
   styleUrls: ['project-view.component.css']
 })
 
-export class ProjectViewComponent { }
+export class ProjectViewComponent {
+      @Input('post') post: string;
+}

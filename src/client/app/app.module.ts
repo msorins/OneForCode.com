@@ -31,7 +31,7 @@ const FIREBASE_APP_CONFIG = {
 };
 
 @NgModule({
-  imports: [BrowserModule, HttpModule, AppRoutingModule, AuthModule.forRoot(), AboutModule, HomeModule, SharedModule.forRoot(),
+  imports: [BrowserModule, HttpModule, AppRoutingModule, AuthModule.forRoot(), ApiModule.forRoot(), AboutModule, HomeModule, SharedModule.forRoot(),
   AngularFireModule.initializeApp(FIREBASE_APP_CONFIG), MaterializeModule
   ],
   declarations: [AppComponent],

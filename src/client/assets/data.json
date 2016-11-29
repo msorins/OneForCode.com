@@ -1,6 +1,24 @@
-[
-  "Edsger Dijkstra",
-  "Donald Knuth",
-  "Alan Turing",
-  "Grace Hopper"
-]
+{"data":
+    [
+      {
+          "title": "Sample Konfabulator Widget",
+          "name": "description",
+          "tags": ["JS", "HTML", "CSS"]
+      },
+      {
+         "title": "Gigel Gigelescu",
+         "name": "description",
+         "tags": ["PYTHON", "C++"]
+     },
+     {
+        "title": "Gigel Gigelescu",
+        "name": "description",
+        "tags": ["PYTHON", "C++"]
+    },
+    {
+       "title": "Gigel Gigelescu",
+       "name": "description",
+       "tags": ["PYTHON", "C++"]
+    }
+  ]
+}
