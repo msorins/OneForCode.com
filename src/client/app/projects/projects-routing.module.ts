@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { AddProjectComponent } from './addproject/index';
+import { AddProjectComponent } from './add-project/index';
 
 @NgModule({
   imports: [
@@ -11,4 +11,5 @@ import { AddProjectComponent } from './addproject/index';
   ],
   exports: [RouterModule]
 })
+
 export class ProjectsRoutingModule { }

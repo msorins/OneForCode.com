@@ -7,7 +7,6 @@ import { ToolbarComponent } from './toolbar/index';
 import { NavbarComponent } from './navbar/index';
 import { HeaderComponent } from './header/index';
 import { FooterComponent } from './footer/index';
-import { ProjectViewComponent } from './project-view/index';
 import { NameListService } from './name-list/index';
 import { AuthModule } from '../auth/auth.module';
 /**
@@ -16,9 +15,9 @@ import { AuthModule } from '../auth/auth.module';
 
 @NgModule({
   imports: [CommonModule, RouterModule, AuthModule],
-  declarations: [ToolbarComponent, NavbarComponent, ProjectViewComponent, HeaderComponent, FooterComponent],
+  declarations: [ToolbarComponent, NavbarComponent, HeaderComponent, FooterComponent],
   exports: [ToolbarComponent, NavbarComponent,
-    CommonModule, FormsModule, RouterModule, ProjectViewComponent, HeaderComponent, FooterComponent]
+    CommonModule, FormsModule, RouterModule, HeaderComponent, FooterComponent]
 })
 
 export class SharedModule {
