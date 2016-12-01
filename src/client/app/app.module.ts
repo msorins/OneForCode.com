@@ -16,7 +16,7 @@ import { ApiModule } from './api/api.module';
 import { AboutModule } from './about/about.module';
 import { HomeModule } from './home/home.module';
 import { SharedModule } from './shared/shared.module';
-
+import { ProjectsModule } from './projects/projects.module';
 import { AuthService } from './auth/services/auth-service'
 
 
@@ -31,7 +31,7 @@ const FIREBASE_APP_CONFIG = {
 };
 
 @NgModule({
-  imports: [BrowserModule, HttpModule, AppRoutingModule, AuthModule.forRoot(), ApiModule.forRoot(), AboutModule, HomeModule, SharedModule.forRoot(),
+  imports: [BrowserModule, HttpModule, AppRoutingModule, AuthModule.forRoot(), ApiModule.forRoot(),ProjectsModule, AboutModule, HomeModule, SharedModule.forRoot(),
   AngularFireModule.initializeApp(FIREBASE_APP_CONFIG), MaterializeModule
   ],
   declarations: [AppComponent],

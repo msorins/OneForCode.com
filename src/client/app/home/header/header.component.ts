@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
  */
 @Component({
   moduleId: module.id,
-  selector: 'ofc-header',
+  selector: 'ofc-header-home',
   templateUrl: 'header.component.html',
 })
 export class HeaderComponent { }
