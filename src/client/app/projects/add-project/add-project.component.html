@@ -9,11 +9,7 @@
     <div class="form-group">
       <h5>GIT project</h5>
       <select class="form-control" id="exampleSelect1">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
+          <option *ngFor="let repo of reposList">{{repo.name}}</option>
         </select>
     </div>
 

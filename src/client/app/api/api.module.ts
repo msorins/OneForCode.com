@@ -1,6 +1,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 
-import {ProjectsService} from './projects/index'
+import { ProjectsService } from './projects/index';
+import { ReposService } from './repos/index';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ export class ApiModule {
     static forRoot(): ModuleWithProviders {
       return {
         ngModule: ApiModule,
-        providers: [ProjectsService]
+        providers: [ProjectsService, ReposService]
       };
     }
 
