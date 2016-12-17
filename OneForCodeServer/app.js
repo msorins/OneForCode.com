@@ -103,9 +103,10 @@ app.use('/api/projects/new', [function(req, res, next) {
   if (req.method != 'OPTIONS') {
     console.log(req.body);
     response = req.body;
-    //TO DO -> put the respone into the mongoDB
 
-    res.status(200).send("OK");
+    addProjects(req.query.firebaseUID, req.body);
+
+    res.status(200).send(JSON.stringify("OK"));
 
   } else
     res.status(200).send('OPTIONS Request SUCCESS');
@@ -198,6 +199,30 @@ function addUserDataToDb(firebaseUID, userObj) {
 }
 
 
+function addProjects(firebaseUID, projectObj) {
+  console.log(firebaseUID);
+  var refProjects = db.ref("/").child("projects").child(firebaseUID);
+
+  refProjects.once("value", function(snapshot) {
+    userProjects = snapshot.val();
+
+    //Count the number of projects user has
+    nrOfProjects = 0;
+    if(userProjects != null) {
+      nrOfProjects = Object.keys(userProjects).length;
+    }
+
+    //Increment that number
+    nrOfProjects++;
+
+    //Add the current project to the database
+    db.ref("/").child("projects").child(firebaseUID).child(nrOfProjects).update(projectObj);
+
+  }, function(errorObject) {
+    console.log("The read failed: " + errorObject.code);
+  });
+
+}
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');

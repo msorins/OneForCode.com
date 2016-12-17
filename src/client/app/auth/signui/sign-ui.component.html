@@ -1,7 +1,7 @@
 <li *ngIf="auth.getUserName() != ''"class="nav-item dropdown">
   <a class="nav-link dropdown-toggle" href="http://example.com" id="supportedContentDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{auth.getUserName()}}</a>
   <div class="dropdown-menu" aria-labelledby="supportedContentDropdown">
-    <a class="dropdown-item" href="#">bla1</a>
+    <a class="dropdown-item" href="#">My projects</a>
     <a class="dropdown-item" href="#">bla2</a>
     <a class="dropdown-item" (click)="auth.signOut()" >Logout</a>
   </div>

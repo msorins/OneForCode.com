@@ -4,6 +4,7 @@ import { ReposService } from '../../api/repos/repos.service';
 import { ProjectsService } from '../../api/projects/projects.service';
 import { AddProject } from './add-project.interface'
 import { FormGroup, FormControl } from "@angular/forms";
+import { AuthService } from '../../auth/services/auth-service';
 
 @Component({
   moduleId: module.id,
@@ -16,7 +17,7 @@ export class AddProjectComponent implements OnInit{
     reposList :string[] ;
     addProjectForm: FormGroup;
 
-    constructor(public _reposService: ReposService, public _projectsService: ProjectsService) {}
+    constructor(public _reposService: ReposService, public _projectsService: ProjectsService, public _authService: AuthService) {}
 
     ngOnInit() {
         //Get the list of repos
@@ -36,7 +37,10 @@ export class AddProjectComponent implements OnInit{
 
     onSubmit({ value, valid }: { value: AddProject, valid: boolean }) {
       if(valid === true) {
-        this._projectsService.addNewProject(value)
+        this._projectsService.addNewProject(this._authService.getFirebaseUID(), value)
+          .subscribe(
+            data => console.log(data)
+          )
       }
     }
 

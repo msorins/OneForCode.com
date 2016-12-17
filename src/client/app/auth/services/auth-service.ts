@@ -47,6 +47,13 @@ export class AuthService{
     return this.authenticated ? this.authState.uid : '';
   }
 
+  getFirebaseUID():string {
+    if(this.authState.uid == null)
+      return '';
+
+    return this.authState.uid;
+  }
+
   getUserName():string {
       if(this.authState == null || typeof this.userGit === "undefined")
         return '';
