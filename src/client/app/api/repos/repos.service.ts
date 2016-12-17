@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { AuthService } from '../../auth/services/auth-service'
+
 import 'rxjs/add/operator/do';  // for debugging
 
 
@@ -8,10 +10,11 @@ import 'rxjs/add/operator/do';  // for debugging
 export class ReposService {
 
 
-  constructor(private http: Http) {}
+  constructor(private http: Http, private _authService: AuthService) {}
 
   getUserRepos(): Observable<string[]> {
-    return this.http.get('http://localhost:3000/api/repos')
+
+    return this.http.get('http://localhost:3000/api/repos?username=' + this._authService.getUserName())
                     .map((res: Response) => res.json())
                     .do(data => console.log('getUserRepos:', data))  // debug
                     .catch(this.handleError);

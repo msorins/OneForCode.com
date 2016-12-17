@@ -4,12 +4,14 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var request = require('request');
+
+var firebaseAdmin = require("firebase-admin");
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 
 var cors = require('cors');
-var request = require('request');
 
 var app = express();
 
@@ -35,6 +37,18 @@ app.use('/', index);
 app.use('/users', users);
 
 
+// ===== FIREBASE INITIALISATION PART ====
+
+var serviceAccount = require("./serviceAccountCredentials.json");
+
+firebaseAdmin.initializeApp({
+  credential: firebaseAdmin.credential.cert(serviceAccount),
+  databaseURL: "https://oneforcode.firebaseio.com"
+});
+
+db = firebaseAdmin.database();
+
+
 // ===== API PART =====
 
 function parseRepos(str) {
@@ -53,13 +67,15 @@ function parseRepos(str) {
     return JSON.stringify(res);
 }
 
+CLIENT_ID = "d2911925423f70c339c5"
+CLIENT_SECRET = "28d5b2b4135993ab67045843e17188f28a8e0b29"
+
 // ===== API PART =====
 app.use('/api/repos', [function(req, res, next) {
     if (req.method != 'OPTIONS') {
-        var request = require('request');
 
         var options = {
-            url: 'https://api.github.com/users/sorynsoo/repos',
+            url: 'https://api.github.com/users/'+ req.query.username + '/repos?client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET,
             headers: {
                 'User-Agent': 'request'
             }
@@ -81,7 +97,106 @@ app.use('/api/repos', [function(req, res, next) {
     } else
         res.status(200).send('OPTIONS Request SUCCESS');
 
-}])
+}]);
+
+app.use('/api/projects/new', [function(req, res, next) {
+  if (req.method != 'OPTIONS') {
+    console.log(req.body);
+    response = req.body;
+    //TO DO -> put the respone into the mongoDB
+
+    res.status(200).send("OK");
+
+  } else
+    res.status(200).send('OPTIONS Request SUCCESS');
+
+}]);
+
+app.use('/api/users/get/gitUID', [function(req, res, next) {
+  /*
+   @Input: GET parameter 'gitUID' and 'firebaseUID'
+   @Returns: JSON with Git user info
+   */
+  if (req.method != 'OPTIONS') {
+    if(req.query.gitUID != null) {
+
+      var options = {
+        url: 'https://api.github.com/user/'+req.query.gitUID + '?client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET,
+        headers: {
+          'User-Agent': 'request'
+        }
+      };
+
+      function callback(error, response, body) {
+        if (!error && response.statusCode == 200) {
+          var info = JSON.parse(body);
+
+          firebaseUID = req.query.firebaseUID;
+          addUserDataToDb(firebaseUID, info);
+
+          res.status(200).send(JSON.stringify(info));
+        } else {
+          res.status(200).send("Error retriving the response: ");
+        }
+      }
+
+      request(options, callback);
+    } else {
+      res.status(200).send("Must provide and 'gitUID' GET parameter ");
+    }
+
+
+  } else
+    res.status(200).send('OPTIONS Request SUCCESS');
+
+}]);
+
+app.use('/api/users/get/gitToken', [function(req, res, next) {
+  /*
+  @Input: GET parameter 'gitToken' and 'firebaseUID'
+  @Returns: JSON with Git user info
+   */
+  if (req.method != 'OPTIONS') {
+    if(req.query.gitToken != null) {
+
+      var options = {
+        url: 'https://api.github.com/user?access_token='+req.query.gitToken,
+        headers: {
+          'User-Agent': 'request'
+        }
+      };
+
+      var firebaseUID = req.query.firebaseUID;
+
+      function callback(error, response, body) {
+        if (!error && response.statusCode == 200) {
+          var info = JSON.parse(body);
+
+          addUserDataToDb(firebaseUID, info);
+          res.status(200).send(info);
+        } else {
+          res.status(200).send("Error retriving the response: ");
+        }
+      }
+
+      request(options, callback);
+    } else {
+      res.status(200).send("Must provide and 'gitToken' GET parameter ");
+    }
+
+
+  } else
+    res.status(200).send('OPTIONS Request SUCCESS');
+
+}]);
+
+
+
+//  ==== FUNCTIONS PART ====
+function addUserDataToDb(firebaseUID, userObj) {
+  db.ref("/users").child(firebaseUID).update(userObj);
+}
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
