@@ -6,4 +6,5 @@ export interface ProjectInterface {
   gitProject: string;
   tags: string
   description: string
+  ch: string
 }

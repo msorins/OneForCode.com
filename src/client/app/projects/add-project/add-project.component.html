@@ -1,28 +1,47 @@
 <ofc-header-shared></ofc-header-shared>
 <div class="container">
   <form (ngSubmit)="onSubmit(addProjectForm)" [formGroup]="addProjectForm">
-    <div class="form-group">
-      <h5>Project Title</h5>
-      <input formControlName="title" type="text" class="form-control" id="" aria-describedby="ProjectTitle" placeholder="Enter the title you want">
-      <!--<small id="emailHelp" class="form-text text-muted">To find it more easily</small>-->
-    </div>
-    <div class="form-group">
-      <h5>GIT project</h5>
-      <select  formControlName="gitProject" class="form-control" id="exampleSelect1">
+    <div class="col-md-6">
+
+      <div class="form-group">
+        <h5>Project Title</h5>
+        <input formControlName="title" type="text" class="form-control" id="" aria-describedby="ProjectTitle" placeholder="Enter the title you want">
+        <!--<small id="emailHelp" class="form-text text-muted">To find it more easily</small>-->
+      </div>
+
+      <div class="form-group">
+        <h5>GIT project</h5>
+        <select  formControlName="gitProject" class="form-control" id="exampleSelect1">
           <option *ngFor="let repo of reposList">{{repo.name}}</option>
         </select>
+      </div>
+
     </div>
 
-    <div class="form-group">
-      <h5>Tags</h5>
-      <input formControlName="tags" type="text" class="form-control" id="" aria-describedby="ProjectTags" placeholder="Ex: CSS, JAVA, JAVASCRIPT">
-      <!--<small id="emailHelp" class="form-text text-muted">To find it more easily</small>-->
+    <div class="col-md-6">
+
+      <div class="form-group">
+        <h5>Tags</h5>
+        <input formControlName="tags" type="text" class="form-control" id="" aria-describedby="ProjectTags" placeholder="Ex: CSS, JAVA, JAVASCRIPT">
+        <!--<small id="emailHelp" class="form-text text-muted">To find it more easily</small>-->
+      </div>
+
+      <div class="form-group">
+        <div>
+          <h5><img style="max-height: 25px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/price-tag.png"> Maximum offer</h5>
+          <input style="width:99%" type="range" min="1" max="10" value="1" formControlName="ch">
+        </div>
+      </div>
+
     </div>
 
-    <div class="form-group">
-      <h5>Job Description</h5>
-      <textarea  formControlName="description" class="form-control" id="exampleTextarea" rows="5"></textarea>
+    <div class="col-md-12">
+      <div class="form-group">
+        <h5>Job Description</h5>
+        <textarea  formControlName="description" class="form-control" id="exampleTextarea" rows="5"></textarea>
+      </div>
     </div>
+
 
 
     <button style="width:100%" type="submit" class="btn btn-default">Submit</button>

@@ -3,22 +3,26 @@
       {
           "title": "Sample Konfabulator Widget",
           "name": "description",
-          "tags": ["JS", "HTML", "CSS"]
+          "tags": ["JS", "HTML", "CSS"],
+          "ch": "5"
       },
       {
          "title": "Gigel Gigelescu",
          "name": "description",
-         "tags": ["PYTHON", "C++"]
+         "tags": ["PYTHON", "C++"],
+         "ch": "10"
      },
      {
         "title": "Gigel Tralalal",
         "name": "description",
-        "tags": ["PYTHON", "C++"]
+        "tags": ["PYTHON", "C++"],
+        "ch": "4"
     },
     {
        "title": "Gigel Gigelescu",
        "name": "description",
-       "tags": ["PYTHON", "C++"]
+       "tags": ["PYTHON", "C++"],
+       "ch": "3"
     }
   ]
 }

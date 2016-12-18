@@ -31,7 +31,8 @@ export class AddProjectComponent implements OnInit{
           title: new FormControl('', [Validators.minLength(3)]),
           gitProject: new FormControl(''),
           tags: new FormControl(''),
-          description: new FormControl('')
+          description: new FormControl(''),
+          ch: new FormControl('')
         });
     }
 

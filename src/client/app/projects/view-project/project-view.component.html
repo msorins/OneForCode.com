@@ -1,13 +1,14 @@
 <div class="card text-xs-center">
   <div class="card-header">
-    Featured
+    {{post.ch}}
+    <img style="max-height: 25px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/price-tag.png">
   </div>
   <div class="card-block">
     <h4 class="card-title">{{post.title}}</h4>
-    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+    <p class="card-text">{{post.description}}</p>
+    <a href="#" class="btn btn-primary">Details</a>
   </div>
-  <div class="card-footer text-muted">
-    2 days ago
+  <div class="card-footer text-muted align-middle">
+    {{post.tags}}
   </div>
 </div>
