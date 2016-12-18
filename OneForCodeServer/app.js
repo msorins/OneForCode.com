@@ -113,6 +113,24 @@ app.use('/api/projects/new', [function(req, res, next) {
 
 }]);
 
+app.use('/api/projects/byUser', [function(req, res, next) {
+  if (req.method != 'OPTIONS') {
+    console.log(req.body);
+    response = req.body;
+
+    if(req.query.firebaseUID == null)
+      res.status(200).send(JSON.stringify("Missing get parameter: 'firebaseUID'"));
+    else {
+      listProjectsByUser(req.query.firebaseUID, function(result) {
+        res.status(200).send(result);
+      });
+    }
+
+  } else
+    res.status(200).send('OPTIONS Request');
+
+}]);
+
 app.use('/api/users/get/gitUID', [function(req, res, next) {
   /*
    @Input: GET parameter 'gitUID' and 'firebaseUID'
@@ -198,9 +216,7 @@ function addUserDataToDb(firebaseUID, userObj) {
   db.ref("/users").child(firebaseUID).update(userObj);
 }
 
-
 function addProjects(firebaseUID, projectObj) {
-  console.log(firebaseUID);
   var refProjects = db.ref("/").child("projects").child(firebaseUID);
 
   refProjects.once("value", function(snapshot) {
@@ -223,14 +239,31 @@ function addProjects(firebaseUID, projectObj) {
   });
 
 }
+
+function listProjectsByUser(firebaseUID, callback) {
+  var refProjects = db.ref("/").child("projects").child(firebaseUID);
+
+  refProjects.once("value", function(snapshot) {
+    userProjects = snapshot.val();
+
+    res = {}
+    for(key in userProjects) {
+        res[key] = userProjects[key];
+    }
+
+    callback(res);
+
+  }, function(errorObject) {
+    console.log("The read failed: " + errorObject.code);
+  });
+}
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
-
-
 
 // error handler
 app.use(function(err, req, res, next) {

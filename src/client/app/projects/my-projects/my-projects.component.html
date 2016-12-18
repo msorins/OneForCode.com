@@ -1,0 +1,11 @@
+<ofc-header-shared></ofc-header-shared>
+
+<div *ngIf="projectsList.length == 0">
+  <div style="height: 100px"></div>
+  <ofc-loading></ofc-loading>
+</div>
+
+
+<div class="container">
+  <ofc-projectView [post]="project" *ngFor="let project of projectsList"></ofc-projectView>
+</div>

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders } from '@angular/core';
+import { AuthRoutingModule } from './auth-routing.module';
 //import { Routes, RouterModule } from '@angular/router';
 
 import { SignUiComponent } from './signui/sign-ui.component';
@@ -17,7 +18,7 @@ import { AuthService } from './services/auth-service';
     SignUiComponent
   ],
   imports: [
-    CommonModule
+    CommonModule, AuthRoutingModule
   ],
   providers: [
     AuthGuard,

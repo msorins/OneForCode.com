@@ -3,7 +3,7 @@ import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';  // for debugging
 
-import { AddProject } from '../../projects/add-project/add-project.interface'
+import { ProjectInterface } from '../../projects/project.interface'
 import {Subscription} from "rxjs";
 
 @Injectable()
@@ -19,7 +19,7 @@ export class ProjectsService {
                     .catch(this.handleError);
   }
 
-  addNewProject(firebaseUID:string, obj : AddProject):  Observable<string[]> {
+  addNewProject(firebaseUID:string, obj : ProjectInterface):  Observable<string[]> {
     let objJSON = JSON.stringify(obj); // Stringify payload
     let headers = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
     let options = new RequestOptions({ headers: headers }); // Create a request option
@@ -29,6 +29,12 @@ export class ProjectsService {
       .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
       .do(data => console.log('addNewProject:', data))
 
+  }
+
+  getProjectsByUser(firebaseUID:string): Observable<ProjectInterface[]> {
+    return this.http.get('http://localhost:3000/api/projects/byUser?firebaseUID=' + firebaseUID)
+      .map((res:Response) => res.json())
+      .do(data => console.log('getByGitToken:', data))  // debug
   }
 
 

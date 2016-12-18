@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ReposService } from '../../api/repos/repos.service';
 import { ProjectsService } from '../../api/projects/projects.service';
-import { AddProject } from './add-project.interface'
+import { ProjectInterface } from '../project.interface'
 import { FormGroup, FormControl } from "@angular/forms";
 import { AuthService } from '../../auth/services/auth-service';
 
@@ -35,7 +35,7 @@ export class AddProjectComponent implements OnInit{
         });
     }
 
-    onSubmit({ value, valid }: { value: AddProject, valid: boolean }) {
+    onSubmit({ value, valid }: { value: ProjectInterface, valid: boolean }) {
       if(valid === true) {
         this._projectsService.addNewProject(this._authService.getFirebaseUID(), value)
           .subscribe(
