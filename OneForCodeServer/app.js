@@ -156,7 +156,7 @@ app.use('/api/projects/getPulls', [function(req, res, next) {
     if(req.query.gitUserName != null && req.query.gitRepoName != null) {
 
       var options = {
-        url: 'https://api.github.com/repos/' + req.query.gitUserName + '/' + req.query.gitRepoName + '/pulls',
+        url: 'https://api.github.com/repos/' + req.query.gitUserName + '/' + req.query.gitRepoName + '/pulls?client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET,
         headers: {
           'User-Agent': 'request'
         }

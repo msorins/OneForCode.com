@@ -8,7 +8,7 @@ import {Observable} from "rxjs/RX";
 @Injectable()
 export class AuthService{
   public authState: FirebaseAuthState = null;
-  public userGit;
+  public userGit: any;
   public userName: string  = "";
   public uid: string = "";
 
@@ -47,7 +47,14 @@ export class AuthService{
     return this.authenticated ? this.authState.uid : '';
   }
 
-  getFirebaseUID():string {
+  getGitUserName(): string {
+    if(this.userGit == null)
+      return '';
+
+    return this.userGit.login;
+  }
+
+  getFirebaseUID(): string {
     if(this.authState.uid == null)
       return '';
 

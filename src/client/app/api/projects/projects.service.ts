@@ -31,16 +31,22 @@ export class ProjectsService {
 
   }
 
-  getProjectsByUser(firebaseUID:string): Observable<ProjectInterface[]> {
+  getProjectsByUser(firebaseUID: string): Observable<ProjectInterface[]> {
     return this.http.get('http://localhost:3000/api/projects/byUser?firebaseUID=' + firebaseUID)
       .map((res:Response) => res.json())
-      .do(data => console.log('getProjectsByUser:', data))  // debug
+      .do(data => console.log('getProjectsByUser:', data));  // debug
   }
 
-  getProjectByTitle(title:string): Observable<ProjectInterface> {
+  getProjectByTitle(title: string): Observable<ProjectInterface> {
     return this.http.get('http://localhost:3000/api/projects/byTitle?title=' + title)
       .map((res:Response) => res.json())
-      .do(data => console.log('getProjectByTitle', data))  // debug
+      .do(data => console.log('getProjectByTitle', data));  // debug
+  }
+
+  getPulls(gitUserName: string, gitRepoName: string): Observable<ProjectInterface> {
+    return this.http.get('http://localhost:3000/api/projects/getPulls?gitUserName=' + gitUserName + '&gitRepoName=' + gitRepoName)
+      .map((res:Response) => res.json())
+      .do(data => console.log('getPulls', data));// debug
   }
 
 

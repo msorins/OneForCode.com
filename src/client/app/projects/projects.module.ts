@@ -8,11 +8,12 @@ import { AddProjectComponent } from './add-project/index';
 import { ProjectViewComponent } from './view-project/index';
 import { MyProjectsComponent } from './my-projects/index';
 import { DetailProjectComponent } from './detail-project/index';
+import { PullsViewComponent } from './view-pulls/index';
 
 @NgModule({
   imports: [ReactiveFormsModule, ProjectsRoutingModule, SharedModule],
-  declarations: [AddProjectComponent, ProjectViewComponent, MyProjectsComponent, DetailProjectComponent],
-  exports: [AddProjectComponent, ProjectViewComponent, MyProjectsComponent, DetailProjectComponent]
+  declarations: [AddProjectComponent, ProjectViewComponent, MyProjectsComponent, DetailProjectComponent, PullsViewComponent],
+  exports: [AddProjectComponent, ProjectViewComponent, MyProjectsComponent, DetailProjectComponent, PullsViewComponent]
 })
 
 export class ProjectsModule { }
