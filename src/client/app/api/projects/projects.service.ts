@@ -34,7 +34,13 @@ export class ProjectsService {
   getProjectsByUser(firebaseUID:string): Observable<ProjectInterface[]> {
     return this.http.get('http://localhost:3000/api/projects/byUser?firebaseUID=' + firebaseUID)
       .map((res:Response) => res.json())
-      .do(data => console.log('getByGitToken:', data))  // debug
+      .do(data => console.log('getProjectsByUser:', data))  // debug
+  }
+
+  getProjectByTitle(title:string): Observable<ProjectInterface> {
+    return this.http.get('http://localhost:3000/api/projects/byTitle?title=' + title)
+      .map((res:Response) => res.json())
+      .do(data => console.log('getProjectByTitle', data))  // debug
   }
 
 

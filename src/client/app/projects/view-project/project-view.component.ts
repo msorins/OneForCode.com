@@ -10,4 +10,5 @@ import { Component, Input } from '@angular/core';
 
 export class ProjectViewComponent {
       @Input('post') post: string;
+      @Input('showDetailsButton') showDetailsButton: boolean;
 }

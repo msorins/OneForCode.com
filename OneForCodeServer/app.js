@@ -115,7 +115,6 @@ app.use('/api/projects/new', [function(req, res, next) {
 
 app.use('/api/projects/byUser', [function(req, res, next) {
   if (req.method != 'OPTIONS') {
-    console.log(req.body);
     response = req.body;
 
     if(req.query.firebaseUID == null)
@@ -128,6 +127,59 @@ app.use('/api/projects/byUser', [function(req, res, next) {
 
   } else
     res.status(200).send('OPTIONS Request');
+
+}]);
+
+app.use('/api/projects/byTitle', [function(req, res, next) {
+  if (req.method != 'OPTIONS') {
+    response = req.body;
+
+    if(req.query.title == null)
+      res.status(200).send(JSON.stringify("Missing get parameter: 'title'"));
+    else {
+      listProjectsByTitle(req.query.title, function(result) {
+          res.status(200).send(result);
+      });
+    }
+
+  } else
+    res.status(200).send('OPTIONS Request');
+
+}]);
+
+app.use('/api/projects/getPulls', [function(req, res, next) {
+  /*
+   @Input: GET parameter 'gitUserName' and 'gitRepoName'
+   @Returns: JSON with all pull requests of that repository
+   */
+  if (req.method != 'OPTIONS') {
+    if(req.query.gitUserName != null && req.query.gitRepoName != null) {
+
+      var options = {
+        url: 'https://api.github.com/repos/' + req.query.gitUserName + '/' + req.query.gitRepoName + '/pulls',
+        headers: {
+          'User-Agent': 'request'
+        }
+      };
+
+      function callback(error, response, body) {
+        if (!error && response.statusCode == 200) {
+          var info = JSON.parse(body);
+
+          console.log(info);
+          res.status(200).send(info);
+        } else {
+          res.status(200).send("Error retriving the response: ");
+        }
+      }
+
+      request(options, callback);
+    } else {
+      res.status(200).send("Must provide and 'gitUserName' and 'gitRepoName' GET parameters");
+    }
+
+  } else
+    res.status(200).send('OPTIONS Request SUCCESS');
 
 }]);
 
@@ -249,6 +301,35 @@ function listProjectsByUser(firebaseUID, callback) {
     res = {}
     for(key in userProjects) {
         res[key] = userProjects[key];
+    }
+
+    callback(res);
+
+  }, function(errorObject) {
+    console.log("The read failed: " + errorObject.code);
+  });
+}
+
+function listProjectsByTitle(title, callback) {
+  var refProjects = db.ref("/").child("projects");
+
+  refProjects.once("value", function(snapshot) {
+    userProjects = snapshot.val();
+
+    res = {};
+    for(firebaseUID in userProjects) {
+      for(key in userProjects[firebaseUID]) {
+        console.log(userProjects[firebaseUID][key]["title"]);
+        console.log(title);
+        if(userProjects[firebaseUID][key]["title"] == title) {
+          res = userProjects[firebaseUID][key];
+          res["byFirebaseUID"] = firebaseUID;
+          res["key"] = key;
+
+          break;
+        }
+
+      }
     }
 
     callback(res);

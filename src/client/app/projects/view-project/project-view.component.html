@@ -6,9 +6,9 @@
   <div class="card-block">
     <h4 class="card-title">{{post.title}}</h4>
     <p class="card-text">{{post.description}}</p>
-    <a href="#" class="btn btn-primary">Details</a>
+    <a *ngIf="showDetailsButton != false" [routerLink]="['/project',  post.title ]" class="btn btn-primary">Details</a>
   </div>
   <div class="card-footer text-muted align-middle">
-    {{post.tags}}
+    {{post?.tags}}
   </div>
 </div>

@@ -7,11 +7,12 @@ import { SharedModule } from '../shared/shared.module';
 import { AddProjectComponent } from './add-project/index';
 import { ProjectViewComponent } from './view-project/index';
 import { MyProjectsComponent } from './my-projects/index';
+import { DetailProjectComponent } from './detail-project/index';
 
 @NgModule({
   imports: [ReactiveFormsModule, ProjectsRoutingModule, SharedModule],
-  declarations: [AddProjectComponent, ProjectViewComponent, MyProjectsComponent],
-  exports: [AddProjectComponent, ProjectViewComponent, MyProjectsComponent]
+  declarations: [AddProjectComponent, ProjectViewComponent, MyProjectsComponent, DetailProjectComponent],
+  exports: [AddProjectComponent, ProjectViewComponent, MyProjectsComponent, DetailProjectComponent]
 })
 
 export class ProjectsModule { }
