@@ -144,7 +144,7 @@ export class SeedConfig {
    * `index.html`.
    * @type {string}
    */
-  APP_TITLE = 'CodeForce';
+  APP_TITLE = 'OneForCode';
 
   /**
    * The base folder of the applications source files.

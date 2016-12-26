@@ -29,7 +29,7 @@
       <div class="form-group">
         <div>
           <h5><img style="max-height: 25px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/price-tag.png"> Maximum offer</h5>
-          <input style="width:99%" type="range" min="1" max="10" value="1" formControlName="ch">
+          <input style="width:99%" type="range" min="1" max="{{_authService.getUserCh()}}" value="1" formControlName="ch">
         </div>
       </div>
 

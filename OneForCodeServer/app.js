@@ -101,7 +101,6 @@ app.use('/api/repos', [function(req, res, next) {
 
 app.use('/api/projects/new', [function(req, res, next) {
   if (req.method != 'OPTIONS') {
-    console.log(req.body);
     response = req.body;
 
     addProjects(req.query.firebaseUID, req.body);
@@ -166,7 +165,6 @@ app.use('/api/projects/getPulls', [function(req, res, next) {
         if (!error && response.statusCode == 200) {
           var info = JSON.parse(body);
 
-          console.log(info);
           res.status(200).send(info);
         } else {
           res.status(200).send("Error retriving the response: ");
@@ -191,27 +189,36 @@ app.use('/api/users/get/gitUID', [function(req, res, next) {
   if (req.method != 'OPTIONS') {
     if(req.query.gitUID != null) {
 
-      var options = {
-        url: 'https://api.github.com/user/'+req.query.gitUID + '?client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET,
-        headers: {
-          'User-Agent': 'request'
-        }
-      };
+      var firebaseUID = req.query.firebaseUID;
+      getUserDB(firebaseUID, function(result) {
+        console.log(result);
+        if(result == null) {
+          var options = {
+            url: 'https://api.github.com/user/'+req.query.gitUID + '?client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET,
+            headers: {
+              'User-Agent': 'request'
+            }
+          };
 
-      function callback(error, response, body) {
-        if (!error && response.statusCode == 200) {
-          var info = JSON.parse(body);
+          function callback(error, response, body) {
+            if (!error && response.statusCode == 200) {
+              var info = JSON.parse(body);
 
-          firebaseUID = req.query.firebaseUID;
-          addUserDataToDb(firebaseUID, info);
+              firebaseUID = req.query.firebaseUID;
+              addUserDataToDb(firebaseUID, info);
 
-          res.status(200).send(JSON.stringify(info));
+              res.status(200).send(JSON.stringify(info));
+            } else {
+              res.status(200).send("Error retriving the response: ");
+            }
+          }
+
+          request(options, callback);
         } else {
-          res.status(200).send("Error retriving the response: ");
+          res.status(200).send(JSON.stringify(result));
         }
-      }
+      });
 
-      request(options, callback);
     } else {
       res.status(200).send("Must provide and 'gitUID' GET parameter ");
     }
@@ -229,35 +236,42 @@ app.use('/api/users/get/gitToken', [function(req, res, next) {
    */
   if (req.method != 'OPTIONS') {
     if(req.query.gitToken != null) {
-
-      var options = {
-        url: 'https://api.github.com/user?access_token='+req.query.gitToken,
-        headers: {
-          'User-Agent': 'request'
-        }
-      };
-
       var firebaseUID = req.query.firebaseUID;
 
-      function callback(error, response, body) {
-        if (!error && response.statusCode == 200) {
-          var info = JSON.parse(body);
+      getUserDB(firebaseUID, function(result) {
+          if(result == null) {
+            //Send a request to GIT API to get basic info about the user (1st time)
+            var options = {
+              url: 'https://api.github.com/user?access_token='+req.query.gitToken,
+              headers: {
+                'User-Agent': 'request'
+              }
+            };
 
-          addUserDataToDb(firebaseUID, info);
-          res.status(200).send(info);
-        } else {
-          res.status(200).send("Error retriving the response: ");
-        }
-      }
+            function callback(error, response, body) {
+              if (!error && response.statusCode == 200) {
+                var info = JSON.parse(body);
 
-      request(options, callback);
+                addUserDataToDb(firebaseUID, info);
+                res.status(200).send(info);
+              } else {
+                res.status(200).send("Error retriving the response: ");
+              }
+            }
+
+            request(options, callback);
+          } else {
+            res.status(200).send(JSON.stringify(result));
+          }
+
+      });
+
     } else {
       res.status(200).send("Must provide and 'gitToken' GET parameter ");
     }
-
-
-  } else
-    res.status(200).send('OPTIONS Request SUCCESS');
+  }
+    else
+      res.status(200).send('OPTIONS Request SUCCESS');
 
 }]);
 
@@ -265,10 +279,31 @@ app.use('/api/users/get/gitToken', [function(req, res, next) {
 
 //  ==== FUNCTIONS PART ====
 function addUserDataToDb(firebaseUID, userObj) {
-  db.ref("/users").child(firebaseUID).update(userObj);
+  //Receives the firebaseUID and an object containing userInfo (from github)
+  //Adds specific proprieties to that value if it doesn't exists
+  getUserDB(firebaseUID, function(value) {
+    userObj["ch"] = 1;
+
+    if(value != null && value.hasOwnProperty("ch"))
+      userObj["ch"] = value["ch"];
+
+    db.ref("/users").child(firebaseUID).update(userObj);
+  });
+
+}
+
+function getUserDB(firebaseUID, callback) {
+  //Receives the firebaseUID and returns through a callback function the database
+  var refUser = db.ref("/").child("users").child(firebaseUID);
+
+  refUser.once("value", function(snapshot) {
+    callback(snapshot.val());
+  })
 }
 
 function addProjects(firebaseUID, projectObj) {
+  //Receives the firebaseUID of the users and an object containing the project info
+  //Adds it to the firebase database
   var refProjects = db.ref("/").child("projects").child(firebaseUID);
 
   refProjects.once("value", function(snapshot) {
