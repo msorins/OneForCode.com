@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ReposService } from '../../api/repos/repos.service';
 import { ProjectsService } from '../../api/projects/projects.service';
@@ -15,6 +15,7 @@ import {Router} from "@angular/router";
 })
 
 export class AddProjectComponent implements OnInit{
+    @Input('header') header: string;
     reposList :string[] ;
     addProjectForm: FormGroup;
 
@@ -40,6 +41,8 @@ export class AddProjectComponent implements OnInit{
     onSubmit({ value, valid }: { value: ProjectInterface, valid: boolean }) {
       if(valid === true) {
         value.gitUID = this._authService.getGitUserName();
+        value.byFirebaseUID = this._authService.getFirebaseUID();
+
         this._projectsService.addNewProject(this._authService.getFirebaseUID(), value)
           .subscribe(
             data => {

@@ -1,5 +1,12 @@
-<ofc-header-shared></ofc-header-shared>
+<ofc-header-shared *ngIf="header != -1"></ofc-header-shared>
+
+
+
 <div class="container">
+  <br>
+  <h3> Add a project </h3>
+  <br>
+
   <form (ngSubmit)="onSubmit(addProjectForm)" [formGroup]="addProjectForm">
     <div class="col-md-6">
 

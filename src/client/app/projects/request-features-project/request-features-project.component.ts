@@ -9,6 +9,7 @@ import { ProjectInterface } from '../project.interface'
 import { FormGroup, FormControl } from "@angular/forms";
 import { AuthService } from '../../auth/services/auth-service';
 import {ActivatedRoute} from "@angular/router";
+import {FeaturesProjectInterface} from "../features-project.interface";
 
 @Component({
   moduleId: module.id,
@@ -43,7 +44,7 @@ export class RequestFeaturesProjectComponent implements OnInit{
     });
   }
 
-  onSubmit({ value, valid }: { value: ProjectInterface, valid: boolean }) {
+  onSubmit({ value, valid }: { value: FeaturesProjectInterface, valid: boolean }) {
     if(valid === true) {
 
       value.status = "open";

@@ -4,21 +4,49 @@
 <div style="margin-top:25px;" class="container">
   <div class="row">
     <div class="col-md-4">
+      <div style="margin-bottom:12px">
+        <button [routerLink]="['/send',  projectTitle]" type="button" class="btn btn-default btn-lg btn-block">Send contribution</button>
+      </div>
+
       <ofc-projectView *ngIf="projectObj != null" [post]="projectObj" [showDetailsButton] = "false"></ofc-projectView>
 
-      <br>
-      <button [routerLink]="['/send',  projectName]"type="button" class="btn btn-default btn-lg btn-block">Send contribution</button>
 
-      <br>
-      <button [routerLink]="['/request-features/',  projectName]" type="button" class="btn btn-default btn-lg btn-block">Request a feature</button>
+      <div style="margin-top:12px;" class="list-group">
+        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active blue-background">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">List group item heading</h5>
+            <small>3 days ago</small>
+          </div>
+          <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+          <small>Donec id elit non mi porta.</small>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">List group item heading</h5>
+            <small class="text-muted">3 days ago</small>
+          </div>
+          <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+          <small class="text-muted">Donec id elit non mi porta.</small>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">List group item heading</h5>
+            <small class="text-muted">3 days ago</small>
+          </div>
+          <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+          <small class="text-muted">Donec id elit non mi porta.</small>
+        </a>
+      </div>
+
+
 
       <br>
     </div>
 
     <div class="col-md-8">
       <div class="container bordered">
-        <h4 style="margin-top:15px">Open features</h4>
-        - TO DO -
+        <h4 style="margin-top:15px">Open features <a *ngIf="_authService.getFirebaseUID() === projectObj.byFirebaseUID" [routerLink]="['/request-features/',  projectTitle]"> <img  style="margin-left:5px; max-height: 25px; display: inline-block; position:absolute" class="img-fluid rounded-circle" src="../../../assets/img/settings-v2.png"> </a> </h4>
+        <ofc-featuresView [projectTitle]="projectTitle" [features] = "projectFeaturesObj"></ofc-featuresView>
       </div>
     </div>
 

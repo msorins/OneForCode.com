@@ -1,32 +1,48 @@
 <ofc-header-shared></ofc-header-shared>
 
 <br>
-
-
 <div class="container">
-  <h3>{{projectName}}</h3>
-  <form>
+  <h3> Send your contribution for  <a class="" [routerLink]="['/project/',  projectName]" routerLinkActive="active" >{{projectName}}</a></h3>
+  <form (ngSubmit)="onSubmit(sendContributionForm)" [formGroup]="sendContributionForm">
     <div class="row">
       <div class="col-md-12">
         <div class="container bordered">
-          <h4 style="margin-top:15px">I Make a git Pull request</h4>
+          <h4 style="margin-top:15px">I) <img style="max-height: 25px; margin-left:2px; margin-right:2px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/git-pull.png"> Make a git Pull request </h4>
           <hr>
 
           <br>
-          <h4 style="margin-top:15px">II Choose your completed features</h4>
-          TO DO
+          <h4 style="margin-top:15px">II) Choose completed feature</h4>
+            <div class="form-group">
+              <select formControlName="featureTitle" class="form-control">
+                <option disabled selected [selected]="1"></option>
+                <option selected *ngFor="let item of projectFeaturesObj" value="{{item.title}}">{{item.title}}</option>
+              </select>
+            </div>
           <hr>
 
           <br>
-          <h4 style="margin-top:15px">III Select git pull here</h4>
-          <ofc-pullsView [pull] = "projectPullsObj"></ofc-pullsView>
+          <h4 style="margin-top:15px">III) Select git pull here</h4>
+          <div class="form-group">
+            <select formControlName="gitPullId" class="form-control">
+              <option disabled selected [selected]="1"></option>
+              <option  *ngFor="let item of projectPullsObj" value="{{item.id}}">{{item.title}} - {{item.updated_at | date : 'short'}}</option>
+            </select>
+          </div>
           <hr>
 
           <br>
-          <h4 style="margin-top:15px">III $</h4>
-          To DO
+          <h4>III) <img style="max-height: 25px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/price-tag.png"> Maximum offer</h4>
+          <div class="form-group">
+            <div>
+              <input formControlName="ch" style="width:99%" type="range" min="1" max="{{_authService.getUserCh()}}" value="1">
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
+    <button style="width:100%" type="submit" class="btn btn-default">Submit</button>
   </form>
 </div>
+
+{{ sendContributionForm.value | json }}

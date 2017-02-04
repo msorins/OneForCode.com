@@ -9,6 +9,8 @@ import { AuthService } from '../../auth/services/auth-service';
 import { ProjectInterface } from '../project.interface';
 import { ActivatedRoute } from "@angular/router";
 import {runInNewContext} from "vm";
+import {FeaturesProjectInterface} from "../features-project.interface";
+import {ContributionInterface} from "../contribution.interface";
 
 @Component({
   moduleId: module.id,
@@ -22,6 +24,8 @@ export class SendContributionProjectComponent implements OnInit{
   public projectName: string;
   public projectObj:ProjectInterface;
   public projectPullsObj: any;
+  public projectFeaturesObj: FeaturesProjectInterface[];
+  public sendContributionForm: FormGroup;
 
   constructor(public _authService: AuthService,  public _projectsService: ProjectsService, private _activatedRoute: ActivatedRoute) {}
 
@@ -32,6 +36,13 @@ export class SendContributionProjectComponent implements OnInit{
         this.initialiseProject();
       }
     )
+
+    //Initialise the form
+    this.sendContributionForm = new FormGroup({
+      featureTitle: new FormControl(''),
+      gitPullId: new FormControl(''),
+      ch: new FormControl('')
+    })
   }
 
   ngOnDestroy() {
@@ -44,6 +55,7 @@ export class SendContributionProjectComponent implements OnInit{
       data => {
         this.projectObj = data;
         this.initialiseProjectPulls();
+        this.initialiseProjectFeatures();
       }
     );
   }
@@ -66,6 +78,40 @@ export class SendContributionProjectComponent implements OnInit{
     }
 
     return newObj;
+  }
+
+  initialiseProjectFeatures() {
+    //Get the features for the current project
+    this._projectsService.getFeaturesByTitle(this.projectObj.byFirebaseUID, this.projectObj.title).subscribe(
+      data => {
+        this.projectFeaturesObj = data;
+      }
+    )
+  }
+
+  onSubmit({ value, valid }: { value: ContributionInterface, valid: boolean }) {
+    if(valid === true) {
+      value.byFirebaseUID = this._authService.getFirebaseUID();
+
+      for(let item of this.projectPullsObj) {
+        if(item.id == value.gitPullId) {
+          value.gitHtmlUrl = item.html_url;
+          value.gitApiUrl = item.url;
+          break;
+        }
+      }
+
+      console.log(value);
+
+      this._projectsService.addNewContribution(this.projectObj.byFirebaseUID, this.projectObj.title, value)
+        .subscribe(
+          data => {
+            console.log(data);
+          }
+        )
+
+
+    }
   }
 
 

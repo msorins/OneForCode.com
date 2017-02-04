@@ -9,5 +9,6 @@ export interface ProjectInterface {
   description: string
   ch: string
   gitUID: string,
-  features: FeaturesProjectInterface[]
+  features: FeaturesProjectInterface[],
+  byFirebaseUID: string
 }

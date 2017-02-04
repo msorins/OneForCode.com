@@ -12,11 +12,12 @@ import { PullsViewComponent } from './view-pulls/index';
 import {SendContributionProjectComponent} from "./send-contribution-project/send-contribution-project.component";
 import {FeaturesProjectInterface} from "./features-project.interface";
 import {RequestFeaturesProjectComponent} from "./request-features-project/request-features-project.component";
+import {FeatureViewComponent} from "./view-features/view-features.component";
 
 @NgModule({
   imports: [ReactiveFormsModule, ProjectsRoutingModule, SharedModule],
-  declarations: [AddProjectComponent, ProjectViewComponent, MyProjectsComponent, DetailProjectComponent, PullsViewComponent, SendContributionProjectComponent, RequestFeaturesProjectComponent],
-  exports: [AddProjectComponent, ProjectViewComponent, MyProjectsComponent, DetailProjectComponent, PullsViewComponent, SendContributionProjectComponent, RequestFeaturesProjectComponent]
+  declarations: [AddProjectComponent, ProjectViewComponent, MyProjectsComponent, DetailProjectComponent, PullsViewComponent, SendContributionProjectComponent, RequestFeaturesProjectComponent, FeatureViewComponent],
+  exports: [AddProjectComponent, ProjectViewComponent, MyProjectsComponent, DetailProjectComponent, PullsViewComponent, SendContributionProjectComponent, RequestFeaturesProjectComponent, FeatureViewComponent]
 })
 
 export class ProjectsModule { }

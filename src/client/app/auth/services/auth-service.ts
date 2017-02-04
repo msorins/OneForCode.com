@@ -71,7 +71,7 @@ export class AuthService{
   }
 
   getFirebaseUID(): string {
-    if(this.authState.uid == null)
+    if(this.authState == null || this.authState.uid == null)
       return '';
 
     return this.authState.uid;
