@@ -15,17 +15,20 @@ import { AuthService } from '../../auth/services/auth-service';
 export class DetailProjectComponent implements OnInit, OnDestroy{
   //@Input('post') post: string;
   projectName = ''
-  projectObj: ProjectInterface;
+  projectObj: ProjectInterface = {title:"dd", gitUID:"", gitProject:"", tags:"", ch:"", description:"", features:[]};
   projectPullsObj: any;
   private sub: any;
 
   constructor(private _ActivatedRoute: ActivatedRoute, public _projectsService: ProjectsService, public _authService: AuthService) {}
 
   ngOnInit() {
+
     this.sub = this._ActivatedRoute.params.subscribe(
       params => {
         //Get the title from the page parameters
         this.projectName = params['title'];
+
+        this.projectObj.title = this.projectName;
         this.initialiseProject()
       }
     )
@@ -47,7 +50,7 @@ export class DetailProjectComponent implements OnInit, OnDestroy{
 
   initialiseProjectPulls() {
     //Get pulls for the current project
-    this._projectsService.getPulls(this._authService.getGitUserName(), this.projectObj.gitProject).subscribe(
+    this._projectsService.getPulls(this.projectObj.gitUID, this.projectObj.gitProject).subscribe(
       data => this.projectPullsObj = data
     )
   }

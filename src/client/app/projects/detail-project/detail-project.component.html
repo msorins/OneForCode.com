@@ -5,13 +5,32 @@
   <div class="row">
     <div class="col-md-4">
       <ofc-projectView *ngIf="projectObj != null" [post]="projectObj" [showDetailsButton] = "false"></ofc-projectView>
+
+      <br>
+      <button [routerLink]="['/send',  projectName]"type="button" class="btn btn-default btn-lg btn-block">Send contribution</button>
+
+      <br>
+      <button [routerLink]="['/request-features/',  projectName]" type="button" class="btn btn-default btn-lg btn-block">Request a feature</button>
+
+      <br>
     </div>
+
+    <div class="col-md-8">
+      <div class="container bordered">
+        <h4 style="margin-top:15px">Open features</h4>
+        - TO DO -
+      </div>
+    </div>
+
+    <br>
+
     <div class="col-md-8">
       <div class="container bordered">
         <h4 style="margin-top:15px">Submitted requests</h4>
         <ofc-pullsView [pull] = "projectPullsObj"></ofc-pullsView>
       </div>
     </div>
+
   </div>
 </div>
 

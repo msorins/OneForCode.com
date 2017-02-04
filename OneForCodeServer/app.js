@@ -112,6 +112,19 @@ app.use('/api/projects/new', [function(req, res, next) {
 
 }]);
 
+app.use('/api/feature-projects/new', [function(req, res, next) {
+  if (req.method != 'OPTIONS') {
+    response = req.body;
+
+    addFeatures(req.query.firebaseUID, req.query.title, req.body);
+
+    res.status(200).send(JSON.stringify("OK"));
+
+  } else
+    res.status(200).send('OPTIONS Request SUCCESS');
+
+}]);
+
 app.use('/api/projects/byUser', [function(req, res, next) {
   if (req.method != 'OPTIONS') {
     response = req.body;
@@ -309,23 +322,22 @@ function addProjects(firebaseUID, projectObj) {
   refProjects.once("value", function(snapshot) {
     userProjects = snapshot.val();
 
-    //Count the number of projects user has
-    nrOfProjects = 0;
-    if(userProjects != null) {
-      nrOfProjects = Object.keys(userProjects).length;
-    }
-
-    //Increment that number
-    nrOfProjects++;
-
     //Add the current project to the database
-    db.ref("/").child("projects").child(firebaseUID).child(nrOfProjects).update(projectObj);
+    db.ref("/").child("projects").child(firebaseUID).child(projectObj.title).update(projectObj);
 
   }, function(errorObject) {
     console.log("The read failed: " + errorObject.code);
   });
 
 }
+
+function addFeatures(firebaseUID, projectName, featureObj) {
+
+  //Adds received feature to FfireBase
+  db.ref("/").child("projects").child(firebaseUID).child(projectName).child("features").child(featureObj.title).update(featureObj);
+
+}
+
 
 function listProjectsByUser(firebaseUID, callback) {
   var refProjects = db.ref("/").child("projects").child(firebaseUID);

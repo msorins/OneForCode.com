@@ -5,6 +5,7 @@ import { ProjectsService } from '../../api/projects/projects.service';
 import { ProjectInterface } from '../project.interface'
 import { FormGroup, FormControl } from "@angular/forms";
 import { AuthService } from '../../auth/services/auth-service';
+import {Router} from "@angular/router";
 
 @Component({
   moduleId: module.id,
@@ -17,7 +18,7 @@ export class AddProjectComponent implements OnInit{
     reposList :string[] ;
     addProjectForm: FormGroup;
 
-    constructor(public _reposService: ReposService, public _projectsService: ProjectsService, public _authService: AuthService) {}
+    constructor(public _reposService: ReposService, public _projectsService: ProjectsService, public _authService: AuthService, private _router: Router) {}
 
     ngOnInit() {
         //Get the list of repos
@@ -38,11 +39,22 @@ export class AddProjectComponent implements OnInit{
 
     onSubmit({ value, valid }: { value: ProjectInterface, valid: boolean }) {
       if(valid === true) {
+        value.gitUID = this._authService.getGitUserName();
         this._projectsService.addNewProject(this._authService.getFirebaseUID(), value)
           .subscribe(
-            data => console.log(data)
+            data => {
+                console.log(data);
+                this.navigateToFeatureRequests(value.title);
+            }
           )
+
       }
+    }
+
+    navigateToFeatureRequests(postTitle: string) {
+      //Navigate to the step 2 of creating the project (another form for requests)
+      console.log("NAVIGATEEE: " + postTitle);
+      this._router.navigate(['/request-features', postTitle])
     }
 
 }
