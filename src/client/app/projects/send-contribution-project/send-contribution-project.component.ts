@@ -92,11 +92,14 @@ export class SendContributionProjectComponent implements OnInit{
   onSubmit({ value, valid }: { value: ContributionInterface, valid: boolean }) {
     if(valid === true) {
       value.byFirebaseUID = this._authService.getFirebaseUID();
+      value.byUserName = this._authService.getUserName();
+      value.status = "waiting";
 
       for(let item of this.projectPullsObj) {
         if(item.id == value.gitPullId) {
           value.gitHtmlUrl = item.html_url;
           value.gitApiUrl = item.url;
+          value.gitTitle = item.title;
           break;
         }
       }

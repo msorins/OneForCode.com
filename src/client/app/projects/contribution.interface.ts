@@ -8,5 +8,8 @@ export interface ContributionInterface {
   ch: string,
   byFirebaseUID: string,
   gitHtmlUrl: string,
-  gitApiUrl: string
+  gitApiUrl: string,
+  byUserName: string,
+  gitTitle: string,
+  status: string
 }

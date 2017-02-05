@@ -61,6 +61,24 @@ export class ProjectsService {
       .do(data => console.log('getFeaturesByTitle:', JSON.stringify(data)));  // debug
   }
 
+  getContributionsByTitle(firebaseUID: string, projectTitle: string): Observable<FeaturesProjectInterface[]> {
+    return this.http.get('http://localhost:3000/api/projects/contributions/byTitle?firebaseUID=' + firebaseUID + '&title=' + projectTitle)
+      .map((res:Response) => res.json())
+      .do(data => console.log('getContributionsByTitle:', JSON.stringify(data)));  // debug
+  }
+
+  acceptContribution(firebaseUID: string, projectTitle: string, gitPullId: string): Observable<FeaturesProjectInterface[]> {
+    return this.http.get('http://localhost:3000/api/projects/contributions/accept?firebaseUID=' + firebaseUID + '&title=' + projectTitle + '&gitPullId=' + gitPullId)
+      .map((res:Response) => res.json())
+      .do(data => console.log('getContributionsByTitle:', JSON.stringify(data)));  // debug
+  }
+
+  denyContribution(firebaseUID: string, projectTitle: string, gitPullId: string): Observable<FeaturesProjectInterface[]> {
+    return this.http.get('http://localhost:3000/api/projects/contributions/deny?firebaseUID=' + firebaseUID + '&title=' + projectTitle + '&gitPullId=' + gitPullId)
+      .map((res:Response) => res.json())
+      .do(data => console.log('getContributionsByTitle:', JSON.stringify(data)));  // debug
+  }
+
   getProjectsByUser(firebaseUID: string): Observable<ProjectInterface[]> {
     return this.http.get('http://localhost:3000/api/projects/byUser?firebaseUID=' + firebaseUID)
       .map((res:Response) => res.json())

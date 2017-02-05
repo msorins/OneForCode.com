@@ -116,12 +116,93 @@ app.use('/api/feature-projects/new', [function(req, res, next) {
   if (req.method != 'OPTIONS') {
     response = req.body;
 
-    addFeatures(req.query.firebaseUID, req.query.title, req.body);
+    addFeature(req.query.firebaseUID, req.query.title, req.body);
 
     res.status(200).send(JSON.stringify("OK"));
 
   } else
     res.status(200).send('OPTIONS Request SUCCESS');
+
+}]);
+
+app.use('/api/contribution-projects/new', [function(req, res, next) {
+  if (req.method != 'OPTIONS') {
+    response = req.body;
+
+    addContribution(req.query.firebaseUID, req.query.title, req.body);
+
+    res.status(200).send(JSON.stringify("OK"));
+
+  } else
+    res.status(200).send('OPTIONS Request SUCCESS');
+
+}]);
+
+app.use('/api/projects/features/byTitle', [function(req, res, next) {
+  if (req.method != 'OPTIONS') {
+    response = req.body;
+
+    if(req.query.firebaseUID == null || req.query.title == null)
+      res.status(200).send(JSON.stringify("Missing get parameter: 'firebaseUID' of 'title"));
+    else {
+        listFeaturesByTitle(req.query.firebaseUID, req.query.title, function(result) {
+          res.status(200).send(result);
+      });
+    }
+
+  } else
+    res.status(200).send('OPTIONS Request');
+
+}]);
+
+app.use('/api/projects/contributions/byTitle', [function(req, res, next) {
+  if (req.method != 'OPTIONS') {
+    response = req.body;
+
+    if(req.query.firebaseUID == null || req.query.title == null)
+      res.status(200).send(JSON.stringify("Missing get parameter: 'firebaseUID' of 'title"));
+    else {
+      listContributionsByTitle(req.query.firebaseUID, req.query.title, function(result) {
+        res.status(200).send(result);
+      });
+    }
+
+  } else
+    res.status(200).send('OPTIONS Request');
+
+}]);
+
+app.use('/api/projects/contributions/accept', [function(req, res, next) {
+  if (req.method != 'OPTIONS') {
+    response = req.body;
+
+    if(req.query.firebaseUID == null || req.query.title == null || req.query.gitPullId == null)
+      res.status(200).send(JSON.stringify("Missing get parameter: 'firebaseUID' or 'title' or 'gitPullId'"));
+    else {
+      acceptContribution(req.query.firebaseUID, req.query.title, req.query.gitPullId, function(result) {
+        res.status(200).send(result);
+      });
+    }
+
+  } else
+    res.status(200).send('OPTIONS Request');
+
+}]);
+
+app.use('/api/projects/contributions/deny', [function(req, res, next) {
+  if (req.method != 'OPTIONS') {
+    response = req.body;
+
+    if(req.query.firebaseUID == null || req.query.title == null || req.query.gitPullId == null)
+      res.status(200).send(JSON.stringify("Missing get parameter: 'firebaseUID' or 'title' or 'gitPullId'"));
+    else {
+      denyContribution(req.query.firebaseUID, req.query.title, req.query.gitPullId, function(result) {
+        res.status(200).send(result);
+      });
+    }
+
+  } else
+    res.status(200).send('OPTIONS Request');
 
 }]);
 
@@ -331,13 +412,53 @@ function addProjects(firebaseUID, projectObj) {
 
 }
 
-function addFeatures(firebaseUID, projectName, featureObj) {
-
+function addFeature(firebaseUID, projectName, featureObj) {
   //Adds received feature to FfireBase
   db.ref("/").child("projects").child(firebaseUID).child(projectName).child("features").child(featureObj.title).update(featureObj);
 
 }
 
+function addContribution(firebaseUID, projectName, featureObj) {
+  //Adds received feature to FfireBase
+  db.ref("/").child("projects").child(firebaseUID).child(projectName).child("contributions").child(featureObj.gitPullId).update(featureObj);
+
+}
+
+function listFeaturesByTitle(firebaseUID, projectTitle, callback) {
+  var refProjects = db.ref("/").child("projects").child(firebaseUID).child(projectTitle).child("features");
+
+  refProjects.once("value", function(snapshot) {
+    userProjectsFeatures = snapshot.val();
+
+    res = [];
+    for(key in userProjectsFeatures) {
+      res.push(userProjectsFeatures[key]);
+    }
+
+    callback(JSON.stringify(res));
+
+  }, function(errorObject) {
+    console.log("The read failed: " + errorObject.code);
+  });
+}
+
+function listContributionsByTitle(firebaseUID, projectTitle, callback) {
+  var refProjects = db.ref("/").child("projects").child(firebaseUID).child(projectTitle).child("contributions");
+
+  refProjects.once("value", function(snapshot) {
+    userProjectsFeatures = snapshot.val();
+
+    res = [];
+    for(key in userProjectsFeatures) {
+      res.push(userProjectsFeatures[key]);
+    }
+
+    callback(JSON.stringify(res));
+
+  }, function(errorObject) {
+    console.log("The read failed: " + errorObject.code);
+  });
+}
 
 function listProjectsByUser(firebaseUID, callback) {
   var refProjects = db.ref("/").child("projects").child(firebaseUID);
@@ -345,12 +466,8 @@ function listProjectsByUser(firebaseUID, callback) {
   refProjects.once("value", function(snapshot) {
     userProjects = snapshot.val();
 
-    res = {}
-    for(key in userProjects) {
-        res[key] = userProjects[key];
-    }
-
-    callback(res);
+    //Send the response
+    callback(userProjects);
 
   }, function(errorObject) {
     console.log("The read failed: " + errorObject.code);
@@ -384,6 +501,32 @@ function listProjectsByTitle(title, callback) {
   }, function(errorObject) {
     console.log("The read failed: " + errorObject.code);
   });
+}
+
+function acceptContribution(firebaseUID, projectTitle, gitPullUid, callback) {
+  var refProjects = db.ref("/").child("projects").child(firebaseUID).child(projectTitle).child("contributions").child(gitPullUid);
+
+  db.ref("/").child("projects").child(firebaseUID).child(projectTitle).child("contributions").child(gitPullUid).child("status").set("accepted");
+
+  refProjects.once("value", function(snapshot) {
+    userProjectsFeatures = snapshot.val();
+
+    res = [];
+    for(key in userProjectsFeatures) {
+      res.push(userProjectsFeatures[key]);
+    }
+
+    callback(JSON.stringify(res));
+
+  }, function(errorObject) {
+    console.log("The read failed: " + errorObject.code);
+  });
+}
+
+function denyContribution(firebaseUID, projectTitle, gitPullUid, callback) {
+  db.ref("/").child("projects").child(firebaseUID).child(projectTitle).child("contributions").child(gitPullUid).child("status").set("denied");
+
+  callback(JSON.stringify("ok"));
 }
 
 // catch 404 and forward to error handler

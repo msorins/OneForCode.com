@@ -5,7 +5,7 @@
   <div class="row">
     <div class="col-md-4">
       <div style="margin-bottom:12px">
-        <button [routerLink]="['/send',  projectTitle]" type="button" class="btn btn-default btn-lg btn-block">Send contribution</button>
+        <button [routerLink]="['/send',  projectTitle]" type="button" class="btn btn-default btn-lg btn-block">Contribute</button>
       </div>
 
       <ofc-projectView *ngIf="projectObj != null" [post]="projectObj" [showDetailsButton] = "false"></ofc-projectView>
@@ -45,7 +45,7 @@
 
     <div class="col-md-8">
       <div class="container bordered">
-        <h4 style="margin-top:15px">Open features <a *ngIf="_authService.getFirebaseUID() === projectObj.byFirebaseUID" [routerLink]="['/request-features/',  projectTitle]"> <img  style="margin-left:5px; max-height: 25px; display: inline-block; position:absolute" class="img-fluid rounded-circle" src="../../../assets/img/settings-v2.png"> </a> </h4>
+        <h4 style="margin-top:15px">Features <a *ngIf="_authService.getFirebaseUID() === projectObj.byFirebaseUID" [routerLink]="['/request-features/',  projectTitle]"> <img  style="margin-left:5px; max-height: 25px; display: inline-block; position:absolute" class="img-fluid rounded-circle" src="../../../assets/img/settings-v2.png"> </a> </h4>
         <ofc-featuresView [projectTitle]="projectTitle" [features] = "projectFeaturesObj"></ofc-featuresView>
       </div>
     </div>
@@ -54,8 +54,8 @@
 
     <div class="col-md-8">
       <div class="container bordered">
-        <h4 style="margin-top:15px">Submitted requests</h4>
-        <ofc-pullsView [pull] = "projectPullsObj"></ofc-pullsView>
+        <h4 style="margin-top:15px">Contributions</h4>
+        <ofc-contributionsView [firebaseUID]="projectObj.byFirebaseUID" [projectTitle]="projectTitle" [contributions] = "projectContributionsObj"></ofc-contributionsView>
       </div>
     </div>
 

@@ -17,7 +17,7 @@ export class DetailProjectComponent implements OnInit, OnDestroy{
   //@Input('post') post: string;
   projectTitle = ''
   projectObj: ProjectInterface = {title:"dd", gitUID:"", gitProject:"", tags:"", ch:"", description:"", features:[], byFirebaseUID: ""};
-  projectPullsObj: any;
+  projectContributionsObj: any;
   projectFeaturesObj: FeaturesProjectInterface[];
   private sub: any;
 
@@ -45,16 +45,16 @@ export class DetailProjectComponent implements OnInit, OnDestroy{
     this._projectsService.getProjectByTitle(this.projectTitle).subscribe(
       data => {
         this.projectObj = data;
-        this.initialiseProjectPulls();
+        this.initialiseProjectContributions();
         this.initialiseProjectFeatures();
       }
     );
   }
 
-  initialiseProjectPulls() {
+  initialiseProjectContributions() {
     //Get pulls for the current project
-    this._projectsService.getPulls(this.projectObj.gitUID, this.projectObj.gitProject).subscribe(
-      data => this.projectPullsObj = data
+    this._projectsService.getContributionsByTitle(this.projectObj.byFirebaseUID, this.projectObj.title).subscribe(
+      data => this.projectContributionsObj = data
     )
   }
 
