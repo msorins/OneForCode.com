@@ -13,9 +13,13 @@
           <br>
           <h4 style="margin-top:15px">II) Choose completed feature</h4>
             <div class="form-group">
-              <select formControlName="featureTitle" class="form-control">
-                <option disabled></option>
-                <option *ngFor="let item of projectFeaturesObj" value="{{item.title}}" [selected]="item.title == chosenFeature"  >{{item.title}}</option>
+              <select *ngIf="chosenFeature == null" formControlName="featureTitle" class="form-control">
+                <option disabled selected [selected]="1"></option>
+                <option *ngFor="let item of projectFeaturesObj" value="{{item.title}}">{{item.title}}</option>
+              </select>
+
+              <select *ngIf="chosenFeature != null" formControlName="featureTitle" class="form-control">
+                <option [selected]="1 == 1" *ngFor="let item of projectFeaturesObj" value="{{item.title}}">{{item.title}}</option>
               </select>
             </div>
           <hr>
@@ -46,5 +50,4 @@
 </div>
 
 {{ sendContributionForm.value | json }}
-
-{{ chosenFeature }}
+{{projectFeaturesObj | json}}

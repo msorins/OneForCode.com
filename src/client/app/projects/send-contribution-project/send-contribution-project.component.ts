@@ -27,6 +27,7 @@ export class SendContributionProjectComponent implements OnInit{
   public projectFeaturesObj: FeaturesProjectInterface[];
   public sendContributionForm: FormGroup;
   public chosenFeature: string = '';
+  public ok:any;
 
   constructor(public _authService: AuthService,  public _projectsService: ProjectsService, private _activatedRoute: ActivatedRoute) {}
 
@@ -86,9 +87,22 @@ export class SendContributionProjectComponent implements OnInit{
     //Get the features for the current project
     this._projectsService.getFeaturesByTitle(this.projectObj.byFirebaseUID, this.projectObj.title).subscribe(
       data => {
-        this.projectFeaturesObj = data;
+        this.projectFeaturesObj = this.filterFeatures(data);
       }
     )
+  }
+
+  filterFeatures(inp: any) {
+    let newObj: any = [];
+
+    for(let i = 0; i < inp.length; i++) {
+
+     if(this.chosenFeature == '' || this.chosenFeature == null || (this.chosenFeature != '' && inp[i].title == this.chosenFeature))
+        newObj.push(inp[i]);
+
+    }
+
+    return newObj;
   }
 
   onSubmit({ value, valid }: { value: ContributionInterface, valid: boolean }) {

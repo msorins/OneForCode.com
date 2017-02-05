@@ -504,10 +504,20 @@ function listProjectsByTitle(title, callback) {
 }
 
 function acceptContribution(firebaseUID, projectTitle, gitPullUid, callback) {
-  var refProjects = db.ref("/").child("projects").child(firebaseUID).child(projectTitle).child("contributions").child(gitPullUid);
 
+  //Set the contribution as accepted
   db.ref("/").child("projects").child(firebaseUID).child(projectTitle).child("contributions").child(gitPullUid).child("status").set("accepted");
 
+  var refContribution = db.ref("/").child("projects").child(firebaseUID).child(projectTitle).child("contributions").child(gitPullUid);
+
+  refContribution.once("value", function(snapshot) {
+     contribution = snapshot.val();
+
+     featureTitle = contribution["featureTitle"];
+     //Set the feature as completed
+     db.ref("/").child("projects").child(firebaseUID).child(projectTitle).child("features").child(featureTitle).child("status").set("completed");
+
+  });
 
   listContributionsByTitle(firebaseUID, projectTitle, function(result) {
     callback(result);
