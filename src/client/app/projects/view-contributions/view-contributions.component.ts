@@ -46,30 +46,36 @@ export class ContributionViewComponent implements OnInit, OnChanges {
         }
       }
 
-      //Split the list into 3 different categories: waiting, accepted denied
-      for (let crt of this.contributions) {
-          if(crt.status == "waiting")
-            this.waitingContributions.push(crt);
-
-          if(crt.status == "accepted")
-            this.acceptedContributions.push(crt);
-
-          if(crt.status == "denied")
-            this.deniedContributions.push(crt);
-      }
+      this.distributeContribution(this.contributions, this.waitingContributions, this.acceptedContributions, this.deniedContributions);
     }
 
   }
 
+  distributeContribution(source: any, waitingContribution: ContributionInterface[], acceptedContribution: ContributionInterface[], deniedContribution: ContributionInterface[]) {
+    //Split the list into 3 different categories: waiting, accepted denied
+    waitingContribution.length = acceptedContribution.length = deniedContribution.length = 0;
+
+    for (let crt of source) {
+      if(crt.status == "waiting")
+        waitingContribution.push(crt);
+
+      if(crt.status == "accepted")
+        acceptedContribution.push(crt);
+
+      if(crt.status == "denied")
+        deniedContribution.push(crt);
+    }
+  }
+
   submitAcceptContribution(selectedContribution: string) {
     this._projectsService.acceptContribution(this.firebaseUID, this.projectTitle, this.selectedContribution).subscribe(
-      data => console.log(data)
+      data => this.distributeContribution(data, this.waitingContributions, this.acceptedContributions, this.deniedContributions)
     )
   }
 
   submitDenyContribution(selectedContribution: string) {
     this._projectsService.denyContribution(this.firebaseUID, this.projectTitle, this.selectedContribution).subscribe(
-      data => console.log(data)
+      data => this.distributeContribution(data, this.waitingContributions, this.acceptedContributions, this.deniedContributions)
     )
   }
 }

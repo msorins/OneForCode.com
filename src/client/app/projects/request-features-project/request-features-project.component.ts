@@ -20,7 +20,7 @@ import {FeaturesProjectInterface} from "../features-project.interface";
 
 export class RequestFeaturesProjectComponent implements OnInit{
 
-  projectName:string = "";
+  projectName: string = "";
   requestFeaturesForm: FormGroup;
 
   constructor(public _reposService: ReposService, public _projectsService: ProjectsService, public _authService: AuthService, private _ActivatedRoute: ActivatedRoute) {}

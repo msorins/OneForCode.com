@@ -25,7 +25,7 @@
         </thead>
         <tbody>
         <tr *ngFor="let crt of openFeatures">
-          <a [routerLink]="['/send',  projectTitle]"> <th><img style="max-height: 25px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/right-arrow.png"></th> </a>
+          <a [routerLink]="['/send',  projectTitle, crt.title]"> <th><img style="max-height: 25px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/terminal.png"></th> </a>
           <td>{{crt.title}}</td>
           <td>{{crt.description}}</td>
           <td>{{crt.ch}}  <img style="max-height: 25px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/price-tag.png"> </td>

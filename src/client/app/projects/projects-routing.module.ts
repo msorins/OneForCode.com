@@ -13,6 +13,7 @@ import {RequestFeaturesProjectComponent} from "./request-features-project/reques
       { path: 'add', component: AddProjectComponent },
       { path: 'projects', component: MyProjectsComponent},
       { path: 'project/:title', component: DetailProjectComponent},
+      { path: 'send/:title/:feature', component: SendContributionProjectComponent },
       { path: 'send/:title', component: SendContributionProjectComponent },
       { path: 'request-features/:title', component: RequestFeaturesProjectComponent}
     ])

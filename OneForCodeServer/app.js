@@ -508,25 +508,18 @@ function acceptContribution(firebaseUID, projectTitle, gitPullUid, callback) {
 
   db.ref("/").child("projects").child(firebaseUID).child(projectTitle).child("contributions").child(gitPullUid).child("status").set("accepted");
 
-  refProjects.once("value", function(snapshot) {
-    userProjectsFeatures = snapshot.val();
 
-    res = [];
-    for(key in userProjectsFeatures) {
-      res.push(userProjectsFeatures[key]);
-    }
-
-    callback(JSON.stringify(res));
-
-  }, function(errorObject) {
-    console.log("The read failed: " + errorObject.code);
+  listContributionsByTitle(firebaseUID, projectTitle, function(result) {
+    callback(result);
   });
 }
 
 function denyContribution(firebaseUID, projectTitle, gitPullUid, callback) {
   db.ref("/").child("projects").child(firebaseUID).child(projectTitle).child("contributions").child(gitPullUid).child("status").set("denied");
 
-  callback(JSON.stringify("ok"));
+  listContributionsByTitle(firebaseUID, projectTitle, function(result) {
+    callback(result);
+  });
 }
 
 // catch 404 and forward to error handler

@@ -26,6 +26,7 @@ export class SendContributionProjectComponent implements OnInit{
   public projectPullsObj: any;
   public projectFeaturesObj: FeaturesProjectInterface[];
   public sendContributionForm: FormGroup;
+  public chosenFeature: string = '';
 
   constructor(public _authService: AuthService,  public _projectsService: ProjectsService, private _activatedRoute: ActivatedRoute) {}
 
@@ -33,9 +34,10 @@ export class SendContributionProjectComponent implements OnInit{
     this.sub = this._activatedRoute.params.subscribe(
       params => {
         this.projectName = params['title'];
+        this.chosenFeature = params['feature'];
         this.initialiseProject();
       }
-    )
+    );
 
     //Initialise the form
     this.sendContributionForm = new FormGroup({

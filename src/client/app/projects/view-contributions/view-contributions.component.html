@@ -28,7 +28,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let crt of waitingContributions">
-        <td *ngIf="_authService.getFirebaseUID() === crt.byFirebaseUID"> <img (click)="selectedContribution = crt.gitPullId" data-toggle="modal" data-target="#confirmAccept" style="margin-left:5px; max-height: 25px; display: inline-block; position: absolute" class="img-fluid rounded-circle" src="../../../assets/img/checked.png"> <img (click)="selectedContribution = crt.gitPullId" data-toggle="modal" data-target="#confirmDeny" style="margin-left:55px; max-height: 25px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/cross.png">  </td>
+        <td *ngIf="_authService.getFirebaseUID() === crt.byFirebaseUID"> <img (click)="selectedContribution = crt.gitPullId" data-toggle="modal" data-target="#confirmAccept" style="margin-left:5px; max-height: 25px; display: inline-block; position: absolute" class="img-fluid rounded-circle" src="../../../assets/img/checked.png"> <img (click)="selectedContribution = crt.gitPullId" data-toggle="modal" data-target="#confirmDeny" style="margin-left:55px; max-height: 25px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/ban.png">  </td>
         <td>{{crt.byUserName}}</td>
         <td>{{crt.featureTitle}}</td>
         <td><a href="{{crt.gitHtmlUrl}}">{{crt.gitTitle}}</a></td>
