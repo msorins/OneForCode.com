@@ -2,7 +2,7 @@
   <div class="card-header">
     {{post.ch}}
     <img style="max-height: 25px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/price-tag.png">
-    <img *ngIf="_authService.getFirebaseUID() == post.byFirebaseUID" (click)="editable = true" style="margin-left:5px; max-height: 25px; display: inline-block; float:right" class="img-fluid rounded-circle" src="../../../assets/img/edit-black.png">
+    <img *ngIf="_authService.getFirebaseUID() == post.byFirebaseUID" (click)="editable = true" style="margin-left:5px; max-height: 25px; display: inline-block; float:right;" class="img-fluid rounded-circle" src="../../../assets/img/edit-black.png">
   </div>
   <div class="card-block">
     <h4 class="card-title">{{post.title}} </h4>

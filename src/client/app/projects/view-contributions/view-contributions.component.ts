@@ -42,7 +42,7 @@ export class ContributionViewComponent implements OnInit, OnChanges {
       for (let crt of this.contributions) {
         if (crt.byFirebaseUID == this._authService.getFirebaseUID()) {
           this.owner = true;
-          break
+          break;
         }
       }
 

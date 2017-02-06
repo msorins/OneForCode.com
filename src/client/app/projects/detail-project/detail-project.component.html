@@ -10,34 +10,7 @@
 
       <ofc-projectView *ngIf="projectObj != null" [post]="projectObj" [showDetailsButton] = "false"></ofc-projectView>
 
-      {{test}}
-      <div  style="margin-top:12px;" class="list-group">
-        <div href="#" class="list-group-item list-group-item-action flex-column align-items-start active blue-background">
-          <div class="d-flex w-100 justify-content-between">
-
-            <h5 class="mb-1"><span contenteditable="true" [textContent]="test" (input)="test=$event.target.textContent"> </span><a [routerLink]="['/edit-news',  projectTitle]"> <img  style="float:right; margin-left:5px; margin-right:5px; max-height: 25px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/edit.png"> </a></h5>
-            <small>3 days ago</small>
-          </div>
-          <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-          <small>Donec id elit non mi porta.</small>
-        </div>
-        <div href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-          <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">List group item heading</h5>
-            <small class="text-muted">3 days ago</small>
-          </div>
-          <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-          <small class="text-muted">Donec id elit non mi porta.</small>
-        </div>
-        <div href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-          <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">List group item heading</h5>
-            <small class="text-muted">3 days ago</small>
-          </div>
-          <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-          <small class="text-muted">Donec id elit non mi porta.</small>
-        </div>
-      </div>
+      <ofc-newsView></ofc-newsView>
 
       <br>
     </div>
