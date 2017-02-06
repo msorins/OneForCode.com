@@ -18,6 +18,8 @@ export class FeatureViewComponent implements OnChanges{
 
   ngOnChanges() {
     if(this.features != null) {
+      this.openFeatures.length = this.completedFeatures.length = 0;
+
       for(let crt of this.features) {
         if(crt.status == 'open')
           this.openFeatures.push(crt);

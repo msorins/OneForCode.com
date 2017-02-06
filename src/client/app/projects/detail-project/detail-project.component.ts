@@ -15,10 +15,10 @@ import {FeaturesProjectInterface} from "../features-project.interface";
 
 export class DetailProjectComponent implements OnInit, OnDestroy{
   //@Input('post') post: string;
-  projectTitle = ''
+  projectTitle = '';
   projectObj: ProjectInterface = {title:"dd", gitUID:"", gitProject:"", tags:"", ch:"", description:"", features:[], byFirebaseUID: ""};
   projectContributionsObj: any;
-  projectFeaturesObj: FeaturesProjectInterface[];
+  projectFeaturesObj: FeaturesProjectInterface[] = [];
   private sub: any;
 
   constructor(private _ActivatedRoute: ActivatedRoute, public _projectsService: ProjectsService, public _authService: AuthService) {}
@@ -61,10 +61,31 @@ export class DetailProjectComponent implements OnInit, OnDestroy{
 
   initialiseProjectFeatures() {
     //Get the features for the current project
+    this.projectFeaturesObj = [];
+
     this._projectsService.getFeaturesByTitle(this.projectObj.byFirebaseUID, this.projectObj.title).subscribe(
       data => {
         this.projectFeaturesObj = data;
       }
     )
+  }
+
+  handleSelectedContribution(inp: any) {
+    if(inp["action"] == "accept") {
+      this._projectsService.acceptContribution(this.projectObj.byFirebaseUID, this.projectTitle, inp["selectedContribution"]).subscribe(
+        data => {
+          this.projectContributionsObj = data;
+          this.initialiseProjectFeatures();
+        }
+      );
+    }
+
+    if(inp["action"] == "deny") {
+      this._projectsService.denyContribution(this.projectObj.byFirebaseUID, this.projectTitle, inp["selectedContribution"]).subscribe(
+        data => {
+          this.projectContributionsObj = data;
+        }
+      );
+    }
   }
 }

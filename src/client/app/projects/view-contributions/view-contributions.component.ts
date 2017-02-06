@@ -1,7 +1,7 @@
 /**
  * Created by so on 05/02/2017.
  */
-import {Component, Input, OnInit, OnChanges} from '@angular/core';
+import {Component, Input, OnInit, OnChanges, Output, EventEmitter} from '@angular/core';
 import { FeaturesProjectInterface } from "../features-project.interface";
 import {ContributionInterface} from "../contribution.interface";
 import {AuthService} from "../../auth/services/auth-service";
@@ -18,8 +18,8 @@ import {ProjectsService} from "../../api/projects/projects.service";
 
 export class ContributionViewComponent implements OnInit, OnChanges {
   @Input('contributions') contributions: ContributionInterface[];
-  @Input('projectTitle') projectTitle: string;
-  @Input('firebaseUID') firebaseUID: string;
+  @Output('selectedContribution') selectedContributionOut = new EventEmitter();
+
 
   private owner: boolean = false;
 
@@ -68,14 +68,18 @@ export class ContributionViewComponent implements OnInit, OnChanges {
   }
 
   submitAcceptContribution(selectedContribution: string) {
-    this._projectsService.acceptContribution(this.firebaseUID, this.projectTitle, this.selectedContribution).subscribe(
-      data => this.distributeContribution(data, this.waitingContributions, this.acceptedContributions, this.deniedContributions)
-    )
+    let obj: any = {};
+    obj["selectedContribution"] = selectedContribution;
+    obj["action"] = "accept";
+
+    this.selectedContributionOut.emit(obj);
   }
 
   submitDenyContribution(selectedContribution: string) {
-    this._projectsService.denyContribution(this.firebaseUID, this.projectTitle, this.selectedContribution).subscribe(
-      data => this.distributeContribution(data, this.waitingContributions, this.acceptedContributions, this.deniedContributions)
-    )
+    let obj: any = {};
+    obj["selectedContribution"] = selectedContribution;
+    obj["action"] = "deny";
+
+    this.selectedContributionOut.emit(obj);
   }
 }
