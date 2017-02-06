@@ -21,6 +21,8 @@ export class DetailProjectComponent implements OnInit, OnDestroy{
   projectFeaturesObj: FeaturesProjectInterface[] = [];
   private sub: any;
 
+  public test:string = "Test title";
+
   constructor(private _ActivatedRoute: ActivatedRoute, public _projectsService: ProjectsService, public _authService: AuthService) {}
 
   ngOnInit() {

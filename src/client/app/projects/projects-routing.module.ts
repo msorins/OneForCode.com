@@ -5,7 +5,8 @@ import { AddProjectComponent } from './add-project/index';
 import { MyProjectsComponent } from './my-projects/my-projects.component';
 import { DetailProjectComponent } from './detail-project/index';
 import { SendContributionProjectComponent } from './send-contribution-project/index'
-import {RequestFeaturesProjectComponent} from "./request-features-project/request-features-project.component";
+import { RequestFeaturesProjectComponent } from "./request-features-project/request-features-project.component";
+import { EditNewsComponent } from "./edit-news/edit-news.component";
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import {RequestFeaturesProjectComponent} from "./request-features-project/reques
       { path: 'project/:title', component: DetailProjectComponent},
       { path: 'send/:title/:feature', component: SendContributionProjectComponent },
       { path: 'send/:title', component: SendContributionProjectComponent },
-      { path: 'request-features/:title', component: RequestFeaturesProjectComponent}
+      { path: 'request-features/:title', component: RequestFeaturesProjectComponent},
+      { path: 'edit-news/:title', component: EditNewsComponent}
     ])
   ],
   exports: [RouterModule]
