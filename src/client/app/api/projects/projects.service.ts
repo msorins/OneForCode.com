@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable, OnChanges} from '@angular/core';
 import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';  // for debugging
@@ -10,7 +10,7 @@ import {ContributionInterface} from "../../projects/contribution.interface";
 import {NewsInterface} from "../../projects/news.interface";
 
 @Injectable()
-export class ProjectsService {
+export class ProjectsService  implements  OnChanges{
 
 
   constructor(private http: Http) {}
@@ -20,6 +20,10 @@ export class ProjectsService {
                     .map((res: Response) => res.json())
                     .do(data => console.log('getOpenProjects data:', data))  // debug
                     .catch(this.handleError);
+  }
+
+  ngOnChanges(changes: any) {
+    console.log("Changes: " + changes);
   }
 
   addNewProject(firebaseUID:string, obj : ProjectInterface):  Observable<string[]> {

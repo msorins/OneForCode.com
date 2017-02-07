@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, OnChanges} from '@angular/core';
 import { ProjectsService } from '../../api/projects/projects.service';
 
 import { FormGroup, FormControl } from "@angular/forms";
@@ -18,10 +18,13 @@ export class MyProjectsComponent implements OnInit{
   constructor(public _projectsService: ProjectsService, public _authService: AuthService) {}
 
   ngOnInit() {
-
-      this._projectsService.getProjectsByUser(this._authService.getFirebaseUID()).subscribe(
-        data => this.projectsList = this.transformToString(data),
-      )
+      this._authService.loggedInEvent.subscribe(
+        data => {
+          console.log("loggedInEvent triggered, firebaseUID: " + data);
+          this.getProjectByUser();
+        }
+      );
+      this.getProjectByUser();
   }
 
   transformToString(obj: ProjectInterface[]) {
@@ -30,6 +33,15 @@ export class MyProjectsComponent implements OnInit{
       res.push(obj[key]);
     }
     return res;
+  }
+
+  getProjectByUser() {
+    if(this._authService.getFirebaseUID().length) {
+      console.log("DAAA : " + this._authService.getFirebaseUID());
+      this._projectsService.getProjectsByUser(this._authService.getFirebaseUID()).subscribe(
+        data => this.projectsList = this.transformToString(data),
+      );
+    }
 
   }
 }

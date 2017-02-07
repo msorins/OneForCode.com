@@ -1,9 +1,10 @@
-import {Injectable, Input} from '@angular/core';
+import {Injectable, Input, EventEmitter} from '@angular/core';
 import {AuthProviders, AuthMethods, FirebaseAuth, FirebaseAuthState, FirebaseObjectObservable} from 'angularfire2';
 import { Http, Response } from '@angular/http';
 import {Subscription} from "rxjs";
 import {Observable} from "rxjs/RX";
 import {AngularFire, FirebaseListObservable} from 'angularfire2';
+
 
 @Injectable()
 export class AuthService{
@@ -13,32 +14,45 @@ export class AuthService{
   public userName: string  = "";
   public uid: string = "";
 
+  public loggedInEvent: EventEmitter<string> = new EventEmitter<string>();
+
   constructor(public auth$: FirebaseAuth, private http: Http, public _fireBase: AngularFire) {
+
     auth$.subscribe((state: FirebaseAuthState) => {
       this.authState = state;
       console.log(state);
+      this.loggedInEvent.emit(this.getFirebaseUID());
 
       //SEND requests to the server with the firebaseAccessToken and GithubUID/GithubAcessToken
       //the servers calls GIT API and saves user data to firebaseDB and returns it
       if (this.isAuthenticated() && typeof state.github.uid !== "undefined") {
         console.log("--- GITHUB UID ---");
         this.getByGitUserID(this.authState.uid, this.authState.github.uid).subscribe(
-          data => this.userGit = data
+          data => {
+            this.userGit = data;
+            //this.loggedInEvent.emit(this.getFirebaseUID());
+          }
         );
       }
 
       else if (this.isAuthenticated() && typeof state.github.accessToken !== "undefined") {
         console.log("--- GITHUB TOKEN ---");
         this.getByGitToken(this.authState.uid, this.authState.github.accessToken).subscribe(
-          data => this.userGit = data
+          data => {
+            this.userGit = data;
+            //this.loggedInEvent.emit(this.getFirebaseUID());
+          }
         );
       }
 
       //Create an Observable to track changes in the FireBase DB
-      this.userFireBaseObservable = _fireBase.database.object('/users/'+this.authState.uid);
-      this.userFireBaseObservable.subscribe(
-        data => this.userGit = data
-      )
+      if(this.authState != null) {
+        this.userFireBaseObservable = _fireBase.database.object('/users/'+this.authState.uid);
+        this.userFireBaseObservable.subscribe(
+          data => this.userGit = data
+        )
+      }
+
 
     });
   }
