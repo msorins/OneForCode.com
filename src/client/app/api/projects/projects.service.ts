@@ -7,6 +7,7 @@ import { ProjectInterface } from '../../projects/project.interface'
 import {Subscription} from "rxjs";
 import {FeaturesProjectInterface} from "../../projects/features-project.interface";
 import {ContributionInterface} from "../../projects/contribution.interface";
+import {NewsInterface} from "../../projects/news.interface";
 
 @Injectable()
 export class ProjectsService {
@@ -96,6 +97,26 @@ export class ProjectsService {
       .map((res:Response) => res.json())
       .do(data => console.log('getPulls', data));// debug
   }
+
+  addNews(firebaseUID:string, projectTitle : string, obj : NewsInterface[]):  Observable<string[]> {
+    let objJSON = JSON.stringify(obj); // Stringify payload
+    let headers = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
+    let options = new RequestOptions({ headers: headers }); // Create a request option
+
+    return this.http.post('http://localhost:3000/api/projects/setNews?firebaseUID=' + firebaseUID + '&title=' + projectTitle, objJSON, options) // ...using post request
+      .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
+      .do(data => console.log('addNewProject:', data))
+  }
+
+  getNews(firebaseUID:string, projectTitle : string):  Observable<string[]> {
+    let headers = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
+    let options = new RequestOptions({ headers: headers }); // Create a request option
+
+    return this.http.post('http://localhost:3000/api/projects/getNews?firebaseUID=' + firebaseUID + '&title=' + projectTitle, options) // ...using post request
+      .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
+      .do(data => console.log('addNewProject:', data))
+  }
+
 
 
   private handleError (error: any) {

@@ -369,7 +369,39 @@ app.use('/api/users/get/gitToken', [function(req, res, next) {
 
 }]);
 
+app.use('/api/projects/setNews', [function(req, res, next) {
+  if (req.method != 'OPTIONS') {
+    response = req.body;
 
+    if(req.query.firebaseUID == null || req.query.title == null)
+      res.status(200).send(JSON.stringify("Missing get parameter: 'firebaseUID' of 'title"));
+    else {
+      setNews(req.query.firebaseUID, req.query.title, req.body, function(result) {
+        res.status(200).send(result);
+      });
+    }
+
+  } else
+    res.status(200).send('OPTIONS Request');
+
+}]);
+
+app.use('/api/projects/getNews', [function(req, res, next) {
+  if (req.method != 'OPTIONS') {
+    response = req.body;
+
+    if(req.query.firebaseUID == null || req.query.title == null)
+      res.status(200).send(JSON.stringify("Missing get parameter: 'firebaseUID' of 'title"));
+    else {
+      listNews(req.query.firebaseUID, req.query.title, function(result) {
+        res.status(200).send(result);
+      });
+    }
+
+  } else
+    res.status(200).send('OPTIONS Request');
+
+}]);
 
 //  ==== FUNCTIONS PART ====
 function addUserDataToDb(firebaseUID, userObj) {
@@ -529,6 +561,32 @@ function denyContribution(firebaseUID, projectTitle, gitPullUid, callback) {
 
   listContributionsByTitle(firebaseUID, projectTitle, function(result) {
     callback(result);
+  });
+}
+
+function setNews(firebaseUID, projectTitle, newsObj, callback) {
+  db.ref("/").child("projects").child(firebaseUID).child(projectTitle).child("news").set(newsObj);
+
+  listNews(firebaseUID, projectTitle, function(result) {
+    callback(result);
+  });
+}
+
+function listNews(firebaseUID, projectTitle, callback) {
+  var refProjects = db.ref("/").child("projects").child(firebaseUID).child(projectTitle).child("news");
+
+  refProjects.once("value", function(snapshot) {
+    userProjectsNews = snapshot.val();
+
+    res = [];
+    for(key in userProjectsNews) {
+      res.push(userProjectsNews[key]);
+    }
+
+    callback(JSON.stringify(res));
+
+  }, function(errorObject) {
+    console.log("The read failed: " + errorObject.code);
   });
 }
 

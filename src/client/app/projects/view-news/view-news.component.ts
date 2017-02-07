@@ -1,8 +1,10 @@
 /**
  * Created by so on 06/02/2017.
  */
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Input, OnChanges} from '@angular/core';
 import {NewsInterface} from "../news.interface";
+import {ProjectsService} from "../../api/projects/projects.service";
+import {AuthService} from "../../auth/services/auth-service";
 
 
 @Component({
@@ -12,22 +14,50 @@ import {NewsInterface} from "../news.interface";
   styleUrls: ['view-news.component.css']
 })
 
-export class ViewNewsComponent implements OnInit{
+export class ViewNewsComponent implements OnInit, OnChanges{
+  @Input('title') title: any;
+
   public test: string;
 
   public editable:boolean = false;
-  public newsList: NewsInterface[] = [];
-  public x: NewsInterface = {title: "This is title", "description": "This is the description", footer:"Footer small", date:"12.12.2015"};
-  public y: NewsInterface = {title: "This is 2nd title", "description": "What is what?", footer:"Mini-Footer yeap", date:"12.12.2015"};
+  public newsList: any[] = []; // Actually NewsInterface[]
 
+  constructor(public _authService: AuthService, public _projectsService: ProjectsService) {}
 
   ngOnInit() {
-    this.newsList.push(this.x);
-    this.newsList.push(this.y);
+    this.load();
+  }
+
+  ngOnChanges() {
+    this.load();
+  }
+
+  load() {
+
+    if(this._authService.getFirebaseUID() != null) {
+      this._projectsService.getNews(this._authService.getFirebaseUID(), this.title)
+        .subscribe(
+          data=> {
+            console.log(data);
+            this.newsList = data;
+          }
+        )
+    }
+
   }
 
   save() {
+    this._projectsService.addNews(this._authService.getFirebaseUID(), this.title, this.newsList)
+      .subscribe(
+        data=> {
+          console.log(data);
+          this.newsList = data;
+        }
+      )
+  }
 
+  plusNews() {
+    this.newsList.push({title: "Title", "description": "description", footer:"footer", date:"12.12.2015"});
   }
 
 }
