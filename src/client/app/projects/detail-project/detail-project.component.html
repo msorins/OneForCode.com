@@ -10,7 +10,7 @@
 
       <ofc-projectView *ngIf="projectObj != null" [post]="projectObj" [showDetailsButton] = "false"></ofc-projectView>
 
-      <ofc-newsView [title] = "projectTitle"></ofc-newsView>
+      <ofc-newsView [project]="projectObj" [title] = "projectTitle"></ofc-newsView>
 
       <br>
     </div>

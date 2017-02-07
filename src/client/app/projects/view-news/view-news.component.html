@@ -21,7 +21,10 @@
     <div [class.active]="i == 0" [class.blue-background]="i == 0" href="#" class="list-group-item list-group-item-action flex-column align-items-start">
       <div class="d-flex w-100 justify-content-between">
 
-        <h5 class="mb-1"><span class="highlight" contenteditable="true" [textContent]="crt.title" (input)="crt.title = $event.target.textContent"> {{crt.title }} </span> <img *ngIf="i == 0" (click) = "editable = false" (click) = "save()"  style="float:right; margin-left:5px; margin-right:5px; max-height: 25px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/save-white.png"> </h5>
+        <h5 class="mb-1"><span class="highlight" contenteditable="true" [textContent]="crt.title" (input)="crt.title = $event.target.textContent"> {{crt.title }} </span>
+          <img *ngIf="i == 0" (click) = "editable = false" (click) = "save()"  style="float:right; margin-left:5px; margin-right:5px; max-height: 25px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/save-white.png">
+          <img *ngIf="i > 0" (click) = "removeNews(i)"  style="float:right; margin-left:5px; margin-right:5px; max-height: 25px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/ban.png">
+        </h5>
         <small>3 days ago</small>
       </div>
       <p contenteditable="true" class="mb-1 highlight" [textContent]="crt.description" (input)="crt.description = $event.target.textContent">{{crt.description}}</p>

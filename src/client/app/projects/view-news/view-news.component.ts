@@ -5,6 +5,7 @@ import {Component, OnInit, Input, OnChanges} from '@angular/core';
 import {NewsInterface} from "../news.interface";
 import {ProjectsService} from "../../api/projects/projects.service";
 import {AuthService} from "../../auth/services/auth-service";
+import {ProjectInterface} from "../project.interface";
 
 
 @Component({
@@ -15,7 +16,7 @@ import {AuthService} from "../../auth/services/auth-service";
 })
 
 export class ViewNewsComponent implements OnInit, OnChanges{
-  @Input('title') title: any;
+  @Input('project') projectObj: ProjectInterface;
 
   public test: string;
 
@@ -29,31 +30,33 @@ export class ViewNewsComponent implements OnInit, OnChanges{
   }
 
   ngOnChanges() {
-    this.load();
+    this.newsList = this.projectObj.news;
   }
 
   load() {
 
-    if(this._authService.getFirebaseUID() != null) {
-      this._projectsService.getNews(this._authService.getFirebaseUID(), this.title)
+      this._projectsService.getNews(this._authService.getFirebaseUID(), this.projectObj.title)
         .subscribe(
           data=> {
             console.log(data);
             this.newsList = data;
           }
         )
-    }
 
   }
 
   save() {
-    this._projectsService.addNews(this._authService.getFirebaseUID(), this.title, this.newsList)
+    this._projectsService.addNews(this._authService.getFirebaseUID(), this.projectObj.title, this.newsList)
       .subscribe(
         data=> {
           console.log(data);
           this.newsList = data;
         }
       )
+  }
+
+  removeNews(index: number) {
+    this.newsList.splice(index, 1);
   }
 
   plusNews() {
