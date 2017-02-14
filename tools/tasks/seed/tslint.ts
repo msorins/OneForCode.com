@@ -19,9 +19,9 @@ export = () => {
     '!' + join(Config.TOOLS_DIR, '**/*.d.ts')
   ];
 
-  return gulp.src(src)
+  return gulp.src(src, {'base': '.'})
     .pipe(plugins.tslint())
     .pipe(plugins.tslint.report({
-      emitError: require('is-ci')
+      emitError: require('is-ci') || Config.FORCE_TSLINT_EMIT_ERROR
     }));
 };

@@ -9,7 +9,7 @@ class Protractor {
   server(port: number, dir: string) {
     let app = express();
     let root = resolve(process.cwd(), dir);
-    for (let proxy of Config.getProxyMiddleware()) {
+    for (let proxy of Config.PROXY_MIDDLEWARE) {
       app.use(proxy);
     }
     app.use(express.static(root));
@@ -26,7 +26,7 @@ class Protractor {
  * Executes the build process, running all e2e specs using `protractor`.
  */
 export = (done: any) => {
-  process.env.LANG='en_US.UTF-8';
+  process.env.LANG = 'en_US.UTF-8';
   new Protractor()
     .server(Config.PORT, Config.PROD_DEST)
     .then((server: any) => {

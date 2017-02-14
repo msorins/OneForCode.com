@@ -7,35 +7,29 @@ import { makeTsProject, TemplateLocalsBuilder } from '../../utils';
 
 const plugins = <any>gulpLoadPlugins();
 
-const INLINE_OPTIONS = {
-  base: Config.TMP_DIR,
-  target: 'es5',
-  useRelativePaths: true,
-  removeLineBreaks: true
-};
-
 /**
  * Executes the build process, transpiling the TypeScript files for the production environment.
  */
 
 export = () => {
-  let tsProject = makeTsProject({}, Config.TMP_DIR);
-  let src = [
-    Config.TOOLS_DIR + '/manual_typings/**/*.d.ts',
-    join(Config.TMP_DIR, '**/*.ts'),
-    '!' + join(Config.TMP_DIR, `**/${Config.NG_FACTORY_FILE}.ts`)
+  const tsProject = makeTsProject({
+    target: 'es2015',
+    module: 'es2015',
+    moduleResolution: 'node'
+  }, Config.TMP_DIR);
+  const src = [
+    join(Config.TOOLS_DIR, '/manual_typings/**/*.d.ts'),
+    join(Config.TMP_DIR, '**/*.ts')
   ];
-  let result = gulp.src(src)
+  const result = gulp.src(src)
     .pipe(plugins.plumber())
-    .pipe(plugins.inlineNg2Template(INLINE_OPTIONS))
     .pipe(tsProject())
-    .once('error', function(e: any) {
+    .once('error', () => {
       this.once('finish', () => process.exit(1));
     });
 
-
   return result.js
-    .pipe(plugins.template(new TemplateLocalsBuilder().build()))
+    .pipe(plugins.template(new TemplateLocalsBuilder().build(), {interpolate: /<%=([\s\S]+?)%>/g}))
     .pipe(gulp.dest(Config.TMP_DIR))
     .on('error', (e: any) => {
       console.log(e);
