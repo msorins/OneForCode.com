@@ -11,7 +11,7 @@ import { AuthService } from '../../auth/services/auth-service'
   templateUrl: 'navbar.component.html'
 })
 export class NavbarComponent{
-     userName:string = ''
+     userName:string = '';
 
 
      constructor(public auth: AuthService){}
