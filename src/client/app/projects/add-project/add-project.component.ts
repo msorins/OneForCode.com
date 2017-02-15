@@ -42,6 +42,7 @@ export class AddProjectComponent implements OnInit{
       if(valid === true) {
         value.gitUID = this._authService.getGitUserName();
         value.byFirebaseUID = this._authService.getFirebaseUID();
+        value.hasHeader = false;
 
         this._projectsService.addNewProject(this._authService.getFirebaseUID(), value)
           .subscribe(

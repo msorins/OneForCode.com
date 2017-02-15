@@ -12,5 +12,6 @@ export interface ProjectInterface {
   gitUID: string,
   features: FeaturesProjectInterface[],
   news: NewsInterface[],
-  byFirebaseUID: string
+  byFirebaseUID: string,
+  hasHeader: boolean
 }

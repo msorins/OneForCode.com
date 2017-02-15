@@ -429,8 +429,8 @@ var storage = multer.diskStorage({
     //Path to saving directory
 
     // PRODUCTION LINK
-    // var dest = "../src/client/assets/img/projects/header/";
-    var dest = "uploads/header/";
+    var dest = "../src/client/assets/img/projects/header/";
+    // var dest = "uploads/header/";
 
     mkdirp.sync(dest);
     cb(null, dest);

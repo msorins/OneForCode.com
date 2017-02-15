@@ -1,10 +1,7 @@
 import {Component, Input, ElementRef, ViewChild, NgZone, Inject, OnChanges, EventEmitter} from '@angular/core';
 import { AuthService } from "../../auth/services/auth-service";
 import { ProjectsService } from "../../api/projects/projects.service";
-import { FileUploader } from 'ng2-file-upload/ng2-file-upload';
 import { NgUploaderOptions } from "ngx-uploader/ngx-uploader";
-import {UploadedFile} from "ngx-uploader";
-import {date} from "gulp-util";
 
 @Component({
   moduleId: module.id,
@@ -22,7 +19,7 @@ export class ProjectViewComponent implements  OnChanges{
   //Upload
   options: NgUploaderOptions;
   response: any;
-  public imageInput: any;
+  public imageHeaderName: string = '';
   inputUploadEvents: EventEmitter<string>;
 
   //Constructor
@@ -43,9 +40,16 @@ export class ProjectViewComponent implements  OnChanges{
       this.inputUploadEvents = new EventEmitter<string>();
   }
 
+  handleChosenImage(data: any) {
+    //Get chosen file name
+    this.imageHeaderName = data.target.files[0]["name"];
+  }
 
   save() {
     // Save the edited Project to the DataBase
+    if(this.imageHeaderName != '')
+      this.post.hasHeader = true;
+
     this._projectsService.addNewProject(this._authService.getFirebaseUID(), this.post)
       .subscribe(
         data => {
@@ -55,7 +59,11 @@ export class ProjectViewComponent implements  OnChanges{
 
     // Start the upload of the headerImage
     this.inputUploadEvents.emit('startUpload');
+
+    //Reset chosen image
+    this.imageHeaderName = ''
   }
 
+  public image: any;
 
 }
