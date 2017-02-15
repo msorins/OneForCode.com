@@ -15,12 +15,11 @@
   </div>
 </div>
 
-
 <div *ngIf="editable == true" class="card text-xs-center">
   <div  style="margin-bottom:0px;" class="form-group">
     <label style="margin-bottom:0px; width:100%;" class="custom-file highlight">
-      <input (change)="console.log('something changed')" type="file" id="file" class="custom-file-input">
-      <span class="custom-file-control"></span>
+      <input ngFileSelect [options]="options" [events]="inputUploadEvents" type="file" id="header" name="header" class="custom-file-input headerImgUpload">
+      <span data-content="DO NOT Choose file..." class="custom-file-control" [class.custom-file-control-empty]="1">FileName</span>
     </label>
   </div>
   <div class="card-header">
@@ -38,3 +37,6 @@
     {{post?.tags}}
   </div>
 </div>
+
+{{headerImgUpload}}
+{{respoonse}}

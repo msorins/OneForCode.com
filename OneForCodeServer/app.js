@@ -1,10 +1,12 @@
 var express = require('express');
 var path = require('path');
+var multer  = require('multer')
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var request = require('request');
+var mkdirp = require('mkdirp');
 
 var firebaseAdmin = require("firebase-admin");
 
@@ -15,6 +17,7 @@ var cors = require('cors');
 
 var app = express();
 
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -23,12 +26,30 @@ app.set('view engine', 'jade');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 
-app.use(cors());
-app.options('*', cors());
+var whitelist = [
+  'http://localhost:5555'
+];
+var corsOptions = {
+  origin: function(origin, callback){
+    var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
+    callback(null, originIsWhitelisted);
+  },
+  credentials: true
+};
+
+app.use(cors(corsOptions));
+
+
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Methods', 'POST');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
+});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-    extended: false
+    extended: true
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -48,13 +69,12 @@ firebaseAdmin.initializeApp({
 
 db = firebaseAdmin.database();
 
-
 // ===== API PART =====
 
 function parseRepos(str) {
-    res = []
+    res = [];
     for(var key in str) {
-        crtObj = {}
+        crtObj = {};
         crtObj["repo_id"] = str[key].id;
         crtObj["owner_name"] = str[key].owner.name;
         crtObj["name"] = str[key].name;
@@ -67,8 +87,8 @@ function parseRepos(str) {
     return JSON.stringify(res);
 }
 
-CLIENT_ID = "d2911925423f70c339c5"
-CLIENT_SECRET = "28d5b2b4135993ab67045843e17188f28a8e0b29"
+CLIENT_ID = "d2911925423f70c339c5";
+CLIENT_SECRET = "28d5b2b4135993ab67045843e17188f28a8e0b29";
 
 // ===== API PART =====
 app.use('/api/repos', [function(req, res, next) {
@@ -285,7 +305,7 @@ app.use('/api/users/get/gitUID', [function(req, res, next) {
 
       var firebaseUID = req.query.firebaseUID;
       getUserDB(firebaseUID, function(result) {
-        console.log(result);
+        //console.log(result);
         if(result == null) {
           var options = {
             url: 'https://api.github.com/user/'+req.query.gitUID + '?client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET,
@@ -403,6 +423,40 @@ app.use('/api/projects/getNews', [function(req, res, next) {
 
 }]);
 
+//Multer configuration for saving project headers
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    //Path to saving directory
+
+    // PRODUCTION LINK
+    // var dest = "../src/client/assets/img/projects/header/";
+    var dest = "uploads/header/";
+
+    mkdirp.sync(dest);
+    cb(null, dest);
+  },
+  filename: function (req, file, cb) {
+    cb(null, req.body["fileName"] + ".jpg")
+  }
+});
+
+var upload = multer({ storage: storage }).single('file');
+
+app.post('/api/projects/upload/header', [function(req, res, next) {
+
+  //Upload the image file received through POST request
+  upload(req, res, function (err) {
+    if (err) {
+      res.status(500).send('Something went wrong');
+      return
+    }
+
+    // Everything is fine, image uploaded
+    res.status(200).send('OK');
+  });
+}]);
+
+
 //  ==== FUNCTIONS PART ====
 function addUserDataToDb(firebaseUID, userObj) {
   //Receives the firebaseUID and an object containing userInfo (from github)
@@ -515,8 +569,6 @@ function listProjectsByTitle(title, callback) {
     res = {};
     for(firebaseUID in userProjects) {
       for(key in userProjects[firebaseUID]) {
-        console.log(userProjects[firebaseUID][key]["title"]);
-        console.log(title);
         if(userProjects[firebaseUID][key]["title"] == title) {
           res = userProjects[firebaseUID][key];
           res["byFirebaseUID"] = firebaseUID;

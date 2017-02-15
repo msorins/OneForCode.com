@@ -15,10 +15,12 @@ import {RequestFeaturesProjectComponent} from "./request-features-project/reques
 import {FeatureViewComponent} from "./view-features/view-features.component";
 import {ContributionViewComponent} from "./view-contributions/view-contributions.component";
 import {ViewNewsComponent} from "./view-news/view-news.component";
+import {FileSelectDirective, FileUploader} from "ng2-file-upload/ng2-file-upload";
+import { NgUploaderModule } from 'ngx-uploader/ngx-uploader';
 
 @NgModule({
-  imports: [ReactiveFormsModule, ProjectsRoutingModule, SharedModule],
-  declarations: [AddProjectComponent, ProjectViewComponent, MyProjectsComponent, DetailProjectComponent, PullsViewComponent, SendContributionProjectComponent, RequestFeaturesProjectComponent, FeatureViewComponent, ContributionViewComponent, ViewNewsComponent],
+  imports: [ReactiveFormsModule, ProjectsRoutingModule, SharedModule,  NgUploaderModule ],
+  declarations: [AddProjectComponent, ProjectViewComponent, MyProjectsComponent, DetailProjectComponent, PullsViewComponent, SendContributionProjectComponent, RequestFeaturesProjectComponent, FeatureViewComponent, ContributionViewComponent, ViewNewsComponent, FileSelectDirective],
   exports: [AddProjectComponent, ProjectViewComponent, MyProjectsComponent, DetailProjectComponent, PullsViewComponent, SendContributionProjectComponent, RequestFeaturesProjectComponent, FeatureViewComponent, ContributionViewComponent, ViewNewsComponent]
 })
 

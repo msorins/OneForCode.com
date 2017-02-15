@@ -1,0 +1,7 @@
+.custom-file-control:lang(en)::after {
+  content: "Choose file :)";
+}
+
+.custom-file-control-empty:lang(en)::after {
+  content: "";
+}

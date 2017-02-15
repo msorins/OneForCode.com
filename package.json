@@ -143,6 +143,8 @@
     "@angular/router": "~3.4.1",
     "core-js": "^2.4.1",
     "intl": "^1.2.5",
+    "ng2-file-upload": "^1.2.0",
+    "ngx-uploader": "^2.1.6",
     "rxjs": "~5.0.3",
     "systemjs": "0.19.41",
     "zone.js": "^0.7.2"
