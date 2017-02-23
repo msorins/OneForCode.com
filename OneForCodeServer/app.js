@@ -457,6 +457,19 @@ app.post('/api/projects/upload/header', [function(req, res, next) {
 }]);
 
 
+app.use('/api/projects/features/setLargeDescription', [function(req, res, next) {
+  if (req.method != 'OPTIONS') {
+    if(req.query.firebaseUID == null || req.query.projectTitle == null || req.query.featureTitle == null)
+      res.status(200).send(JSON.stringify("Missing get parameter: firebaseUID or projectTitle or featureTitle"));
+    else {
+      res.status(200).send("OK");
+    }
+
+  } else
+    res.status(200).send('OPTIONS Request');
+
+}]);
+
 //  ==== FUNCTIONS PART ====
 function addUserDataToDb(firebaseUID, userObj) {
   //Receives the firebaseUID and an object containing userInfo (from github)

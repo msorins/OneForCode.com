@@ -5,6 +5,7 @@ import { ProjectsService } from '../../api/projects/projects.service';
 import { ProjectInterface } from '../project.interface';
 import { AuthService } from '../../auth/services/auth-service';
 import {FeaturesProjectInterface} from "../features-project.interface";
+import {NewsInterface} from "../news.interface";
 
 @Component({
   moduleId: module.id,
@@ -16,7 +17,7 @@ import {FeaturesProjectInterface} from "../features-project.interface";
 export class DetailProjectComponent implements OnInit, OnDestroy{
   //@Input('post') post: string;
   projectTitle = '';
-  projectObj: ProjectInterface = {title:"dd", gitUID:"", gitProject:"", tags:"", ch:"", description:"", features:[], byFirebaseUID: ""};
+  projectObj: ProjectInterface = {title:"dd", gitUID:"", gitProject:"", tags:"", ch:"", description:"", features:[], byFirebaseUID: "", news: [], hasHeader: false};
   projectContributionsObj: any;
   projectFeaturesObj: FeaturesProjectInterface[] = [];
   private sub: any;

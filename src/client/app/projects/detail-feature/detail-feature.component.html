@@ -1,0 +1,12 @@
+<div>
+      <div class="container bordered">
+        {{feature.title}}
+      </div>
+  <button (click)="save()" class="btn btn-default btn-lg btn-block" type="button">Save</button>
+</div>
+<br><br>
+<ckeditor
+  [(ngModel)]="ckeditorContent"
+  (change)="onEditorChange($event)"
+>
+</ckeditor>

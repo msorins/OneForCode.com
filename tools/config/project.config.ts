@@ -73,6 +73,16 @@ export class ProjectConfig extends SeedConfig {
       }
     });
 
+    // Add Text editor configuration
+    this.addPackageBundles({
+      name: 'ng2-ckeditor',
+      path: 'node_modules/ng2-ckeditor',
+      packageMeta: {
+        main: 'lib/index.js',
+        defaultExtension: 'js'
+      }
+    });
+
     // Add packages (e.g. lodash)
     // let additionalPackages: ExtendPackages[] = [{
     //   name: 'lodash',

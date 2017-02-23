@@ -17,11 +17,13 @@ import {ContributionViewComponent} from "./view-contributions/view-contributions
 import {ViewNewsComponent} from "./view-news/view-news.component";
 import {FileSelectDirective, FileUploader} from "ng2-file-upload/ng2-file-upload";
 import { NgUploaderModule } from 'ngx-uploader/ngx-uploader';
+import { DetailFeatureComponent } from './detail-feature/index';
+import { CKEditorModule } from 'ng2-ckeditor';
 
 @NgModule({
-  imports: [ReactiveFormsModule, ProjectsRoutingModule, SharedModule,  NgUploaderModule ],
-  declarations: [AddProjectComponent, ProjectViewComponent, MyProjectsComponent, DetailProjectComponent, PullsViewComponent, SendContributionProjectComponent, RequestFeaturesProjectComponent, FeatureViewComponent, ContributionViewComponent, ViewNewsComponent, FileSelectDirective],
-  exports: [AddProjectComponent, ProjectViewComponent, MyProjectsComponent, DetailProjectComponent, PullsViewComponent, SendContributionProjectComponent, RequestFeaturesProjectComponent, FeatureViewComponent, ContributionViewComponent, ViewNewsComponent]
+  imports: [CKEditorModule, ReactiveFormsModule, ProjectsRoutingModule, SharedModule,  NgUploaderModule],
+  declarations: [AddProjectComponent, ProjectViewComponent, MyProjectsComponent, DetailProjectComponent, PullsViewComponent, SendContributionProjectComponent, RequestFeaturesProjectComponent, FeatureViewComponent, ContributionViewComponent, ViewNewsComponent, FileSelectDirective, DetailFeatureComponent],
+  exports: [AddProjectComponent, ProjectViewComponent, MyProjectsComponent, DetailProjectComponent, PullsViewComponent, SendContributionProjectComponent, RequestFeaturesProjectComponent, FeatureViewComponent, ContributionViewComponent, ViewNewsComponent, DetailFeatureComponent]
 })
 
 export class ProjectsModule { }

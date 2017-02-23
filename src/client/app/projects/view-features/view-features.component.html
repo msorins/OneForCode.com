@@ -1,17 +1,18 @@
+<div *ngIf="isFeatureSelected == false">
 
-<!-- Nav tabs -->
-<ul class="nav nav-tabs" role="tablist">
-  <li class="nav-item">
-    <a class="nav-link" href="#home" aria-controls="home" role="tab" data-toggle="tab"><span class="ofc-light-green">Open</span></a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#profile" aria-controls="profile" role="tab" data-toggle="tab"><span class="ofc-light-green">Completed</span></a>
-  </li>
-</ul>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs " role="tablist">
+    <li class="nav-item">
+      <a class="nav-link" href="#home" aria-controls="home" role="tab" data-toggle="tab"><span class="ofc-light-green">Open</span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#profile" aria-controls="profile" role="tab" data-toggle="tab"><span class="ofc-light-green">Completed</span></a>
+    </li>
+  </ul>
 
 
   <!-- Tab panes -->
-  <div class="tab-content">
+  <div class="tab-content table-hover">
     <div role="tabpanel" class="tab-pane active" id="home">
 
       <table style="margin-top:15px;" class="table">
@@ -24,7 +25,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let crt of openFeatures">
+        <tr *ngFor="let crt of openFeatures" class='clickable-row' (click)="featureSelected(crt)">
           <a [routerLink]="['/send',  projectTitle, crt.title]"> <th><img style="max-height: 25px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/terminal.png"></th> </a>
           <td>{{crt.title}}</td>
           <td>{{crt.description}}</td>
@@ -35,7 +36,7 @@
 
     </div>
 
-    <div role="tabpanel" class="tab-pane" id="profile">
+    <div role="tabpanel" class="tab-pane table-hover" id="profile">
       <table style="margin-top:15px;" class="table">
         <thead class="thead-default">
         <tr>
@@ -55,6 +56,8 @@
     </div>
   </div>
 
+</div>
 
+<ofc-detail-feature *ngIf="isFeatureSelected == true" [projectTitle]="projectTitle" [feature]="selectedFeature" (close)="isFeatureSelected = false"></ofc-detail-feature>
 
 

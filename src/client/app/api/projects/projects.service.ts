@@ -60,6 +60,16 @@ export class ProjectsService  implements  OnChanges{
 
   }
 
+  setFeatureLargeDescription(firebaseUID:string, projectTitle: string, featureTitle:string, largeDescription:string):  Observable<string[]> {
+    let objJSON = JSON.stringify({"content": largeDescription }); // Stringify payload
+    let headers = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
+    let options = new RequestOptions({ headers: headers }); // Create a request option
+
+    return this.http.post('http://localhost:3000/api/projects/features/setLargeDescription?firebaseUID=' + firebaseUID + '&projectTitle=' + projectTitle + '&featureTitle=' + featureTitle, objJSON, options) // ...using post request
+      .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
+      .do(data => console.log('setFeatureLargeDescription:', data))
+  }
+
   getFeaturesByTitle(firebaseUID: string, projectTitle: string): Observable<FeaturesProjectInterface[]> {
     return this.http.get('http://localhost:3000/api/projects/features/byTitle?firebaseUID=' + firebaseUID + '&title=' + projectTitle)
       .map((res:Response) => res.json())

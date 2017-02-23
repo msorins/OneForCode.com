@@ -17,7 +17,7 @@
 
     <div class="col-md-8">
       <div class="container bordered">
-        <h4 style="margin-top:15px">Features <a *ngIf="_authService.getFirebaseUID() === projectObj.byFirebaseUID" [routerLink]="['/request-features/',  projectTitle]"> <img  style="margin-left:5px; max-height: 25px; display: inline-block; position:absolute" class="img-fluid rounded-circle" src="../../../assets/img/add-button.png"> </a> </h4>
+        <h4 style="margin-top:15px">Features <a *ngIf="_authService.getFirebaseUID() === projectObj.byFirebaseUID"> <img  style="margin-left:5px; max-height: 25px; display: inline-block; position:absolute" class="img-fluid rounded-circle" src="../../../assets/img/add-button.png"> </a> </h4>
         <ofc-featuresView [projectTitle]="projectTitle" [features] = "projectFeaturesObj"></ofc-featuresView>
       </div>
     </div>

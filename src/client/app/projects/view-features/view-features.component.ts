@@ -16,6 +16,9 @@ export class FeatureViewComponent implements OnChanges{
   openFeatures: FeaturesProjectInterface[] = [];
   completedFeatures: FeaturesProjectInterface[] = [];
 
+  isFeatureSelected = false;
+  selectedFeature: FeaturesProjectInterface;
+
   ngOnChanges() {
     if(this.features != null) {
       this.openFeatures.length = this.completedFeatures.length = 0;
@@ -27,6 +30,11 @@ export class FeatureViewComponent implements OnChanges{
           this.completedFeatures.push(crt);
       }
     }
+  }
+
+  featureSelected(feature: FeaturesProjectInterface) {
+    this.selectedFeature = feature;
+    this.isFeatureSelected = true;
   }
 
 }
