@@ -28,14 +28,28 @@
 
     <div class="col-md-12">
       <div class="form-group">
-        <h5>Feature Description</h5>
+        <h5>Short description</h5>
         <textarea  formControlName="description" class="form-control" id="exampleTextarea" rows="5"></textarea>
       </div>
     </div>
 
 
+    <div class="col-md-12">
+      <div class="form-group">
+        <h5>Description</h5>
+        <ckeditor
+          [ngModelOptions]="{standalone: true}"
+          [(ngModel)]="ckeditorContent"
+          (change)="onEditorChange($event)"
+        >
+        </ckeditor>
+      </div>
+    </div>
+
     <button style="width:100%" type="submit" class="btn btn-default">Submit</button>
+
   </form>
+
 </div>
 
 {{ requestFeaturesForm.value | json }}

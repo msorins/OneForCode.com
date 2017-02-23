@@ -3,7 +3,8 @@
  */
 export interface FeaturesProjectInterface {
   title: string;
-  description: string
-  ch: string
-  status: string
+  description: string;
+  ch: string;
+  status: string;
+  largeDescription: string;
 }

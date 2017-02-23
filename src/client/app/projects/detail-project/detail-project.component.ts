@@ -91,4 +91,8 @@ export class DetailProjectComponent implements OnInit, OnDestroy{
       );
     }
   }
+
+  newProjectHandle(obj:ProjectInterface) {
+    this.projectObj = obj;
+  }
 }

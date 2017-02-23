@@ -1,5 +1,6 @@
-import {Component, Input, OnChanges} from '@angular/core';
+import {Component, Input, OnChanges, EventEmitter, Output} from '@angular/core';
 import { FeaturesProjectInterface } from "../features-project.interface";
+import {ProjectInterface} from "../project.interface";
 
 
 @Component({
@@ -10,8 +11,9 @@ import { FeaturesProjectInterface } from "../features-project.interface";
 })
 
 export class FeatureViewComponent implements OnChanges{
-  @Input('features') features: FeaturesProjectInterface[];
-  @Input('projectTitle') projectTitle: string;
+  @Input('project') project: ProjectInterface;
+  @Output('newProject') newProject = new EventEmitter<ProjectInterface>();
+  projectTitle: string;
 
   openFeatures: FeaturesProjectInterface[] = [];
   completedFeatures: FeaturesProjectInterface[] = [];
@@ -20,14 +22,16 @@ export class FeatureViewComponent implements OnChanges{
   selectedFeature: FeaturesProjectInterface;
 
   ngOnChanges() {
-    if(this.features != null) {
+    this.projectTitle = this.project.title;
+
+    if(this.project["features"] != null) {
       this.openFeatures.length = this.completedFeatures.length = 0;
 
-      for(let crt of this.features) {
-        if(crt.status == 'open')
-          this.openFeatures.push(crt);
-        if(crt.status == 'completed')
-          this.completedFeatures.push(crt);
+      for(let key in this.project["features"]) {
+        if(this.project["features"][key].status == 'open')
+          this.openFeatures.push(this.project["features"][key]);
+        if(this.project["features"][key].status == 'completed')
+          this.completedFeatures.push(this.project["features"][key]);
       }
     }
   }
@@ -35,6 +39,11 @@ export class FeatureViewComponent implements OnChanges{
   featureSelected(feature: FeaturesProjectInterface) {
     this.selectedFeature = feature;
     this.isFeatureSelected = true;
+  }
+
+  newProjectHandler(obj: ProjectInterface) {
+    this.project = obj;
+    this.newProject.emit(this.project);
   }
 
 }

@@ -10,6 +10,7 @@ import { FormGroup, FormControl } from "@angular/forms";
 import { AuthService } from '../../auth/services/auth-service';
 import {ActivatedRoute} from "@angular/router";
 import {FeaturesProjectInterface} from "../features-project.interface";
+import { CKEditorModule } from 'ng2-ckeditor';
 
 @Component({
   moduleId: module.id,
@@ -22,8 +23,11 @@ export class RequestFeaturesProjectComponent implements OnInit{
 
   projectName: string = "";
   requestFeaturesForm: FormGroup;
+  ckeditorContent = '';
 
-  constructor(public _reposService: ReposService, public _projectsService: ProjectsService, public _authService: AuthService, private _ActivatedRoute: ActivatedRoute) {}
+  constructor(public _reposService: ReposService, public _projectsService: ProjectsService, public _authService: AuthService, private _ActivatedRoute: ActivatedRoute) {
+    this.ckeditorContent = '';
+  }
 
   ngOnInit() {
     //Get Parameters
@@ -48,6 +52,7 @@ export class RequestFeaturesProjectComponent implements OnInit{
     if(valid === true) {
 
       value.status = "open";
+      value.largeDescription = this.ckeditorContent;
       this._projectsService.addNewFeature(this._authService.getFirebaseUID(), this.projectName, value)
         .subscribe(
           data => {
@@ -55,6 +60,11 @@ export class RequestFeaturesProjectComponent implements OnInit{
           }
         )
     }
+  }
+
+  onEditorChange(value: string) {
+    //CK editor event
+    this.ckeditorContent = value;
   }
 
 

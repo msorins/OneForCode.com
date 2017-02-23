@@ -459,12 +459,16 @@ app.post('/api/projects/upload/header', [function(req, res, next) {
 
 app.use('/api/projects/features/setLargeDescription', [function(req, res, next) {
   if (req.method != 'OPTIONS') {
+
     if(req.query.firebaseUID == null || req.query.projectTitle == null || req.query.featureTitle == null)
       res.status(200).send(JSON.stringify("Missing get parameter: firebaseUID or projectTitle or featureTitle"));
     else {
-      res.status(200).send("OK");
+      response = req.body;
+      setProjectFeatureLargeDescription(req.query.firebaseUID, req.query.projectTitle, req.query.featureTitle, response["content"], function(result) {
+        console.log("RESULT: " + JSON.stringify(result));
+        res.status(200).send(result);
+      });
     }
-
   } else
     res.status(200).send('OPTIONS Request');
 
@@ -653,6 +657,15 @@ function listNews(firebaseUID, projectTitle, callback) {
   }, function(errorObject) {
     console.log("The read failed: " + errorObject.code);
   });
+}
+
+function setProjectFeatureLargeDescription(firebaseUID, projectTitle, featureTitle, largeDescription, callback) {
+  db.ref("/").child("projects").child(firebaseUID).child(projectTitle).child("features").child(featureTitle).child("largeDescription").set(largeDescription);
+
+  listProjectsByTitle(projectTitle, function(result) {
+    callback(result);
+  });
+
 }
 
 // catch 404 and forward to error handler

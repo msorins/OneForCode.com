@@ -15,7 +15,6 @@ export class ProjectViewComponent implements  OnChanges{
   @Input('showDetailsButton') showDetailsButton: boolean;
   public editable:boolean = false;
 
-
   //Upload
   options: NgUploaderOptions;
   response: any;

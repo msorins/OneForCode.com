@@ -6,6 +6,8 @@ import { FeaturesProjectInterface } from "../features-project.interface";
 import { CKEditorModule } from 'ng2-ckeditor';
 import {ProjectsService} from "../../api/projects/projects.service";
 import {AuthService} from "../../auth/services/auth-service";
+import {ProjectInterface} from "../project.interface";
+import {Router} from "@angular/router";
 
 @Component({
   moduleId: module.id,
@@ -14,31 +16,41 @@ import {AuthService} from "../../auth/services/auth-service";
   styleUrls: ['detail-feature.component.css']
 })
 
-export class DetailFeatureComponent{
+export class DetailFeatureComponent implements OnChanges{
   @Input('feature') feature: FeaturesProjectInterface;
-  @Input('projectTitle') projectTitle: string;
+  @Input('project') project: any; //Actuallt ProjectInterface type
   @Output('close') close =  new EventEmitter();
+  @Output('newProject') newProject = new EventEmitter<ProjectInterface>();
 
   ckeditorContent = "";
 
-  constructor(public _projectsService: ProjectsService, public _authService: AuthService){
-    this.ckeditorContent = `<p>My HTML</p>`;
+  constructor(public _projectsService: ProjectsService, public _authService: AuthService, public _router: Router) { }
+
+  ngOnChanges() {
+    this.ckeditorContent = `` + this.feature.largeDescription;
   }
 
-  editable = true;
+  editable = false;
 
   save() {
     //Save here feature object
-    this._projectsService.setFeatureLargeDescription(this._authService.getFirebaseUID(), this.projectTitle, this.feature.title, this.ckeditorContent).subscribe(
-      data => console.log(data)
+    this._projectsService.setFeatureLargeDescription(this._authService.getFirebaseUID(), this.project.title, this.feature.title, this.ckeditorContent).subscribe(
+      data => {
+        this.project = data;
+        this.newProject.emit(this.project);
+        this.goBack();
+      }
     );
 
 
-    //Emit close event
-    this.close.emit(true);
   }
 
   onEditorChange(content: any) {
     this.ckeditorContent = content;
+  }
+
+  goBack() {
+    //Emit close event
+    this.close.emit(true);
   }
 }

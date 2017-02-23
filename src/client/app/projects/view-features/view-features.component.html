@@ -58,6 +58,6 @@
 
 </div>
 
-<ofc-detail-feature *ngIf="isFeatureSelected == true" [projectTitle]="projectTitle" [feature]="selectedFeature" (close)="isFeatureSelected = false"></ofc-detail-feature>
+<ofc-detail-feature *ngIf="isFeatureSelected == true" (newProject)="newProjectHandler($event)" [project]="project" [feature]="selectedFeature" (close)="isFeatureSelected = false"></ofc-detail-feature>
 
 
