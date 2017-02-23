@@ -12,6 +12,8 @@ import {ProjectInterface} from "../project.interface";
 
 export class FeatureViewComponent implements OnChanges{
   @Input('project') project: ProjectInterface;
+  @Input('update') update: any;
+
   @Output('newProject') newProject = new EventEmitter<ProjectInterface>();
   projectTitle: string;
 
@@ -22,6 +24,7 @@ export class FeatureViewComponent implements OnChanges{
   selectedFeature: FeaturesProjectInterface;
 
   ngOnChanges() {
+    console.log("PROJECT CHANGED");
     this.projectTitle = this.project.title;
 
     if(this.project["features"] != null) {

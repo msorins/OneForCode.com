@@ -69,6 +69,8 @@ export class DetailProjectComponent implements OnInit, OnDestroy{
     this._projectsService.getFeaturesByTitle(this.projectObj.byFirebaseUID, this.projectObj.title).subscribe(
       data => {
         this.projectFeaturesObj = data;
+        this.projectObj.features = data;
+        console.log("BLABLABLABLA  " + JSON.stringify(data));
       }
     )
   }
