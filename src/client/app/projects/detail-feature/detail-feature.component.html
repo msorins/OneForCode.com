@@ -6,7 +6,7 @@
       <img (click)="goBack()"style="margin-right: 10px; max-height: 25px; display: inline-block; float:left;" class="img-fluid rounded-circle" src="../../../assets/img/back.png">
       {{feature.title}}
       <img *ngIf="_authService.getFirebaseUID() == project.byFirebaseUID && editable == false" (click)="editable = true" style="margin-left:5px; max-height: 25px; display: inline-block; float:right;" class="img-fluid rounded-circle" src="../../../assets/img/edit-black.png">
-      <img *ngIf="_authService.getFirebaseUID() == project.byFirebaseUID && editable == true" (click)="editable = false" (click)="save()" style="margin-left:5px; max-height: 25px; display: inline-block; float:right;" class="img-fluid rounded-circle" src="../../../assets/img/save.png">
+      <img *ngIf="_authService.getFirebaseUID() == project.byFirebaseUID && editable == true"  (click)="save()" style="margin-left:5px; max-height: 25px; display: inline-block; float:right;" class="img-fluid rounded-circle" src="../../../assets/img/save.png">
       </h3>
 
 
@@ -18,7 +18,5 @@
       (change)="onEditorChange($event)"
     >
     </ckeditor>
-
-
   </div>
 </div>

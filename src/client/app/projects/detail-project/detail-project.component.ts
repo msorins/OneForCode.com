@@ -70,7 +70,6 @@ export class DetailProjectComponent implements OnInit, OnDestroy{
       data => {
         this.projectFeaturesObj = data;
         this.projectObj.features = data;
-        console.log("BLABLABLABLA  " + JSON.stringify(data));
       }
     )
   }

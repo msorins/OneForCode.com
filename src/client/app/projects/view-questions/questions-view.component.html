@@ -1,0 +1,30 @@
+<h4 (click)="addQuestion()" style="margin-top:15px">Questions <a><img  style="margin-left:5px; max-height: 25px; display: inline-block; position:absolute" class="img-fluid rounded-circle" src="../../../assets/img/add-button.png"> </a> </h4>
+
+<div *ngIf="editable == false">
+  <div *ngFor="let crtQuestion of questions" class="card">
+    <div class="card-block">
+      <blockquote class="blockquote">
+        <p>{{crtQuestion.question}}</p>
+        <footer><a><h6 style="text-size:20dpi" title="Source Title">By {{crtQuestion.byUserName}}</h6></a></footer>
+      </blockquote>
+      <p class="card-text">{{crtQuestion.answer}}</p>
+      <p class="card-text"><small class="text-muted">Answered {{crtQuestion.date}} ago</small></p>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="editable == true">
+  <div *ngFor="let crtQuestion of questions" class="card">
+    <div class="card-block">
+      <blockquote class="blockquote">
+        <p>{{crtQuestion.question}}</p>
+        <footer><a><h6 style="text-size:20dpi" title="Source Title">By {{crtQuestion.byUserName}}</h6></a></footer>
+      </blockquote>
+      <p contenteditable="true" [textContent]="crtQuestion.answer" (input)="crtQuestion.answer = $event.target.textContent" class="card-text">{{crtQuestion.answer}}</p>
+      <p class="card-text"><small class="text-muted">Answered {{crtQuestion.date}} ago</small></p>
+    </div>
+  </div>
+</div>
+
+
+{{questions | json}}

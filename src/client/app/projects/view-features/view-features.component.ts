@@ -1,6 +1,7 @@
 import {Component, Input, OnChanges, EventEmitter, Output} from '@angular/core';
 import { FeaturesProjectInterface } from "../features-project.interface";
 import {ProjectInterface} from "../project.interface";
+import {QuestionsInterface} from "../questions.interface";
 
 
 @Component({
@@ -24,7 +25,6 @@ export class FeatureViewComponent implements OnChanges{
   selectedFeature: FeaturesProjectInterface;
 
   ngOnChanges() {
-    console.log("PROJECT CHANGED");
     this.projectTitle = this.project.title;
 
     if(this.project["features"] != null) {
