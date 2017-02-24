@@ -1,4 +1,4 @@
-<h4 (click)="addQuestion()" style="margin-top:15px">Questions
+<h4 style="margin-top:15px">Questions
   <a>
     <!-- If user is logged in and is not the owner of the project -->
     <img (click)="addQuestion()" *ngIf="_authService.isAuthenticated() && _authService.getFirebaseUID() != project.byFirebaseUID" style="margin-left:5px; max-height: 25px; display: inline-block; position:absolute" class="img-fluid rounded-circle" src="../../../assets/img/add-button.png">
@@ -7,11 +7,14 @@
 
 
 
-<div *ngFor="let crtQuestion of questions" class="card">
+<div *ngFor="let crtQuestion of questions; let i = index" class="card">
   <div class="card-block">
     <!-- If content is not yet editable and current logged in user is eighter the one who asked the questions or the owner of the project -->
     <img *ngIf="(crtQuestion.editable == null || crtQuestion.editable == false) && _authService.isAuthenticated() == true && ( _authService.getFirebaseUID() == project.byFirebaseUID || _authService.getFirebaseUID() == crtQuestion.byFirebaseUID )" (click) = "crtQuestion.editable = true"  style="float:right; margin-left:5px; margin-right:5px; max-height: 25px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/edit-black.png">
-    <img *ngIf="crtQuestion.editable == true" (click) = "crtQuestion.editable = false"  (click)="save()" style="float:right; margin-left:5px; margin-right:5px; max-height: 25px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/save.png">
+    <!-- If content is not yet editable and the current logged in user is the owner of the project then it can delete the question -->
+    <img *ngIf="(crtQuestion.editable == null || crtQuestion.editable == false) && _authService.isAuthenticated() == true && _authService.getFirebaseUID() == project.byFirebaseUID " (click)="removeQuestion(i)" style="float:right; margin-left:5px; margin-right:5px; max-height: 25px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/delete-black.png">
+
+    <img *ngIf="crtQuestion.editable == true" (click) = "crtQuestion.editable = false" (click)="saveQuestions()" style="float:right; margin-left:5px; margin-right:5px; max-height: 25px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/save.png">
     <blockquote class="blockquote">
 
       <!-- Question section -->
@@ -39,8 +42,3 @@
     <p class="card-text"><small class="text-muted">Answered {{crtQuestion.date}} ago</small></p>
   </div>
 </div>
-
-
-
-{{questions | json}}
-{{_authService.isAuthenticated()}}

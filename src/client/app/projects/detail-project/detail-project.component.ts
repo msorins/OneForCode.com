@@ -6,6 +6,8 @@ import { ProjectInterface } from '../project.interface';
 import { AuthService } from '../../auth/services/auth-service';
 import {FeaturesProjectInterface} from "../features-project.interface";
 import {NewsInterface} from "../news.interface";
+import {AngularFire, FirebaseListObservable} from 'angularfire2';
+import {AuthProviders, AuthMethods, FirebaseAuth, FirebaseAuthState, FirebaseObjectObservable} from 'angularfire2';
 
 @Component({
   moduleId: module.id,
@@ -21,10 +23,10 @@ export class DetailProjectComponent implements OnInit, OnDestroy{
   projectContributionsObj: any;
   projectFeaturesObj: FeaturesProjectInterface[] = [];
   private sub: any;
-
   public test:string = "Test title";
+  public userFireBaseObservable: FirebaseObjectObservable<any>;
 
-  constructor(private _ActivatedRoute: ActivatedRoute, public _projectsService: ProjectsService, public _authService: AuthService) {}
+  constructor(private _ActivatedRoute: ActivatedRoute, public _projectsService: ProjectsService, public _authService: AuthService,  public _fireBase: AngularFire) {}
 
   ngOnInit() {
 
@@ -69,6 +71,7 @@ export class DetailProjectComponent implements OnInit, OnDestroy{
     this._projectsService.getFeaturesByTitle(this.projectObj.byFirebaseUID, this.projectObj.title).subscribe(
       data => {
         this.projectFeaturesObj = data;
+        this.initialiseProjectFirebaseListener();
       }
     )
   }
@@ -95,4 +98,21 @@ export class DetailProjectComponent implements OnInit, OnDestroy{
   newProjectHandle(obj:ProjectInterface) {
     this.projectObj = obj;
   }
+
+
+  initialiseProjectFirebaseListener() {
+    //Still under testing
+    //It helps with real time operations
+    if(this._authService.isAuthenticated()) {
+      this.userFireBaseObservable = this._fireBase.database.object('/projects/' + this.projectObj.byFirebaseUID+ '/' + this.projectObj.title);
+      this.userFireBaseObservable.subscribe(
+        data => {
+          this.projectObj = data;
+          console.log("FIREBASE UPDATE");
+        }
+      )
+    }
+
+  }
+
 }

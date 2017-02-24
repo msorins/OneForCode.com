@@ -8,6 +8,7 @@ import {Subscription} from "rxjs";
 import {FeaturesProjectInterface} from "../../projects/features-project.interface";
 import {ContributionInterface} from "../../projects/contribution.interface";
 import {NewsInterface} from "../../projects/news.interface";
+import {QuestionsInterface} from "../../projects/questions.interface";
 
 @Injectable()
 export class ProjectsService  implements  OnChanges{
@@ -69,6 +70,17 @@ export class ProjectsService  implements  OnChanges{
       .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
       .do(data => console.log('setFeatureLargeDescription:', data))
   }
+
+  setFeatureQuestions(firebaseUID:string, projectTitle: string, featureTitle:string, questions:QuestionsInterface[]):  Observable<string[]> {
+    let objJSON = JSON.stringify({"content": questions }); // Stringify payload
+    let headers = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
+    let options = new RequestOptions({ headers: headers }); // Create a request option
+
+    return this.http.post('http://localhost:3000/api/projects/features/setQuestions?firebaseUID=' + firebaseUID + '&projectTitle=' + projectTitle + '&featureTitle=' + featureTitle, objJSON, options) // ...using post request
+      .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
+      .do(data => console.log('setFeatureLargeDescription:', data))
+  }
+
 
   getFeaturesByTitle(firebaseUID: string, projectTitle: string): Observable<FeaturesProjectInterface[]> {
     return this.http.get('http://localhost:3000/api/projects/features/byTitle?firebaseUID=' + firebaseUID + '&title=' + projectTitle)

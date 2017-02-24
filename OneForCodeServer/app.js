@@ -474,6 +474,23 @@ app.use('/api/projects/features/setLargeDescription', [function(req, res, next) 
 
 }]);
 
+app.use('/api/projects/features/setQuestions', [function(req, res, next) {
+  if (req.method != 'OPTIONS') {
+
+    if(req.query.firebaseUID == null || req.query.projectTitle == null || req.query.featureTitle == null)
+      res.status(200).send(JSON.stringify("Missing get parameter: firebaseUID or projectTitle or featureTitle"));
+    else {
+      response = req.body;
+      setProjectQuestions(req.query.firebaseUID, req.query.projectTitle, req.query.featureTitle, response["content"], function(result) {
+        console.log("RESULT: " + JSON.stringify(result));
+        res.status(200).send(result);
+      });
+    }
+  } else
+    res.status(200).send('OPTIONS Request');
+
+}]);
+
 //  ==== FUNCTIONS PART ====
 function addUserDataToDb(firebaseUID, userObj) {
   //Receives the firebaseUID and an object containing userInfo (from github)
@@ -667,6 +684,16 @@ function setProjectFeatureLargeDescription(firebaseUID, projectTitle, featureTit
   });
 
 }
+
+function setProjectQuestions(firebaseUID, projectTitle, featureTitle, largeDescription, callback) {
+  db.ref("/").child("projects").child(firebaseUID).child(projectTitle).child("features").child(featureTitle).child("questions").set(largeDescription);
+
+  listProjectsByTitle(projectTitle, function(result) {
+    callback(result);
+  });
+
+}
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
