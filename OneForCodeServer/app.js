@@ -549,11 +549,11 @@ function listContributionsByTitle(firebaseUID, projectTitle, callback) {
   var refProjects = db.ref("/").child("projects").child(firebaseUID).child(projectTitle).child("contributions");
 
   refProjects.once("value", function(snapshot) {
-    userProjectsFeatures = snapshot.val();
+    userProjectsContributions= snapshot.val();
 
     res = [];
-    for(key in userProjectsFeatures) {
-      res.push(userProjectsFeatures[key]);
+    for(key in userProjectsContributions) {
+      res.push(userProjectsContributions[key]);
     }
 
     callback(JSON.stringify(res));

@@ -4,6 +4,7 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import {QuestionsInterface} from "../questions.interface";
 import {AuthService} from "../../auth/services/auth-service";
+import {ProjectInterface} from "../project.interface";
 
 
 @Component({
@@ -14,12 +15,13 @@ import {AuthService} from "../../auth/services/auth-service";
 })
 
 export class QuestionsViewComponent implements OnChanges{
+  @Input('project') project: ProjectInterface;
   @Input('questions') questions: QuestionsInterface[];
   emptyQuestion: QuestionsInterface;
   editable = false;
 
   constructor(public _authService: AuthService) {
-    this.emptyQuestion = {byUserFirebaseUID: this._authService.getFirebaseUID(), byUserName: this._authService.getUserName(), answer: 'answer', question: 'Question', date: ''}
+    this.emptyQuestion = {byFirebaseUID: this._authService.getFirebaseUID(), byUserName: this._authService.getUserName(), answer: 'answer', question: 'Question', date: ''}
   }
 
   ngOnChanges() {
@@ -30,8 +32,12 @@ export class QuestionsViewComponent implements OnChanges{
 
   addQuestion() {
     console.log("Question added");
-    this.questions.push({byUserFirebaseUID: this._authService.getFirebaseUID(), byUserName: this._authService.getUserName(), answer: 'answer', question: 'Question', date: ''});
+    this.questions.push({byFirebaseUID: this._authService.getFirebaseUID(), byUserName: this._authService.getUserName(), answer: 'answer', question: 'Question', date: ''});
     console.log("da: " + JSON.stringify(this.questions));
+  }
+
+  save() {
+
   }
 
 }

@@ -63,6 +63,6 @@
   <ofc-detail-feature (newProject)="newProjectHandler($event)" [project]="project" [feature]="selectedFeature" (close)="isFeatureSelected = false"></ofc-detail-feature>
 
   <!-- Questions feature view -->
-  <ofc-questionsView [questions]="project.questions"></ofc-questionsView>
+  <ofc-questionsView [project]="project" [questions]="selectedFeature.questions"></ofc-questionsView>
 </div>
 
