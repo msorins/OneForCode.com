@@ -1,0 +1,7 @@
+.show{
+  opacity: 1 !important;
+}
+.step{
+  opacity: 0;
+  transition: .40s ease-in-out all;
+}
