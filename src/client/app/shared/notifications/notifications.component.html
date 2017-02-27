@@ -1,0 +1,12 @@
+<popover-content style="margin-top:110px;" #myPopover
+                 title="X notifications"
+                 placement="bottom"
+                 [animation]="true"
+                 [closeOnClickOutside]="true" >
+  <b>Very</b> <span style="color: #C21F39">Dynamic</span> <span style="color: #00b3ee">Reusable</span>
+  <b><i><span style="color: #ffc520">Popover With</span></i></b> <small>Html support</small>.
+</popover-content>
+
+<a style="float:right; margin-left:15px; margin-right:15px; display: inline-block; margin-top:3px;" [popover]="myPopover">
+  <img style="max-height: 27px;" class="img-fluid rounded-circle" src="../../../assets/img/bell.png">
+</a>

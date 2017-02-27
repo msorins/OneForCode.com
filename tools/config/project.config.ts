@@ -83,6 +83,16 @@ export class ProjectConfig extends SeedConfig {
       }
     });
 
+    // Add Bootstrap Popover
+    this.addPackageBundles({
+      name: 'ngx-popover',
+      path: 'node_modules/ngx-popover',
+      packageMeta: {
+        main: 'index.js',
+        defaultExtension: 'js'
+      }
+    });
+
     // Add packages (e.g. lodash)
     // let additionalPackages: ExtendPackages[] = [{
     //   name: 'lodash',

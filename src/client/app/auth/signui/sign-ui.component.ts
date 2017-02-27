@@ -5,9 +5,7 @@ import { AuthService } from '../services/auth-service';
 
 @Component({
   moduleId: module.id,
-  styles: [
-
-  ],
+  styleUrls: ['sign-ui.component.css'],
   selector: 'ofc-sign-ui',
   templateUrl: 'sign-ui.component.html'
 })
