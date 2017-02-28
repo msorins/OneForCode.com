@@ -1,6 +1,6 @@
 var express = require('express');
 var path = require('path');
-var multer  = require('multer')
+var multer  = require('multer');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -423,6 +423,22 @@ app.use('/api/projects/getNews', [function(req, res, next) {
 
 }]);
 
+app.use('/api/notifications/new', [function(req, res, next) {
+  if (req.method != 'OPTIONS') {
+    response = req.body;
+
+    if(req.query.firebaseUID == null)
+      res.status(200).send(JSON.stringify("Missing get parameter: firebaseUID"));
+    else {
+      sendNotifications(req.query.firebaseUID, response);
+      res.status(200).send("OK");
+    }
+
+  } else
+    res.status(200).send('OPTIONS Request');
+
+}]);
+
 //Multer configuration for saving project headers
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -455,7 +471,6 @@ app.post('/api/projects/upload/header', [function(req, res, next) {
     res.status(200).send('OK');
   });
 }]);
-
 
 app.use('/api/projects/features/setLargeDescription', [function(req, res, next) {
   if (req.method != 'OPTIONS') {
@@ -542,6 +557,15 @@ function addContribution(firebaseUID, projectName, featureObj) {
   //Adds received feature to FfireBase
   db.ref("/").child("projects").child(firebaseUID).child(projectName).child("contributions").child(featureObj.gitPullId).update(featureObj);
 
+  //Prepare and send the notification
+  var notificationObject = {
+    "id": 1,
+    "message": featureObj.byUserName + " contributed to " + projectName,
+    "url": "project/" + projectName
+
+  };
+
+ sendNotifications(firebaseUID, notificationObject)
 }
 
 function listFeaturesByTitle(firebaseUID, projectTitle, callback) {
@@ -637,13 +661,55 @@ function acceptContribution(firebaseUID, projectTitle, gitPullUid, callback) {
 
   });
 
+  //Prepare and send the notification
+  //First get the userName of the owner of the project
+  getUserDB(firebaseUID, function(result) {
+
+    var notificationObject = {
+      "id": 2,
+      "message": result.login + " accepted your contribution",
+      "url": "project/" + projectTitle
+
+    };
+
+    //Next get the firebaseUID of the one whose contribution got accepted
+    db.ref("/").child("projects").child(firebaseUID).child(projectTitle).child("contributions").child(gitPullUid).child("byFirebaseUID").once("value", function(snapshot) {
+      //Send the actual notification
+      sendNotifications(snapshot.val(), notificationObject)
+    });
+
+
+  });
+
+  //Return the list of modified contributions
   listContributionsByTitle(firebaseUID, projectTitle, function(result) {
     callback(result);
   });
+
 }
 
 function denyContribution(firebaseUID, projectTitle, gitPullUid, callback) {
   db.ref("/").child("projects").child(firebaseUID).child(projectTitle).child("contributions").child(gitPullUid).child("status").set("denied");
+
+  //Prepare and send the notification
+  //First get the userName of the owner of the project
+  getUserDB(firebaseUID, function(result) {
+
+    var notificationObject = {
+      "id": 3,
+      "message": result.login + " denied your contribution",
+      "url": "project/" + projectTitle
+
+    };
+
+    //Next get the firebaseUID of the one whose contribution got denied
+    db.ref("/").child("projects").child(firebaseUID).child(projectTitle).child("contributions").child(gitPullUid).child("byFirebaseUID").once("value", function(snapshot) {
+      //Send the actual notification
+      sendNotifications(snapshot.val(), notificationObject)
+    });
+
+
+  });
 
   listContributionsByTitle(firebaseUID, projectTitle, function(result) {
     callback(result);
@@ -693,6 +759,32 @@ function setProjectQuestions(firebaseUID, projectTitle, featureTitle, largeDescr
   });
 
 }
+
+function sendNotifications(firebaseUID, notificationObject) {
+  /*
+    fiebaseUID: of the user who received the notification
+    message: a string with the actual message
+    idNotification: integer
+
+   */
+
+  console.log("Notification received +" + JSON.stringify(notificationObject));
+  var refNews = db.ref("/").child("notifications").child(firebaseUID);
+
+  refNews.once("value", function(snapshot) {
+    var snapshotValue = snapshot.val();
+
+    if(snapshotValue == null)
+      snapshotValue = [];
+
+    notificationObject["timestamp"] = new Date().getTime().toLocaleString();
+    snapshotValue.push(notificationObject);
+    db.ref("/").child("notifications").child(firebaseUID).set(snapshotValue);
+
+  })
+}
+
+
 
 
 // catch 404 and forward to error handler

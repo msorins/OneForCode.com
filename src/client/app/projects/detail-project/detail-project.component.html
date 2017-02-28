@@ -27,7 +27,7 @@
     <div class="col-md-8">
       <div class="container bordered">
         <h4 style="margin-top:15px">Contributions</h4>
-        <ofc-contributionsView (selectedContribution) = "handleSelectedContribution($event)"  [contributions] = "projectContributionsObj"></ofc-contributionsView>
+        <ofc-contributionsView (selectedContribution) = "handleSelectedContribution($event)"  [contributions] = "projectContributionsObj" [project]="projectObj"></ofc-contributionsView>
       </div>
     </div>
 

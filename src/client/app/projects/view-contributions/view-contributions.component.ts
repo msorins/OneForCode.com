@@ -17,6 +17,7 @@ import {ProjectsService} from "../../api/projects/projects.service";
 })
 
 export class ContributionViewComponent implements OnInit, OnChanges {
+  @Input('project') project: ProjectInterface;
   @Input('contributions') contributions: ContributionInterface[];
   @Output('selectedContribution') selectedContributionOut = new EventEmitter();
 

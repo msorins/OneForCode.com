@@ -10,7 +10,7 @@
 <div *ngFor="let crtQuestion of questions; let i = index" class="card">
   <div class="card-block">
     <!-- If content is not yet editable and current logged in user is eighter the one who asked the questions or the owner of the project -->
-    <img *ngIf="(crtQuestion.editable == null || crtQuestion.editable == false) && _authService.isAuthenticated() == true && ( _authService.getFirebaseUID() == project.byFirebaseUID || _authService.getFirebaseUID() == crtQuestion.byFirebaseUID )" (click) = "crtQuestion.editable = true"  style="float:right; margin-left:5px; margin-right:5px; max-height: 25px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/edit-black.png">
+    <img *ngIf="(crtQuestion.editable == null || crtQuestion.editable == false) && _authService.isAuthenticated() == true && ( _authService.getFirebaseUID() == project.byFirebaseUID || _authService.getFirebaseUID() == crtQuestion.byFirebaseUID )" (click) = "crtQuestion.editable = true" (click) = "crtQuestion.edited = true"  style="float:right; margin-left:5px; margin-right:5px; max-height: 25px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/edit-black.png">
     <!-- If content is not yet editable and the current logged in user is the owner of the project then it can delete the question -->
     <img *ngIf="(crtQuestion.editable == null || crtQuestion.editable == false) && _authService.isAuthenticated() == true && _authService.getFirebaseUID() == project.byFirebaseUID " (click)="removeQuestion(i)" style="float:right; margin-left:5px; margin-right:5px; max-height: 25px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/delete-black.png">
 

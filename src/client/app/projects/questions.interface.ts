@@ -6,6 +6,9 @@ export interface QuestionsInterface {
   byUserName: string;
   question: string;
   answer: string;
-  date: string;
+  askedTimeStamp: string;
+  answeredTimeStamp?: string;
   editable?: boolean;
+  edited?: boolean;
+  status: string;
 }

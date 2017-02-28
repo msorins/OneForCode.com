@@ -42,7 +42,7 @@ export class SendContributionProjectComponent implements OnInit{
 
     //Initialise the form
     this.sendContributionForm = new FormGroup({
-      featureTitle: new FormControl(''),
+      featureTitle: new FormControl(this.chosenFeature),
       gitPullId: new FormControl(''),
       ch: new FormControl('')
     })

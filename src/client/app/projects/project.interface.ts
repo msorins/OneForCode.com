@@ -13,5 +13,6 @@ export interface ProjectInterface {
   features: FeaturesProjectInterface[],
   news: NewsInterface[],
   byFirebaseUID: string,
+  byUserName: string,
   hasHeader: boolean
 }
