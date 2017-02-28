@@ -439,6 +439,39 @@ app.use('/api/notifications/new', [function(req, res, next) {
 
 }]);
 
+app.use('/api/notifications/new', [function(req, res, next) {
+  if (req.method != 'OPTIONS') {
+    response = req.body;
+
+    if(req.query.firebaseUID == null)
+      res.status(200).send(JSON.stringify("Missing get parameter: firebaseUID"));
+    else {
+      sendNotifications(req.query.firebaseUID, response);
+      res.status(200).send("OK");
+    }
+
+  } else
+    res.status(200).send('OPTIONS Request');
+
+}]);
+
+app.use('/api/notifications/delete', [function(req, res, next) {
+  if (req.method != 'OPTIONS') {
+    response = req.body;
+
+    if(req.query.firebaseUID == null || req.query.notificationIndex == null)
+      res.status(200).send(JSON.stringify("Missing get parameter: firebaseUID or notificationIndex"));
+    else {
+      deleteNotification(req.query.firebaseUID, req.query.notificationIndex);
+      res.status(200).send("OK");
+    }
+
+  } else
+    res.status(200).send('OPTIONS Request');
+
+}]);
+
+
 //Multer configuration for saving project headers
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -768,7 +801,6 @@ function sendNotifications(firebaseUID, notificationObject) {
 
    */
 
-  console.log("Notification received +" + JSON.stringify(notificationObject));
   var refNews = db.ref("/").child("notifications").child(firebaseUID);
 
   refNews.once("value", function(snapshot) {
@@ -784,7 +816,13 @@ function sendNotifications(firebaseUID, notificationObject) {
   })
 }
 
-
+function deleteNotification(firebaseUID, notificationIndex) {
+  /*
+   fiebaseUID:
+   indexNotification:
+   */
+  db.ref("/").child("notifications").child(firebaseUID).child(notificationIndex).remove();
+}
 
 
 // catch 404 and forward to error handler

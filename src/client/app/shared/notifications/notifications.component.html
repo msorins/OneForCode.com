@@ -10,7 +10,7 @@
     <div *ngFor="let crtNotification of notifications; let i = index">
       <div routerLink="/{{crtNotification.url}}">
         <li class="list-group-item justify-content-between  list-group-item-action">
-          <img (click) = "removeNotification(i)"  style="right:8px;  max-height: 20px; position: absolute;" class="img-fluid rounded-circle" src="../../../assets/img/ban.png">
+          <img (click) = "deleteNotification(i)" style="right:8px;  max-height: 20px; position: absolute;" class="img-fluid rounded-circle" src="../../../assets/img/ban.png">
 
           <a><h6 style="margin-right:11px;">{{crtNotification.message}}</h6></a>
         </li>

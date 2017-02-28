@@ -42,7 +42,15 @@ export class NotificationsComponent implements OnInit{
     return this.notifications.length + " notifications";
   }
 
-  removeNotification(index: number) {
+  deleteNotification(index: number) {
+    //Remove the local list
     this.notifications.splice(index, 1);
+
+    //Send a request to the server in order to remove it also from database
+    this._notificationService.deleteNotification(this._authService.getFirebaseUID(), index).subscribe(
+      data => {
+        //Done
+      }
+    )
   }
 }

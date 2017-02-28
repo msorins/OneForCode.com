@@ -38,6 +38,15 @@ export class NotificationsService  implements  OnChanges{
     return userFireBaseObservable;
   }
 
+  deleteNotification(firebaseUID: string, notificationIndex:number):  Observable<string[]> {
+    let headers = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
+    let options = new RequestOptions({ headers: headers }); // Create a request option
+
+    return this.http.get('http://localhost:3000/api/notifications/delete?firebaseUID=' + firebaseUID + '&notificationIndex=' + notificationIndex, options) // ...using post request
+      .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
+      .do(data => console.log('addNewFeatureProject:', data))
+  }
+
 
   private handleError (error: any) {
     // In a real world app, we might use a remote logging infrastructure
