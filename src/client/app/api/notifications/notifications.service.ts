@@ -6,12 +6,15 @@ import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 import {NotificationsInterface} from "./notifications.interface";  // for debugging
+import {AngularFire, FirebaseListObservable} from 'angularfire2';
+import {AuthProviders, AuthMethods, FirebaseAuth, FirebaseAuthState, FirebaseObjectObservable} from 'angularfire2';
+import {AuthService} from "../../auth/services/auth-service";
 
 @Injectable()
 export class NotificationsService  implements  OnChanges{
 
 
-  constructor(private http: Http) {}
+  constructor(private http: Http,  public _fireBase: AngularFire, public _authService: AuthService) {}
 
 
   ngOnChanges(changes: any) {
@@ -27,9 +30,13 @@ export class NotificationsService  implements  OnChanges{
     return this.http.post('http://localhost:3000/api/notifications/new?firebaseUID=' + firebaseUID, objJSON, options) // ...using post request
       .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
       .do(data => console.log('addNewFeatureProject:', data))
-
   }
 
+  subscribeToNotifications(): FirebaseObjectObservable<any> {
+    //Return an observable to the database
+    let userFireBaseObservable:FirebaseObjectObservable<any> = this._fireBase.database.object('/notifications/'+this._authService.getFirebaseUID());
+    return userFireBaseObservable;
+  }
 
 
   private handleError (error: any) {

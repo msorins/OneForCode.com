@@ -65,7 +65,7 @@ export class QuestionsViewComponent implements OnChanges{
         if(this.questions[i].edited == true && this.questions[i].editable == false) {
           //Send the answer notification to the one who asked it
           let notificationObjAnswered: NotificationsInterface = {
-            "id" : 4,
+            "id" : 5,
             "message": this.project.byUserName + " answered your question on " + this.project.title + "/" + this.feature.title,
             "timestamp": new Date().getTime().toString(),
             "url": "project/" + this.project.title
