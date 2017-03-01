@@ -1,13 +1,16 @@
+
 <h4 style="margin-top:15px">Questions
+  <a><img *ngIf="currentPage > 1" (click)="currentPage = currentPage - 1" style="float:left; margin-left:5px; margin-right:10px; max-height: 25px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/arrow-left-black.png"></a>
   <a>
     <!-- If user is logged in and is not the owner of the project -->
-    <img (click)="addQuestion()" *ngIf="_authService.isAuthenticated() && _authService.getFirebaseUID() != project.byFirebaseUID" style="margin-left:5px; max-height: 25px; display: inline-block; position:absolute" class="img-fluid rounded-circle" src="../../../assets/img/add-button.png">
+    <img (click)="addQuestion()" *ngIf="_authService.isAuthenticated() && _authService.getFirebaseUID() != project.byFirebaseUID" style="margin-left:40px; max-height: 25px; display: inline-block; position:absolute" class="img-fluid rounded-circle" src="../../../assets/img/add-button.png">
   </a>
+  <a><img  *ngIf="canLoadMorePages(questions, currentPage, numberOfQuestionsPerPage)" (click)="currentPage = currentPage + 1" style="margin-left:5px; margin-right:5px; max-height: 25px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/arrow-right-black.png"></a>
 </h4>
 
 
 
-<div *ngFor="let crtQuestion of questions; let i = index" class="card">
+<div *ngFor="let crtQuestion of pagination(questions, currentPage, numberOfQuestionsPerPage); let i = index" class="card">
   <div class="card-block">
     <!-- If content is not yet editable and current logged in user is eighter the one who asked the questions or the owner of the project -->
     <img *ngIf="(crtQuestion.editable == null || crtQuestion.editable == false) && _authService.isAuthenticated() == true && ( _authService.getFirebaseUID() == project.byFirebaseUID || _authService.getFirebaseUID() == crtQuestion.byFirebaseUID )" (click) = "crtQuestion.editable = true" (click) = "crtQuestion.edited = true"  style="float:right; margin-left:5px; margin-right:5px; max-height: 25px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/edit-black.png">

@@ -15,6 +15,9 @@ import {NotificationsInterface} from "../../api/notifications/notifications.inte
 export class NotificationsComponent implements OnInit{
   public notifications: NotificationsInterface[] = [];
 
+  currentPage = 1;
+  numberOfNotificationsPerPage = 5;
+
   constructor(private _authService: AuthService, public _notificationService: NotificationsService) { }
 
   ngOnInit() {
@@ -52,5 +55,15 @@ export class NotificationsComponent implements OnInit{
         //Done
       }
     )
+  }
+
+  pagination(objList:any[], page:number, numberPerPage: number) {
+    return objList.slice(numberPerPage * (page - 1), numberPerPage * page);
+  }
+
+  canLoadMorePages(objList:any[], page:number, numberPerPage: number) {
+    if(numberPerPage* page < objList.length)
+      return true;
+    return false;
   }
 }

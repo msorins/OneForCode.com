@@ -2,7 +2,7 @@
 
 
 <div style="margin-top:25px;" class="container">
-  <div class="row">
+  <div class="row align-self-end">
     <div class="col-md-4">
       <div style="margin-bottom:12px">
         <button [routerLink]="['/send',  projectTitle]" type="button" class="btn btn-default btn-lg btn-block">Contribute</button>
@@ -24,7 +24,7 @@
 
     <br>
 
-    <div class="col-md-8">
+    <div style="float:right" class="col-md-8">
       <div class="container bordered">
         <h4 style="margin-top:15px">Contributions</h4>
         <ofc-contributionsView (selectedContribution) = "handleSelectedContribution($event)"  [contributions] = "projectContributionsObj" [project]="projectObj"></ofc-contributionsView>

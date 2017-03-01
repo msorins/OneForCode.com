@@ -26,6 +26,9 @@ export class QuestionsViewComponent implements OnChanges{
   editable = false;
   newQuestion = false;
 
+  currentPage = 1;
+  numberOfQuestionsPerPage = 3;
+
   constructor(public _authService: AuthService, public _projectService: ProjectsService, public _notificationService: NotificationsService) {
     this.emptyQuestion = {byFirebaseUID: this._authService.getFirebaseUID(), byUserName: this._authService.getUserName(), answer: 'answer', question: 'Question', askedTimeStamp: new Date().getTime().toString(), status: 'Open' }
   }
@@ -91,6 +94,16 @@ export class QuestionsViewComponent implements OnChanges{
   removeQuestion(index: number) {
     this.questions.splice(index, 1);
     this.saveQuestions();
+  }
+
+  pagination(objList:any[], page:number, numberOfQuestionsPerPage: number) {
+    return objList.slice(numberOfQuestionsPerPage * (page - 1), numberOfQuestionsPerPage * page);
+  }
+
+  canLoadMorePages(objList:any[], page:number, numberOfQuestionsPerPage: number) {
+    if(numberOfQuestionsPerPage * page < objList.length)
+      return true;
+    return false;
   }
 
 }
