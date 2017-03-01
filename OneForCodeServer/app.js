@@ -459,10 +459,10 @@ app.use('/api/notifications/delete', [function(req, res, next) {
   if (req.method != 'OPTIONS') {
     response = req.body;
 
-    if(req.query.firebaseUID == null || req.query.notificationIndex == null)
-      res.status(200).send(JSON.stringify("Missing get parameter: firebaseUID or notificationIndex"));
+    if(req.query.firebaseUID == null)
+      res.status(200).send(JSON.stringify("Missing get parameter: firebaseUID"));
     else {
-      deleteNotification(req.query.firebaseUID, req.query.notificationIndex);
+      deleteNotification(req.query.firebaseUID, response);
       res.status(200).send("OK");
     }
 
@@ -816,12 +816,8 @@ function sendNotifications(firebaseUID, notificationObject) {
   })
 }
 
-function deleteNotification(firebaseUID, notificationIndex) {
-  /*
-   fiebaseUID:
-   indexNotification:
-   */
-  db.ref("/").child("notifications").child(firebaseUID).child(notificationIndex).remove();
+function deleteNotification(firebaseUID, notificationsObj) {
+  db.ref("/").child("notifications").child(firebaseUID).set(notificationsObj);
 }
 
 

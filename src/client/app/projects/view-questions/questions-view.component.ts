@@ -92,6 +92,7 @@ export class QuestionsViewComponent implements OnChanges{
   }
 
   removeQuestion(index: number) {
+    index += this.numberOfQuestionsPerPage * (this.currentPage - 1);
     this.questions.splice(index, 1);
     this.saveQuestions();
   }

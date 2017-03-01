@@ -46,11 +46,13 @@ export class NotificationsComponent implements OnInit{
   }
 
   deleteNotification(index: number) {
+    index += this.numberOfNotificationsPerPage * (this.currentPage - 1);
+
     //Remove the local list
     this.notifications.splice(index, 1);
 
     //Send a request to the server in order to remove it also from database
-    this._notificationService.deleteNotification(this._authService.getFirebaseUID(), index).subscribe(
+    this._notificationService.deleteNotification(this._authService.getFirebaseUID(), this.notifications).subscribe(
       data => {
         //Done
       }
@@ -58,6 +60,8 @@ export class NotificationsComponent implements OnInit{
   }
 
   pagination(objList:any[], page:number, numberPerPage: number) {
+    console.log(JSON.stringify(objList));
+    console.log(JSON.stringify(objList.slice(numberPerPage * (page - 1), numberPerPage * page));
     return objList.slice(numberPerPage * (page - 1), numberPerPage * page);
   }
 

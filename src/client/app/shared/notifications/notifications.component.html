@@ -10,7 +10,7 @@
   <a><img *ngIf="canLoadMorePages(notifications, currentPage, numberOfNotificationsPerPage)" (click)="currentPage = currentPage + 1" style="margin-top:-40px; margin-left:5px; margin-right:5px; max-height: 25px; position: absolute; right:5px;" src="../../../assets/img/arrow-right-black.png"></a>
   <ul class="list-group">
     <div *ngFor="let crtNotification of pagination(notifications, currentPage, numberOfNotificationsPerPage); let i = index">
-      <div routerLink="/{{crtNotification.url}}">
+      <div routerLink="/{{crtNotification?.url}}">
         <li class="list-group-item justify-content-between  list-group-item-action">
           <img (click) = "deleteNotification(i)" style="right:8px;  max-height: 20px; position: absolute;" class="img-fluid rounded-circle" src="../../../assets/img/ban.png">
 
