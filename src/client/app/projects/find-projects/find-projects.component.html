@@ -11,9 +11,18 @@
   </div>
 
   <br>
+  <a><img *ngIf="currentPage > 1" (click)="currentPage = currentPage - 1" style="margin-top:-40px; margin-left:5%; margin-right:5px; max-height: 25px; position: absolute; left:5px;" src="../../../assets/img/arrow-left-black.png"></a>
+  <a><img *ngIf="canLoadMorePages(projectsObjFiltered, currentPage, numberOfNotificationsPerPage)" (click)="currentPage = currentPage + 1" style="margin-top:-40px; margin-left:5px; margin-right:5%; max-height: 25px; position: absolute; right:5px;" src="../../../assets/img/arrow-right-black.png"></a>
 
-  <div class ="row">
-    <div [class.col-md-6]="projectsObjFiltered.length > 1" *ngFor="let crtObject of projectsObjFiltered" >
+  <div *ngIf="projectsObjFiltered?.length == 0">
+    <div style="height: 100px"></div>
+    <div style="height: 100px"></div>
+    <ofc-loading></ofc-loading>
+    <div style="height: 250px"></div>
+  </div>
+
+  <div class ="card-columns">
+    <div *ngFor="let crtObject of pagination(projectsObjFiltered, currentPage, numberOfNotificationsPerPage)" >
       <ofc-projectView [post]="crtObject" [showDetailsButton] = "true"></ofc-projectView>
       <br>
     </div>

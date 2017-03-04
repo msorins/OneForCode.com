@@ -19,10 +19,13 @@ export class FindProjects implements OnInit{
   constructor(public _projectsService: ProjectsService, public _authService: AuthService) {}
 
   projectsObj: ProjectInterface[];
-  projectsObjFiltered: ProjectInterface[];
+  projectsObjFiltered: ProjectInterface[] = [];
 
   searchInput: string = '';
   selectedFilterOption: string = 'top';
+
+  currentPage = 1;
+  numberOfNotificationsPerPage = 30;
 
   ngOnInit() {
     this._projectsService.getAllProjects().subscribe(
@@ -98,6 +101,16 @@ export class FindProjects implements OnInit{
     });
   }
 
+
+  pagination(objList:any[], page:number, numberPerPage: number) {
+    return objList.slice(numberPerPage * (page - 1), numberPerPage * page);
+  }
+
+  canLoadMorePages(objList:any[], page:number, numberPerPage: number) {
+    if(numberPerPage* page < objList.length)
+      return true;
+    return false;
+  }
 
 
 }
