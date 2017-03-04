@@ -19,7 +19,7 @@ import {AuthProviders, AuthMethods, FirebaseAuth, FirebaseAuthState, FirebaseObj
 export class DetailProjectComponent implements OnInit, OnDestroy{
   //@Input('post') post: string;
   projectTitle = '';
-  projectObj: ProjectInterface = {title:"dd", gitUID:"", gitProject:"", tags:"", ch:"", description:"", features:[], byFirebaseUID: "", news: [], hasHeader: false};
+  projectObj: ProjectInterface = {title:"dd", gitUID:"", gitProject:"", tags:"", ch:"", description:"", features:[], byFirebaseUID: "", news: [], hasHeader: false, byUserName: ""};
   projectContributionsObj: any;
   projectFeaturesObj: FeaturesProjectInterface[] = [];
   private sub: any;
@@ -36,7 +36,12 @@ export class DetailProjectComponent implements OnInit, OnDestroy{
         this.projectTitle = params['title'];
 
         this.projectObj.title = this.projectTitle;
-        this.initialiseProject()
+
+        //Enable real time listener
+        this.initialiseProjectFirebaseListener();
+
+        //Load initial data if user is not logged in
+        this.initialiseProject();
       }
     )
   }
@@ -46,6 +51,7 @@ export class DetailProjectComponent implements OnInit, OnDestroy{
   }
 
   initialiseProject() {
+    //Currently unused ... now its based on FireBase listener
     //Get the current project by its title
     this._projectsService.getProjectByTitle(this.projectTitle).subscribe(
       data => {
@@ -101,18 +107,30 @@ export class DetailProjectComponent implements OnInit, OnDestroy{
 
 
   initialiseProjectFirebaseListener() {
-    //Still under testing
-    //It helps with real time operations
-    if(this._authService.isAuthenticated()) {
-      this.userFireBaseObservable = this._fireBase.database.object('/projects/' + this.projectObj.byFirebaseUID+ '/' + this.projectObj.title);
-      this.userFireBaseObservable.subscribe(
-        data => {
-          this.projectObj = data;
-          console.log("FIREBASE UPDATE");
-        }
-      )
+    //If user is logged in enable realtime listener
+    this._authService.loggedInEvent.subscribe(
+      data => {
+        this._projectsService.subscribeToProjects(this._authService.getFirebaseUID(), this.projectTitle).subscribe(
+          data => {
+            this.projectObj = data;
+            this.projectContributionsObj = this.toArray(data.contributions);
+            this.projectFeaturesObj = this.toArray(data.features);
+          }
+        )
+      }
+    );
+  }
+
+  toArray(obj: any) {
+    //Get an dictionary
+    //Returns an array / list from that dictionary
+    let res:any = [];
+    res = [];
+    for(let key in obj) {
+      res.push(obj[key]);
     }
 
+    return res
   }
 
 }

@@ -9,12 +9,15 @@ import {FeaturesProjectInterface} from "../../projects/features-project.interfac
 import {ContributionInterface} from "../../projects/contribution.interface";
 import {NewsInterface} from "../../projects/news.interface";
 import {QuestionsInterface} from "../../projects/questions.interface";
+import {AngularFire, FirebaseListObservable} from 'angularfire2';
+import {AuthProviders, AuthMethods, FirebaseAuth, FirebaseAuthState, FirebaseObjectObservable} from 'angularfire2';
+import {AuthService} from "../../auth/services/auth-service";
 
 @Injectable()
 export class ProjectsService  implements  OnChanges{
 
 
-  constructor(private http: Http) {}
+  constructor(private http: Http, public _fireBase: AngularFire, private _authService: AuthService) {}
 
   getOpenProjects(): Observable<string[]> {
     return this.http.get('/assets/data.json')
@@ -81,7 +84,6 @@ export class ProjectsService  implements  OnChanges{
       .do(data => console.log('setFeatureLargeDescription:', data))
   }
 
-
   getFeaturesByTitle(firebaseUID: string, projectTitle: string): Observable<FeaturesProjectInterface[]> {
     return this.http.get('http://localhost:3000/api/projects/features/byTitle?firebaseUID=' + firebaseUID + '&title=' + projectTitle)
       .map((res:Response) => res.json())
@@ -143,7 +145,11 @@ export class ProjectsService  implements  OnChanges{
       .do(data => console.log('addNewProject:', data))
   }
 
-
+  subscribeToProjects(firebaseUID: string, projectTitle: string): FirebaseObjectObservable<any> {
+    //Return an observable to the database
+    let fireBaseObservable:FirebaseObjectObservable<any> = this._fireBase.database.object('/projects/'+ firebaseUID + "/" + projectTitle);
+    return fireBaseObservable;
+  }
 
   private handleError (error: any) {
     // In a real world app, we might use a remote logging infrastructure

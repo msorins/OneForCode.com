@@ -678,6 +678,29 @@ function listProjectsByTitle(title, callback) {
   });
 }
 
+function listAllProjects(callback) {
+  /*
+   Returns through callback a list with all projects
+   */
+  db.ref("/").child("projects").once("value", function(snapshot) {
+    dbObj = snapshot.val();
+    res = [];
+
+    for(firebaseUID in dbObj) {
+      for(key in dbObj[firebaseUID]) {
+        obj = simplifyProject(dbObj[firebaseUID][key]);
+        res["byFirebaseUID"] = firebaseUID;
+        res["key"] = key;
+        res.append(obj);
+        }
+
+      }
+
+      callback(res);
+  })
+}
+
+
 function acceptContribution(firebaseUID, projectTitle, gitPullUid, callback) {
 
   //Set the contribution as accepted

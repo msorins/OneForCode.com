@@ -60,8 +60,6 @@ export class NotificationsComponent implements OnInit{
   }
 
   pagination(objList:any[], page:number, numberPerPage: number) {
-    console.log(JSON.stringify(objList));
-    console.log(JSON.stringify(objList.slice(numberPerPage * (page - 1), numberPerPage * page));
     return objList.slice(numberPerPage * (page - 1), numberPerPage * page);
   }
 

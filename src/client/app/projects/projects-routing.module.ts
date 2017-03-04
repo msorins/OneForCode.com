@@ -7,6 +7,7 @@ import { DetailProjectComponent } from './detail-project/index';
 import { SendContributionProjectComponent } from './send-contribution-project/index'
 import { RequestFeaturesProjectComponent } from "./request-features-project/request-features-project.component";
 import { ViewNewsComponent } from "./view-news/view-news.component";
+import { FindProjects } from "./find-projects/find-projects.component";
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { ViewNewsComponent } from "./view-news/view-news.component";
       { path: 'project/:title', component: DetailProjectComponent},
       { path: 'send/:title/:feature', component: SendContributionProjectComponent },
       { path: 'send/:title', component: SendContributionProjectComponent },
-      { path: 'request-features/:title', component: RequestFeaturesProjectComponent}
+      { path: 'request-features/:title', component: RequestFeaturesProjectComponent},
+      { path: 'find', component: FindProjects }
     ])
   ],
   exports: [RouterModule]
