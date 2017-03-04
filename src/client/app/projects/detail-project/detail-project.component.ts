@@ -37,9 +37,6 @@ export class DetailProjectComponent implements OnInit, OnDestroy{
 
         this.projectObj.title = this.projectTitle;
 
-        //Enable real time listener
-        this.initialiseProjectFirebaseListener();
-
         //Load initial data if user is not logged in
         this.initialiseProject();
       }
@@ -56,8 +53,14 @@ export class DetailProjectComponent implements OnInit, OnDestroy{
     this._projectsService.getProjectByTitle(this.projectTitle).subscribe(
       data => {
         this.projectObj = data;
+
+        //Enable real time listener
+        this.initialiseProjectFirebaseListener();
+
         this.initialiseProjectContributions();
         this.initialiseProjectFeatures();
+
+
       }
     );
   }
@@ -110,7 +113,7 @@ export class DetailProjectComponent implements OnInit, OnDestroy{
     //If user is logged in enable realtime listener
     this._authService.loggedInEvent.subscribe(
       data => {
-        this._projectsService.subscribeToProjects(this._authService.getFirebaseUID(), this.projectTitle).subscribe(
+        this._projectsService.subscribeToProjects(this.projectObj.byFirebaseUID, this.projectTitle).subscribe(
           data => {
             this.projectObj = data;
             this.projectContributionsObj = this.toArray(data.contributions);

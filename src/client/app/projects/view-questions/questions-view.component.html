@@ -11,13 +11,14 @@
 
 
 <div *ngFor="let crtQuestion of pagination(questions, currentPage, numberOfQuestionsPerPage); let i = index" class="card">
-  <div class="card-block">
+  <!-- If question is closed or is open and the current logged in user is the owner of the project -->
+  <div *ngIf="crtQuestion.status == 'closed' || (crtQuestion.status == 'open' && ( _authService.getFirebaseUID() == project.byFirebaseUID || _authService.getFirebaseUID() == crtQuestion.byFirebaseUID ))" class="card-block">
     <!-- If content is not yet editable and current logged in user is eighter the one who asked the questions or the owner of the project -->
-    <img *ngIf="(crtQuestion.editable == null || crtQuestion.editable == false) && _authService.isAuthenticated() == true && ( _authService.getFirebaseUID() == project.byFirebaseUID || _authService.getFirebaseUID() == crtQuestion.byFirebaseUID )" (click) = "crtQuestion.editable = true" (click) = "crtQuestion.edited = true"  style="float:right; margin-left:5px; margin-right:5px; max-height: 25px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/edit-black.png">
+    <img *ngIf="crtQuestion.status == 'open' && (crtQuestion.editable == null || crtQuestion.editable == false) && _authService.isAuthenticated() == true && ( _authService.getFirebaseUID() == project.byFirebaseUID || _authService.getFirebaseUID() == crtQuestion.byFirebaseUID )" (click) = "crtQuestion.editable = true" (click) = "crtQuestion.edited = true"  style="float:right; margin-left:5px; margin-right:5px; max-height: 25px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/edit-black.png">
     <!-- If content is not yet editable and the current logged in user is the owner of the project then it can delete the question -->
     <img *ngIf="(crtQuestion.editable == null || crtQuestion.editable == false) && _authService.isAuthenticated() == true && _authService.getFirebaseUID() == project.byFirebaseUID " (click)="removeQuestion(i)" style="float:right; margin-left:5px; margin-right:5px; max-height: 25px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/delete-black.png">
 
-    <img *ngIf="crtQuestion.editable == true" (click) = "crtQuestion.editable = false" (click)="saveQuestions()" style="float:right; margin-left:5px; margin-right:5px; max-height: 25px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/save.png">
+    <img *ngIf="crtQuestion.editable == true" (click) = "crtQuestion.editable = false" (click)="saveQuestion(i)" style="float:right; margin-left:5px; margin-right:5px; max-height: 25px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/save.png">
     <blockquote class="blockquote">
 
       <!-- Question section -->
@@ -42,6 +43,7 @@
 
     </div>
 
-    <p class="card-text"><small class="text-muted">Answered {{crtQuestion.date}} ago</small></p>
+    <p *ngIf="crtQuestion.status == 'closed'" class="card-text"><small class="text-muted">Answered {{timeDifference(crtQuestion.answeredTimeStamp)}} </small></p>
+    <p *ngIf="crtQuestion.status == 'open'" class="card-text"><small class="text-muted">Unanswered</small></p>
   </div>
 </div>

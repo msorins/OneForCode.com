@@ -30,7 +30,7 @@ export class QuestionsViewComponent implements OnChanges{
   numberOfQuestionsPerPage = 3;
 
   constructor(public _authService: AuthService, public _projectService: ProjectsService, public _notificationService: NotificationsService) {
-    this.emptyQuestion = {byFirebaseUID: this._authService.getFirebaseUID(), byUserName: this._authService.getUserName(), answer: 'answer', question: 'Question', askedTimeStamp: new Date().getTime().toString(), status: 'Open' }
+    this.emptyQuestion = {byFirebaseUID: this._authService.getFirebaseUID(), byUserName: this._authService.getUserName(), answer: 'waiting for answer', question: 'Question', askedTimeStamp: new Date().getTime().toString(), status: 'open' }
   }
 
   ngOnChanges() {
@@ -42,10 +42,25 @@ export class QuestionsViewComponent implements OnChanges{
   addQuestion() {
     console.log("Question added");
     this.newQuestion = true;
-    this.questions.unshift({byFirebaseUID: this._authService.getFirebaseUID(), byUserName: this._authService.getUserName(), answer: 'answer', question: 'Question', askedTimeStamp: new Date().getTime().toString(), editable: true, edited: false, status: 'Open'});
+    this.questions.unshift({byFirebaseUID: this._authService.getFirebaseUID(), byUserName: this._authService.getUserName(), answer: 'waiting for answer', question: 'Question', askedTimeStamp: new Date().getTime().toString(), editable: true, edited: false, status: 'open'});
+  }
+
+  saveQuestion(i: number) {
+    //First add some attributes to the question before all the questions are saved
+
+    //A new question is asked
+    if(this.newQuestion == true)
+      this.questions[i].askedTimeStamp = new Date().getTime().toString();
+    else { // A question is answered
+      this.questions[i].answeredTimeStamp = new Date().getTime().toString();
+      this.questions[i].status = 'closed';
+    }
+
+    this.saveQuestions();
   }
 
   saveQuestions() {
+    //Save all the questions and send notifications
 
     //A new question is asked
     if(this.newQuestion == true) {
@@ -81,10 +96,6 @@ export class QuestionsViewComponent implements OnChanges{
       }
     }
 
-
-
-
-
     //Save the changed questions
     this._projectService.setFeatureQuestions(this.project.byFirebaseUID, this.project.title, this.feature.title, this.questions).subscribe(
       data => console.log('projectServiceData: ' +  data)
@@ -107,4 +118,38 @@ export class QuestionsViewComponent implements OnChanges{
     return false;
   }
 
+  timeDifference(previous:any) {
+    let current = new Date().getTime();
+    let msPerMinute = 60 * 1000;
+    let msPerHour = msPerMinute * 60;
+    let msPerDay = msPerHour * 24;
+    let msPerMonth = msPerDay * 30;
+    let msPerYear = msPerDay * 365;
+
+    let elapsed = current - previous;
+
+    if (elapsed < msPerMinute) {
+      return Math.round(elapsed/1000) + ' seconds ago';
+    }
+
+    else if (elapsed < msPerHour) {
+      return Math.round(elapsed/msPerMinute) + ' minutes ago';
+    }
+
+    else if (elapsed < msPerDay ) {
+      return Math.round(elapsed/msPerHour ) + ' hours ago';
+    }
+
+   else if (elapsed < msPerMonth) {
+      return '' + Math.round(elapsed/msPerDay) + ' days ago';
+    }
+
+    else if (elapsed < msPerYear) {
+      return '' + Math.round(elapsed/msPerMonth) + ' months ago';
+    }
+
+    else {
+      return '' + Math.round(elapsed/msPerYear ) + ' years ago';
+    }
+}
 }
