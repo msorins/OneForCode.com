@@ -539,6 +539,15 @@ app.use('/api/projects/features/setQuestions', [function(req, res, next) {
 
 }]);
 
+app.use('/api/projects/all', [function(req, res, next) {
+  if (req.method != 'OPTIONS') {
+      listAllProjects(function(result) {
+        res.status(200).send(result);
+      });
+  } else
+    res.status(200).send('OPTIONS Request');
+}]);
+
 //  ==== FUNCTIONS PART ====
 function addUserDataToDb(firebaseUID, userObj) {
   //Receives the firebaseUID and an object containing userInfo (from github)
@@ -688,10 +697,10 @@ function listAllProjects(callback) {
 
     for(firebaseUID in dbObj) {
       for(key in dbObj[firebaseUID]) {
-        obj = simplifyProject(dbObj[firebaseUID][key]);
+        obj = dbObj[firebaseUID][key]; //Here in the future I can minimise the object size that I send over
         res["byFirebaseUID"] = firebaseUID;
         res["key"] = key;
-        res.append(obj);
+        res.push(obj);
         }
 
       }

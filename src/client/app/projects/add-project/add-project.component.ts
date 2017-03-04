@@ -44,6 +44,7 @@ export class AddProjectComponent implements OnInit{
         value.byFirebaseUID = this._authService.getFirebaseUID();
         value.byUserName = this._authService.getUserName();
         value.hasHeader = false;
+        value.creationTimeStamp = new Date().getTime().toString();
 
         this._projectsService.addNewProject(this._authService.getFirebaseUID(), value)
           .subscribe(

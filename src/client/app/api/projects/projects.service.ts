@@ -151,6 +151,11 @@ export class ProjectsService  implements  OnChanges{
     return fireBaseObservable;
   }
 
+  getAllProjects(): Observable<ProjectInterface[]> {
+    return this.http.get('http://localhost:3000/api/projects/all')
+      .map((res:Response) => res.json())
+      .do(data => console.log('getAllProjects', data));  // debug
+  }
   private handleError (error: any) {
     // In a real world app, we might use a remote logging infrastructure
     // We'd also dig deeper into the error to get a better message
