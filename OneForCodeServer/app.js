@@ -122,6 +122,7 @@ app.use('/api/repos', [function(req, res, next) {
 app.use('/api/projects/new', [function(req, res, next) {
   if (req.method != 'OPTIONS') {
     response = req.body;
+    console.log("Received token: " + req.header("token"));
 
     addProjects(req.query.firebaseUID, req.body);
 

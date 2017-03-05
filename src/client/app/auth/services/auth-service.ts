@@ -13,6 +13,7 @@ export class AuthService{
   public userFireBaseObservable: FirebaseObjectObservable<any>;
   public userName: string  = "";
   public uid: string = "";
+  public firebaseAccessToken:string = "";
 
   public loggedInEvent: EventEmitter<string> = new EventEmitter<string>();
 
@@ -22,6 +23,7 @@ export class AuthService{
       this.authState = state;
       console.log(state);
       this.loggedInEvent.emit(this.getFirebaseUID());
+      this.renewFirebaseAccessToken();
 
       //SEND requests to the server with the firebaseAccessToken and GithubUID/GithubAcessToken
       //the servers calls GIT API and saves user data to firebaseDB and returns it
@@ -133,12 +135,13 @@ export class AuthService{
       .catch(error => console.log('ERROR @ AuthService#signInAnonymously() :', error));
   }
 
-  signInWithGithub(): Promise<FirebaseAuthState> {
+  signInWithGithub(): firebase.Promise<FirebaseAuthState> {
             return this.auth$.login({
             provider: AuthProviders.Github,
             method: AuthMethods.Redirect,
         });
    }
+
   signInWithGoogle(): firebase.Promise<FirebaseAuthState> {
     return this.signIn(AuthProviders.Google);
   }
@@ -149,5 +152,23 @@ export class AuthService{
 
   signOut(): void {
     this.auth$.logout();
+  }
+
+  // === FIREBASE ACCESS TOKEN SECTION ===
+  renewFirebaseAccessToken() : any{
+    //Returns through a callback the current firebaseAccessToken
+    let auth = this._fireBase.auth.subscribe(
+      data => {
+        data.auth.getToken().then( data => this.saveFirebaseAccessToken(data));
+      }
+    );
+  }
+
+  getFirebaseAccessToken():string {
+    return this.firebaseAccessToken;
+  }
+
+  saveFirebaseAccessToken(token: string) {
+    this.firebaseAccessToken = token;
   }
 }

@@ -32,7 +32,9 @@ export class ProjectsService  implements  OnChanges{
 
   addNewProject(firebaseUID:string, obj : ProjectInterface):  Observable<string[]> {
     let objJSON = JSON.stringify(obj); // Stringify payload
-    let headers = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
+    let headers = new Headers({ 'Content-Type': 'application/json',
+                                'token' : this._authService.getFirebaseAccessToken()
+                              }); // ... Set content type to JSON
     let options = new RequestOptions({ headers: headers }); // Create a request option
     console.log(objJSON);
 
