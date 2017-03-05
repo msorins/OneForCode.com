@@ -16,6 +16,7 @@ export class AuthService{
   public firebaseAccessToken:string = "";
 
   public loggedInEvent: EventEmitter<string> = new EventEmitter<string>();
+  public canGetUserName: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(public auth$: FirebaseAuth, private http: Http, public _fireBase: AngularFire) {
 
@@ -32,7 +33,7 @@ export class AuthService{
         this.getByGitUserID(this.authState.uid, this.authState.github.uid).subscribe(
           data => {
             this.userGit = data;
-            //this.loggedInEvent.emit(this.getFirebaseUID());
+            this.canGetUserName.emit(this.getUserName());
           }
         );
       }
@@ -42,7 +43,7 @@ export class AuthService{
         this.getByGitToken(this.authState.uid, this.authState.github.accessToken).subscribe(
           data => {
             this.userGit = data;
-            //this.loggedInEvent.emit(this.getFirebaseUID());
+            this.canGetUserName.emit(this.getUserName());
           }
         );
       }

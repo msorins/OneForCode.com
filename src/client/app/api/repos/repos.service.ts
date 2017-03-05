@@ -12,9 +12,9 @@ export class ReposService {
 
   constructor(private http: Http, private _authService: AuthService) {}
 
-  getUserRepos(): Observable<string[]> {
+  getUserRepos(userName: string): Observable<string[]> {
 
-    return this.http.get('http://localhost:3000/api/repos?username=' + this._authService.getUserName())
+    return this.http.get('http://localhost:3000/api/repos?username=' + userName)
                     .map((res: Response) => res.json())
                     .do(data => console.log('getUserRepos:', data))  // debug
                     .catch(this.handleError);

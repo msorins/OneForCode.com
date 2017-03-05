@@ -23,10 +23,15 @@ export class AddProjectComponent implements OnInit{
 
     ngOnInit() {
         //Get the list of repos
-        this._reposService.getUserRepos()
-          .subscribe(
-            data => this.reposList = data
+        if(this._authService.getUserName() == '') {
+          this._authService.canGetUserName.subscribe(
+            data => {
+              this.getUserRepos();
+            }
           );
+        } else {
+          this.getUserRepos();
+        }
 
         //Create the form
         this.addProjectForm = new FormGroup({
@@ -36,6 +41,13 @@ export class AddProjectComponent implements OnInit{
           description: new FormControl(''),
           ch: new FormControl('')
         });
+    }
+
+    getUserRepos() {
+      this._reposService.getUserRepos(this._authService.getUserName())
+        .subscribe(
+          data => this.reposList = data
+        );
     }
 
     onSubmit({ value, valid }: { value: ProjectInterface, valid: boolean }) {
