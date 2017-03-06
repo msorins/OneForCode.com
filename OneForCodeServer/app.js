@@ -119,10 +119,9 @@ app.use('/api/repos', [function(req, res, next) {
 
 }]);
 
-app.use('/api/projects/new', [function(req, res, next) {
+app.use('/api/projects/new', [hasFirebaseJWT, checkSameJWT, function(req, res, next) {
   if (req.method != 'OPTIONS') {
     response = req.body;
-    console.log("Received token: " + req.header("token"));
 
     addProjects(req.query.firebaseUID, req.body);
 
@@ -133,7 +132,7 @@ app.use('/api/projects/new', [function(req, res, next) {
 
 }]);
 
-app.use('/api/feature-projects/new', [function(req, res, next) {
+app.use('/api/feature-projects/new', [hasFirebaseJWT, checkSameJWT, function(req, res, next) {
   if (req.method != 'OPTIONS') {
     response = req.body;
 
@@ -146,7 +145,7 @@ app.use('/api/feature-projects/new', [function(req, res, next) {
 
 }]);
 
-app.use('/api/contribution-projects/new', [function(req, res, next) {
+app.use('/api/contribution-projects/new', [hasFirebaseJWT, checkSameJWT, function(req, res, next) {
   if (req.method != 'OPTIONS') {
     response = req.body;
 
@@ -193,7 +192,7 @@ app.use('/api/projects/contributions/byTitle', [function(req, res, next) {
 
 }]);
 
-app.use('/api/projects/contributions/accept', [function(req, res, next) {
+app.use('/api/projects/contributions/accept', [hasFirebaseJWT, checkSameJWT, function(req, res, next) {
   if (req.method != 'OPTIONS') {
     response = req.body;
 
@@ -210,7 +209,7 @@ app.use('/api/projects/contributions/accept', [function(req, res, next) {
 
 }]);
 
-app.use('/api/projects/contributions/deny', [function(req, res, next) {
+app.use('/api/projects/contributions/deny', [hasFirebaseJWT, checkSameJWT, function(req, res, next) {
   if (req.method != 'OPTIONS') {
     response = req.body;
 
@@ -390,7 +389,7 @@ app.use('/api/users/get/gitToken', [function(req, res, next) {
 
 }]);
 
-app.use('/api/projects/setNews', [function(req, res, next) {
+app.use('/api/projects/setNews', [hasFirebaseJWT, checkSameJWT, function(req, res, next) {
   if (req.method != 'OPTIONS') {
     response = req.body;
 
@@ -424,7 +423,7 @@ app.use('/api/projects/getNews', [function(req, res, next) {
 
 }]);
 
-app.use('/api/notifications/new', [function(req, res, next) {
+app.use('/api/notifications/new', [hasFirebaseJWT, function(req, res, next) {
   if (req.method != 'OPTIONS') {
     response = req.body;
 
@@ -440,23 +439,7 @@ app.use('/api/notifications/new', [function(req, res, next) {
 
 }]);
 
-app.use('/api/notifications/new', [function(req, res, next) {
-  if (req.method != 'OPTIONS') {
-    response = req.body;
-
-    if(req.query.firebaseUID == null)
-      res.status(200).send(JSON.stringify("Missing get parameter: firebaseUID"));
-    else {
-      sendNotifications(req.query.firebaseUID, response);
-      res.status(200).send("OK");
-    }
-
-  } else
-    res.status(200).send('OPTIONS Request');
-
-}]);
-
-app.use('/api/notifications/delete', [function(req, res, next) {
+app.use('/api/notifications/delete', [hasFirebaseJWT, checkSameJWT, function(req, res, next) {
   if (req.method != 'OPTIONS') {
     response = req.body;
 
@@ -506,7 +489,7 @@ app.post('/api/projects/upload/header', [function(req, res, next) {
   });
 }]);
 
-app.use('/api/projects/features/setLargeDescription', [function(req, res, next) {
+app.use('/api/projects/features/setLargeDescription', [hasFirebaseJWT, checkSameJWT, function(req, res, next) {
   if (req.method != 'OPTIONS') {
 
     if(req.query.firebaseUID == null || req.query.projectTitle == null || req.query.featureTitle == null)
@@ -514,7 +497,6 @@ app.use('/api/projects/features/setLargeDescription', [function(req, res, next) 
     else {
       response = req.body;
       setProjectFeatureLargeDescription(req.query.firebaseUID, req.query.projectTitle, req.query.featureTitle, response["content"], function(result) {
-        console.log("RESULT: " + JSON.stringify(result));
         res.status(200).send(result);
       });
     }
@@ -523,7 +505,7 @@ app.use('/api/projects/features/setLargeDescription', [function(req, res, next) 
 
 }]);
 
-app.use('/api/projects/features/setQuestions', [function(req, res, next) {
+app.use('/api/projects/features/setQuestions', [hasFirebaseJWT, function(req, res, next) {
   if (req.method != 'OPTIONS') {
 
     if(req.query.firebaseUID == null || req.query.projectTitle == null || req.query.featureTitle == null)
@@ -531,7 +513,6 @@ app.use('/api/projects/features/setQuestions', [function(req, res, next) {
     else {
       response = req.body;
       setProjectQuestions(req.query.firebaseUID, req.query.projectTitle, req.query.featureTitle, response["content"], function(result) {
-        console.log("RESULT: " + JSON.stringify(result));
         res.status(200).send(result);
       });
     }
@@ -710,7 +691,6 @@ function listAllProjects(callback) {
   })
 }
 
-
 function acceptContribution(firebaseUID, projectTitle, gitPullUid, callback) {
 
   //Set the contribution as accepted
@@ -853,6 +833,48 @@ function deleteNotification(firebaseUID, notificationsObj) {
   db.ref("/").child("notifications").child(firebaseUID).set(notificationsObj);
 }
 
+
+/* ===== SECURITY FUNCTIONS ====== */
+
+function hasFirebaseJWT(req, res, next) {
+  var token = req.headers['x-access-token'];
+
+  if (token) {
+    firebaseAdmin.auth().verifyIdToken(token)
+      .then(function(decodedToken) {
+        //Here the token is succesfully verified
+        var uid = decodedToken.uid;
+
+
+      }).catch(function(error) {
+      res.status(500).send( 'Authentication error !' );
+    });
+    next();
+  } else {
+    res.status(500).send( 'Authentication error !' );
+  }
+}
+
+function checkSameJWT(req, res, next) {
+  var givenToken = req.headers['x-access-token'];
+  var givenFirebaseUID;
+  var requestedFirebaseUID = req.query.firebaseUID;
+
+  //Decode received access token
+  firebaseAdmin.auth().verifyIdToken(givenToken)
+    .then(function(decodedToken) {
+      //Here the token is succesfully verified
+      var uid = decodedToken.uid;
+
+      if(uid == requestedFirebaseUID)
+        next();
+      else
+        res.status(500).send( 'Authentication error !' );
+
+    }).catch(function(error) {
+    res.status(500).send( 'Authentication error !' );
+  });
+}
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

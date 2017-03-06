@@ -23,7 +23,9 @@ export class NotificationsService  implements  OnChanges{
 
   sendNotification(firebaseUID: string, notificationObject: NotificationsInterface):  Observable<string[]> {
     let objJSON = JSON.stringify(notificationObject); // Stringify payload
-    let headers = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
+    let headers = new Headers({ 'Content-Type': 'application/json',
+      'x-access-token' : this._authService.getFirebaseAccessToken()
+    }); // ... Set content type to JSON
     let options = new RequestOptions({ headers: headers }); // Create a request option
     console.log(objJSON);
 
@@ -40,7 +42,9 @@ export class NotificationsService  implements  OnChanges{
 
   deleteNotification(firebaseUID: string, notificationObject: NotificationsInterface[]):  Observable<NotificationsInterface[]> {
     let objJSON = JSON.stringify(notificationObject);
-    let headers = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
+    let headers = new Headers({ 'Content-Type': 'application/json',
+      'x-access-token' : this._authService.getFirebaseAccessToken()
+    }); // ... Set content type to JSON
     let options = new RequestOptions({ headers: headers }); // Create a request option
 
     return this.http.post('http://localhost:3000/api/notifications/delete?firebaseUID=' + firebaseUID, objJSON,options) // ...using post request

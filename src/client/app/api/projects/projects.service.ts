@@ -33,7 +33,7 @@ export class ProjectsService  implements  OnChanges{
   addNewProject(firebaseUID:string, obj : ProjectInterface):  Observable<string[]> {
     let objJSON = JSON.stringify(obj); // Stringify payload
     let headers = new Headers({ 'Content-Type': 'application/json',
-                                'token' : this._authService.getFirebaseAccessToken()
+                                'x-access-token' : this._authService.getFirebaseAccessToken()
                               }); // ... Set content type to JSON
     let options = new RequestOptions({ headers: headers }); // Create a request option
     console.log(objJSON);
@@ -45,7 +45,9 @@ export class ProjectsService  implements  OnChanges{
 
   addNewContribution(firebaseUID:string, projectTitle:string, obj : ContributionInterface):  Observable<string[]> {
     let objJSON = JSON.stringify(obj); // Stringify payload
-    let headers = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
+    let headers = new Headers({ 'Content-Type': 'application/json',
+      'x-access-token' : this._authService.getFirebaseAccessToken()
+    }); // ... Set content type to JSON
     let options = new RequestOptions({ headers: headers }); // Create a request option
     console.log(objJSON);
 
@@ -56,7 +58,9 @@ export class ProjectsService  implements  OnChanges{
 
   addNewFeature(firebaseUID:string, projectTitle:string, obj : FeaturesProjectInterface):  Observable<string[]> {
     let objJSON = JSON.stringify(obj); // Stringify payload
-    let headers = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
+    let headers = new Headers({ 'Content-Type': 'application/json',
+      'x-access-token' : this._authService.getFirebaseAccessToken()
+    }); // ... Set content type to JSON
     let options = new RequestOptions({ headers: headers }); // Create a request option
     console.log(objJSON);
 
@@ -68,7 +72,9 @@ export class ProjectsService  implements  OnChanges{
 
   setFeatureLargeDescription(firebaseUID:string, projectTitle: string, featureTitle:string, largeDescription:string):  Observable<string[]> {
     let objJSON = JSON.stringify({"content": largeDescription }); // Stringify payload
-    let headers = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
+    let headers = new Headers({ 'Content-Type': 'application/json',
+      'x-access-token' : this._authService.getFirebaseAccessToken()
+    }); // ... Set content type to JSON
     let options = new RequestOptions({ headers: headers }); // Create a request option
 
     return this.http.post('http://localhost:3000/api/projects/features/setLargeDescription?firebaseUID=' + firebaseUID + '&projectTitle=' + projectTitle + '&featureTitle=' + featureTitle, objJSON, options) // ...using post request
@@ -78,7 +84,9 @@ export class ProjectsService  implements  OnChanges{
 
   setFeatureQuestions(firebaseUID:string, projectTitle: string, featureTitle:string, questions:QuestionsInterface[]):  Observable<string[]> {
     let objJSON = JSON.stringify({"content": questions }); // Stringify payload
-    let headers = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
+    let headers = new Headers({ 'Content-Type': 'application/json',
+      'x-access-token' : this._authService.getFirebaseAccessToken()
+    }); // ... Set content type to JSON
     let options = new RequestOptions({ headers: headers }); // Create a request option
 
     return this.http.post('http://localhost:3000/api/projects/features/setQuestions?firebaseUID=' + firebaseUID + '&projectTitle=' + projectTitle + '&featureTitle=' + featureTitle, objJSON, options) // ...using post request
@@ -99,13 +107,25 @@ export class ProjectsService  implements  OnChanges{
   }
 
   acceptContribution(firebaseUID: string, projectTitle: string, gitPullId: string): Observable<FeaturesProjectInterface[]> {
-    return this.http.get('http://localhost:3000/api/projects/contributions/accept?firebaseUID=' + firebaseUID + '&title=' + projectTitle + '&gitPullId=' + gitPullId)
+    let objJSON = JSON.stringify({}); // Stringify payload
+    let headers = new Headers({ 'Content-Type': 'application/json',
+      'x-access-token' : this._authService.getFirebaseAccessToken()
+    }); // ... Set content type to JSON
+    let options = new RequestOptions({ headers: headers }); // Create a request option
+
+    return this.http.post('http://localhost:3000/api/projects/contributions/accept?firebaseUID=' + firebaseUID + '&title=' + projectTitle + '&gitPullId=' + gitPullId, objJSON, options)
       .map((res:Response) => res.json())
       .do(data => console.log('getContributionsByTitle:', JSON.stringify(data)));  // debug
   }
 
   denyContribution(firebaseUID: string, projectTitle: string, gitPullId: string): Observable<FeaturesProjectInterface[]> {
-    return this.http.get('http://localhost:3000/api/projects/contributions/deny?firebaseUID=' + firebaseUID + '&title=' + projectTitle + '&gitPullId=' + gitPullId)
+    let objJSON = JSON.stringify({}); // Stringify payload
+    let headers = new Headers({ 'Content-Type': 'application/json',
+      'x-access-token' : this._authService.getFirebaseAccessToken()
+    }); // ... Set content type to JSON
+    let options = new RequestOptions({ headers: headers }); // Create a request option
+
+    return this.http.post('http://localhost:3000/api/projects/contributions/deny?firebaseUID=' + firebaseUID + '&title=' + projectTitle + '&gitPullId=' + gitPullId, objJSON, options)
       .map((res:Response) => res.json())
       .do(data => console.log('getContributionsByTitle:', JSON.stringify(data)));  // debug
   }
@@ -130,7 +150,9 @@ export class ProjectsService  implements  OnChanges{
 
   addNews(firebaseUID:string, projectTitle : string, obj : NewsInterface[]):  Observable<string[]> {
     let objJSON = JSON.stringify(obj); // Stringify payload
-    let headers = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
+    let headers = new Headers({ 'Content-Type': 'application/json',
+      'x-access-token' : this._authService.getFirebaseAccessToken()
+    }); // ... Set content type to JSON
     let options = new RequestOptions({ headers: headers }); // Create a request option
 
     return this.http.post('http://localhost:3000/api/projects/setNews?firebaseUID=' + firebaseUID + '&title=' + projectTitle, objJSON, options) // ...using post request
