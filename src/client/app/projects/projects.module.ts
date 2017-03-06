@@ -21,9 +21,10 @@ import { DetailFeatureComponent } from './detail-feature/index';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { QuestionsViewComponent } from './view-questions/index';
 import {FindProjects} from "./find-projects/find-projects.component";
+import {PaymentsModule} from "../payments/payments.module";
 
 @NgModule({
-  imports: [CKEditorModule, ReactiveFormsModule, ProjectsRoutingModule, SharedModule,  NgUploaderModule],
+  imports: [CKEditorModule, ReactiveFormsModule, ProjectsRoutingModule, SharedModule,  NgUploaderModule, PaymentsModule],
   declarations: [AddProjectComponent, ProjectViewComponent, MyProjectsComponent, DetailProjectComponent, PullsViewComponent, SendContributionProjectComponent, RequestFeaturesProjectComponent, FeatureViewComponent, ContributionViewComponent, ViewNewsComponent, FileSelectDirective, DetailFeatureComponent, QuestionsViewComponent, FindProjects],
   exports: [AddProjectComponent, ProjectViewComponent, MyProjectsComponent, DetailProjectComponent, PullsViewComponent, SendContributionProjectComponent, RequestFeaturesProjectComponent, FeatureViewComponent, ContributionViewComponent, ViewNewsComponent, DetailFeatureComponent, QuestionsViewComponent, FindProjects]
 })

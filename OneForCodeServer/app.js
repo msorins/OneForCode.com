@@ -857,7 +857,6 @@ function hasFirebaseJWT(req, res, next) {
 
 function checkSameJWT(req, res, next) {
   var givenToken = req.headers['x-access-token'];
-  var givenFirebaseUID;
   var requestedFirebaseUID = req.query.firebaseUID;
 
   //Decode received access token

@@ -8,6 +8,7 @@ import {FeaturesProjectInterface} from "../features-project.interface";
 import {NewsInterface} from "../news.interface";
 import {AngularFire, FirebaseListObservable} from 'angularfire2';
 import {AuthProviders, AuthMethods, FirebaseAuth, FirebaseAuthState, FirebaseObjectObservable} from 'angularfire2';
+import {PaymentsService} from "../../api/payments/payments.service";
 
 @Component({
   moduleId: module.id,
@@ -26,10 +27,10 @@ export class DetailProjectComponent implements OnInit, OnDestroy{
   public test:string = "Test title";
   public userFireBaseObservable: FirebaseObjectObservable<any>;
 
-  constructor(private _ActivatedRoute: ActivatedRoute, public _projectsService: ProjectsService, public _authService: AuthService,  public _fireBase: AngularFire) {}
+  constructor(private _ActivatedRoute: ActivatedRoute, public _projectsService: ProjectsService, public _authService: AuthService,  public _fireBase: AngularFire, private _paymentsService: PaymentsService) {}
 
   ngOnInit() {
-
+    this._paymentsService.test();
     this.sub = this._ActivatedRoute.params.subscribe(
       params => {
         //Get the title from the page parameters

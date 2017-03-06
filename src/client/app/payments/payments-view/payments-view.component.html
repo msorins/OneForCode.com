@@ -1,0 +1,26 @@
+
+<form [formGroup]="paymentForm" (ngSubmit)="getToken(paymentForm)">
+  <div class="form-group col-md-6">
+    <h5>Card number</h5>
+    <input formControlName="cardNumber" name="card-number" type="text" size="20" data-stripe="number">
+  </div>
+
+  <div class="form-group col-md-6">
+    <h5>CVC</h5>
+
+    <input formControlName="cvc" name="cvc" type="text" size="4" data-stripe="cvc">
+  </div>
+
+  <div class="form-group col-md-12">
+    <h5>Expiration (MM/YY)</h5>
+
+    <input style="width: 45%" formControlName="expiryMonth" name="expiry-month" type="text" size="2" data-stripe="exp_month">
+    <span> / </span>
+    <input style="width: 45%" formControlName="expiryYear" name="expiry-year" type="text" size="2" data-stripe="exp_year">
+  </div>
+
+
+  <span class="payment-message">{{message}}</span>
+
+  <input type="submit" value="Submit Payment">
+</form>

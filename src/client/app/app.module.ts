@@ -19,6 +19,7 @@ import { SharedModule } from './shared/shared.module';
 import { ProjectsModule } from './projects/projects.module';
 import { ProfileModule } from './profile/profile.module';
 import { AuthService } from './auth/services/auth-service';
+import {PaymentsModule} from "./payments/payments.module";
 
 const FIREBASE_APP_CONFIG = {
       apiKey: "AIzaSyCHjQQFCgiQPyMBNC2zX7p_mJwWgSb8Ycg",
@@ -31,7 +32,7 @@ const FIREBASE_APP_CONFIG = {
 };
 
 @NgModule({
-  imports: [BrowserModule, HttpModule, AppRoutingModule, AuthModule.forRoot(), ApiModule.forRoot(),ProjectsModule, AboutModule, HomeModule, SharedModule.forRoot(), ProfileModule.forRoot(),
+  imports: [BrowserModule, HttpModule, AppRoutingModule, AuthModule.forRoot(), ApiModule.forRoot(),ProjectsModule, AboutModule, HomeModule, SharedModule.forRoot(), ProfileModule.forRoot(), PaymentsModule.forRoot(),
   AngularFireModule.initializeApp(FIREBASE_APP_CONFIG), MaterializeModule
   ],
   declarations: [AppComponent],
