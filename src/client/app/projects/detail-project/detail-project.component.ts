@@ -30,7 +30,6 @@ export class DetailProjectComponent implements OnInit, OnDestroy{
   constructor(private _ActivatedRoute: ActivatedRoute, public _projectsService: ProjectsService, public _authService: AuthService,  public _fireBase: AngularFire, private _paymentsService: PaymentsService) {}
 
   ngOnInit() {
-    this._paymentsService.test();
     this.sub = this._ActivatedRoute.params.subscribe(
       params => {
         //Get the title from the page parameters

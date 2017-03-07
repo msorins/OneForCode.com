@@ -1,5 +1,12 @@
 
 <form [formGroup]="paymentForm" (ngSubmit)="getToken(paymentForm)">
+  <div class="form-group col-md-12">
+    <h5 for="exampleSelect1">Number of CH</h5>
+    <select (change)="onPaymentCompute($event.target.value)" class="form-control" id="exampleSelect1">
+      <option *ngFor="let crtPayment of paymentsOption" [value]="crtPayment.price" value="{{crtPayment.price}}">{{crtPayment.ch}}</option>
+    </select>
+  </div>
+
   <div class="form-group col-md-6">
     <h5>Card number</h5>
     <input formControlName="cardNumber" name="card-number" type="text" size="20" data-stripe="number">
@@ -22,5 +29,5 @@
 
   <span class="payment-message">{{message}}</span>
 
-  <input type="submit" value="Submit Payment">
+  <button style="width:100%" type="submit" class="btn btn-default"><h5>Pay <b>{{paymentSum}}</b> <img  style="margin-left:5px; margin-right:5px; max-height: 25px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/euro.png"> </h5></button>
 </form>

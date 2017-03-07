@@ -3,12 +3,13 @@
  */
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import {GetChComponent} from "./get-ch/get-ch.component";
 
 
 @NgModule({
   imports: [
     RouterModule.forChild([
-
+      { path: 'get/ch', component: GetChComponent },
     ])
   ],
   exports: [RouterModule]

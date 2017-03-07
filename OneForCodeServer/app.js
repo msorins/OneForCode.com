@@ -530,6 +530,14 @@ app.use('/api/projects/all', [function(req, res, next) {
     res.status(200).send('OPTIONS Request');
 }]);
 
+app.use('/api/payments/get/ch?', [function(req, res, next) {
+  if (req.method != 'OPTIONS') {
+    res.status(200).send('Request received');
+  } else
+    res.status(200).send('OPTIONS Request');
+}]);
+
+
 //  ==== FUNCTIONS PART ====
 function addUserDataToDb(firebaseUID, userObj) {
   //Receives the firebaseUID and an object containing userInfo (from github)

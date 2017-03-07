@@ -1,6 +1,11 @@
 <li *ngIf="auth.getUserName() != ''"class="nav-item dropdown">
   <a class="nav-link dropdown-toggle" href="http://example.com" id="supportedContentDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{auth.getUserName()}}</a>
   <div class="dropdown-menu" aria-labelledby="supportedContentDropdown">
+    <a [routerLink]="['/get/ch']">
+      <span style="text-align: center; margin-bottom:-15px;" class="dropdown-header">
+        <h6><b>{{ auth.getUserCh() }}</b> <img style="max-height: 22px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/price-tag.png"></h6>
+      </span>
+    </a>
     <a class="dropdown-item" routerLink="/profile" routerLinkActive="active">Profile</a>
     <a class="dropdown-item" routerLink="/projects" routerLinkActive="active">My projects</a>
     <a class="dropdown-item" (click)="auth.signOut()" >Logout</a>

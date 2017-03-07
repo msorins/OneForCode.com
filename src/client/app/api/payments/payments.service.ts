@@ -22,23 +22,19 @@ export class PaymentsService  implements  OnChanges, OnInit{
 
   }
 
-  test() {
-    console.log("PAYMENT INITIALISED");
-    console.log(JSON.stringify((<any>window).Stripe.customers));
-    /*
-    (<any>window).Stripe.setPublishableKey('pk_test_nHVpoaU1043erwC4BFqiUFGo');
-    (<any>window).Stripe.customers.create({
-      description: 'Customer for joseph.jackson@example.com',
-      source: "tok_19ttypKMNeHyI7YCqTfO2iMJ" // obtained with Stripe.js
-    }, (status: number, response: any) => {
-      if (status === 200) {
-        console.log(`Success! Card token ${response.card.id}.`);
-      } else {
-        console.log(response.error.message);
-      }
-    });
-    */
+  paymentsGetCh(firebaseUID: string, token: string, sum: number): Observable<string> {
+    console.log("PAYMENTS EXECUTEEEEEED");
+    let objJSON = JSON.stringify({"token" : token, "sum": sum}); // Stringify payload
+    let headers = new Headers({ 'Content-Type': 'application/json',
+      'x-access-token' : this._authService.getFirebaseAccessToken()
+    }); // ... Set content type to JSON
+    let options = new RequestOptions({ headers: headers }); // Create a request option
+
+    return this.http.post('http://localhost:3000/api/payments/get/ch?firebaseUID=' + firebaseUID, objJSON, options)
+      .map((res:Response) => res.json())
+      .do(data => console.log('paymentsGetCH', JSON.stringify(data)));  // debug
   }
+
   ngOnChanges(changes: any) {
     console.log("Changes: " + changes);
   }
