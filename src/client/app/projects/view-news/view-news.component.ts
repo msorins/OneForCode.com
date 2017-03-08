@@ -31,6 +31,11 @@ export class ViewNewsComponent implements OnInit, OnChanges{
 
   ngOnChanges() {
     this.newsList = this.projectObj.news;
+    if(this.newsList == null || this.newsList.length == 0 ) {
+      this.newsList = [];
+      this.plusNews();
+      this.plusNews();
+    }
   }
 
   load() {

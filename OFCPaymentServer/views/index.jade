@@ -1,0 +1,59 @@
+extends layout
+
+mixin thumbnail(key, obj)
+  div.thumbnail(style="padding:15px")
+    form(action="/", method="post")
+      div.col-md-6(style="margin-bottom:20px; padding-left:0px;")
+        div.input-group.input-group-lg
+          span.input-group-addon#sizing-addon2 userToken
+          input.form-control(type="text", name="userFirebaseToken" aria-describedby="sizing-addon", value=obj.firebaseUID, readonly)
+          br
+
+      div.col-md-6(style="margin-bottom:20px; padding-right:0px;")
+        a(href='#')
+          div.input-group.input-group-lg
+            span.input-group-addon#sizing-addon2 userName
+            input.form-control(type="text", name="userName" aria-describedby="sizing-addon", value=obj.byUserName, readonly)
+            br
+
+
+      div.input-group.input-group-lg
+        span.input-group-addon#sizing-addon2 cardToken
+        input.form-control(type="text", name="cardToken" aria-describedby="sizing-addon", value=obj.token, readonly)
+      br
+      div.input-group.input-group-lg
+        span.input-group-addon#sizing-addon2 paymentAmount
+        input.form-control(type="text", name="paymentAmount" aria-describedby="sizing-addon", value=obj.amount, readonly)
+      br
+      div.btn-group.btn-group-justified(role="group")
+        div.btn-group(role="group")
+          button.btn.btn-default(name="action", value="ok")
+            span.glyphicon.glyphicon-ok
+        div.btn-group(role="group")
+          button.btn.btn-default(name="action", value="remove")
+            span.glyphicon.glyphicon-remove
+
+
+
+
+
+block content
+  div.container
+    h1 OFC Payment administration page
+    div
+      - for (key in paymentsList) {
+      +thumbnail(key, paymentsList[key])
+      br
+      br
+      - }
+
+
+div.row
+  div.input-group.input-group-lg.col-md-6
+    span.input-group-addon#sizing-addon2 userToken
+    input.form-control(type="text", name="userFirebaseToken" aria-describedby="sizing-addon", value=obj.firebaseUID, readonly)
+
+
+  div.input-group.input-group-lg.col-md-6
+    span.input-group-addon#sizing-addon2 userName
+    input.form-control(type="text", name="userName" aria-describedby="sizing-addon", value=obj.byUserName, readonly)
