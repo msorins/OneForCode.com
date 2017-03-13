@@ -84,4 +84,39 @@ function addUserCH(firebaseUID, amount) {
     //Increase it
     db.ref("/").child("users").child(firebaseUID).child("ch").set(ch + plusCH);
   });
+
+
+  //Send a notification to user
+  var notificationObject = {
+    "id": 1,
+    "message": plusCH +"ch points were added to your account (payment)",
+    "url": "/get/ch"
+
+  };
+
+  sendNotifications(firebaseUID, notificationObject);
+}
+
+
+function sendNotifications(firebaseUID, notificationObject) {
+  /*
+   fiebaseUID: of the user who received the notification
+   message: a string with the actual message
+   idNotification: integer
+
+   */
+
+  var refNews = db.ref("/").child("notifications").child(firebaseUID);
+
+  refNews.once("value", function(snapshot) {
+    var snapshotValue = snapshot.val();
+
+    if(snapshotValue == null)
+      snapshotValue = [];
+
+    notificationObject["timestamp"] = new Date().getTime().toLocaleString();
+    snapshotValue.push(notificationObject);
+    db.ref("/").child("notifications").child(firebaseUID).set(snapshotValue);
+
+  })
 }

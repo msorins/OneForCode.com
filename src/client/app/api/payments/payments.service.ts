@@ -23,7 +23,6 @@ export class PaymentsService  implements  OnChanges, OnInit{
   }
 
   paymentsGetCh(firebaseUID: string, byUserName: string, token: string, amount: number): Observable<string> {
-    console.log("PAYMENTS EXECUTEEEEEED");
     let objJSON = JSON.stringify({"token" : token, "amount": amount, "byUserName": byUserName}); // Stringify payload
     let headers = new Headers({ 'Content-Type': 'application/json',
       'x-access-token' : this._authService.getFirebaseAccessToken()
@@ -33,6 +32,17 @@ export class PaymentsService  implements  OnChanges, OnInit{
     return this.http.post('http://localhost:3000/api/payments/get/ch?firebaseUID=' + firebaseUID, objJSON, options)
       .map((res:Response) => res.json())
       .do(data => console.log('paymentsGetCH', JSON.stringify(data)));  // debug
+  }
+
+  getPaymentsByUser(firebaseUID: string) {
+    let headers = new Headers({ 'Content-Type': 'application/json',
+      'x-access-token' : this._authService.getFirebaseAccessToken()
+    }); // ... Set content type to JSON
+    let options = new RequestOptions({ headers: headers }); // Create a request option
+
+    return this.http.get('http://localhost:3000/api/payments/getHistory?firebaseUID=' + firebaseUID,options) // ...using post request
+      .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
+      .do(data => console.log('addNewFeatureProject:', data))
   }
 
   ngOnChanges(changes: any) {

@@ -530,10 +530,31 @@ app.use('/api/projects/all', [function(req, res, next) {
     res.status(200).send('OPTIONS Request');
 }]);
 
-app.use('/api/payments/get/ch?', [hasFirebaseJWT, checkSameJWT, function(req, res, next) {
+app.use('/api/payments/get/ch', [hasFirebaseJWT, checkSameJWT, function(req, res, next) {
+
   if (req.method != 'OPTIONS') {
-    addChargeToPaymentsQueue(req.query.firebaseUID, req.body.byUserName, req.body.token, req.body.amount);
-    res.status(200).send('Request received');
+
+    if(req.query.firebaseUID == null)
+      res.status(200).send(JSON.stringify("Missing get parameter: firebaseUID"));
+    else {
+      addChargeToPaymentsQueue(req.query.firebaseUID, req.body.byUserName, req.body.token, req.body.amount);
+      res.status(200).send('Request received');
+    }
+  } else
+    res.status(200).send('OPTIONS Request');
+}]);
+
+app.use('/api/payments/getHistory', [hasFirebaseJWT, checkSameJWT, function(req, res, next) {
+  if (req.method != 'OPTIONS') {
+
+    if(req.query.firebaseUID == null)
+      res.status(200).send(JSON.stringify("Missing get parameter: firebaseUID"));
+    else {
+      listPaymentsOfUser(req.query.firebaseUID, function(result) {
+        res.status(200).send(result);
+      });
+
+    }
   } else
     res.status(200).send('OPTIONS Request');
 }]);
@@ -862,8 +883,9 @@ function addChargeToPaymentsQueue(firebaseUID, byUserName, token, amount) {
       byUserName: byUserName,
       token: token,
       amount: amount,
-      status: 'waiting'
-    })
+      status: 'waiting',
+      timestamp: new Date().getTime().toLocaleString()
+    });
 
   });
 }

@@ -1,0 +1,25 @@
+<div class="list-group">
+  <div *ngFor="let crt of paymentsHistoryList let i = index" href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+    <div class="row">
+      <div class="col-md-7 col-xs-12">
+        <h5>
+          <img *ngIf="crt.status == 'waiting'"  style=" margin-left:5px; margin-right:5%; max-height: 28px; float:left;" class="img-fluid rounded-circle" src="../../../assets/img/waiting.png">
+          <img *ngIf="crt.status == 'success'"  style=" margin-left:5px; margin-right:5%; max-height: 28px; float:left;" class="img-fluid rounded-circle" src="../../../assets/img/checked.png">
+          <img *ngIf="crt.status == 'error'"  style=" margin-left:5px; margin-right:5%;; max-height: 28px; float:left;" class="img-fluid rounded-circle" src="../../../assets/img/cancel.png">
+          {{crt.amount}} <img style="max-height: 22px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/price-tag.png">
+          converted to
+          x <img style="max-height: 22px; display: inline-block" class="img-fluid rounded-circle hidden-xs-down" src="../../../assets/img/euro.png">
+        </h5>
+      </div>
+
+      <div *ngIf="crt.status == 'error'" class="col-md-3 col-xs-12">
+        {{crt.error}}
+      </div>
+
+      <div [class.col-md-2.col-xs-2]="crt.status == 'error'" [class.col-md-5.col-xs-5]="crt.status != 'error'">
+        <small style="float:right"><span style="text-align: right"> 3 days ago </span> </small>
+      </div>
+    </div>
+
+  </div>
+</div>

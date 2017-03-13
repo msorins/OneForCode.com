@@ -59,8 +59,6 @@ export class DetailProjectComponent implements OnInit, OnDestroy{
 
         this.initialiseProjectContributions();
         this.initialiseProjectFeatures();
-
-
       }
     );
   }
@@ -111,18 +109,36 @@ export class DetailProjectComponent implements OnInit, OnDestroy{
 
   initialiseProjectFirebaseListener() {
     //If user is logged in enable realtime listener
-    this._authService.loggedInEvent.subscribe(
-      data => {
-        this._projectsService.subscribeToProjects(this.projectObj.byFirebaseUID, this.projectTitle).subscribe(
-          data => {
-            this.projectObj = data;
-            this.projectContributionsObj = this.toArray(data.contributions);
-            this.projectFeaturesObj = this.toArray(data.features);
-          }
-        )
-      }
-    );
+
+    if(this._authService.isAuthenticated()) {
+
+      this._projectsService.subscribeToProjects(this.projectObj.byFirebaseUID, this.projectTitle).subscribe(
+        data => {
+          this.projectObj = data;
+          this.projectContributionsObj = this.toArray(data.contributions);
+          this.projectFeaturesObj = this.toArray(data.features);
+        }
+      )
+
+    } else {
+
+      this._authService.loggedInEvent.subscribe(
+        data => {
+          this._projectsService.subscribeToProjects(this.projectObj.byFirebaseUID, this.projectTitle).subscribe(
+            data => {
+              this.projectObj = data;
+              this.projectContributionsObj = this.toArray(data.contributions);
+              this.projectFeaturesObj = this.toArray(data.features);
+            }
+          )
+        }
+      );
+
+    }
+
   }
+
+
 
   toArray(obj: any) {
     //Get an dictionary

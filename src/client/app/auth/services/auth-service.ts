@@ -17,6 +17,7 @@ export class AuthService{
 
   public loggedInEvent: EventEmitter<string> = new EventEmitter<string>();
   public canGetUserName: EventEmitter<string> = new EventEmitter<string>();
+  public canGetFirebaseAccessToken: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(public auth$: FirebaseAuth, private http: Http, public _fireBase: AngularFire) {
 
@@ -171,5 +172,6 @@ export class AuthService{
 
   saveFirebaseAccessToken(token: string) {
     this.firebaseAccessToken = token;
+    this.canGetFirebaseAccessToken.emit(token);
   }
 }

@@ -94,7 +94,7 @@ export class FindProjects implements OnInit{
       if(a.creationTimeStamp == null)
         return 1;
 
-      if(a.creationTimeStamp > b.creationTimeStamp)
+      if(a.creationTimeStamp < b.creationTimeStamp)
         return 1;
       else
         return 0;
@@ -110,6 +110,14 @@ export class FindProjects implements OnInit{
     if(numberPerPage* page < objList.length)
       return true;
     return false;
+  }
+
+  doSort() {
+    if(this.selectedFilterOption == 'top')
+      this.projectsObjFiltered = this.sortProjectsTop(this.projectsObjFiltered);
+
+    if(this.selectedFilterOption == 'new')
+      this.projectsObjFiltered = this.sortProjectsNew(this.projectsObjFiltered);
   }
 
 
