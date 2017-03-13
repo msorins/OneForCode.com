@@ -3,27 +3,34 @@ extends layout
 mixin thumbnail(key, obj)
   div.thumbnail(style="padding:15px")
     form(action="/", method="post")
-      div.col-md-6(style="margin-bottom:20px; padding-left:0px;")
+
+      div.col-md-3(style="margin-bottom:20px; padding-left:0px; ")
+        a(href='#')
+          div.input-group.input-group-lg
+            span.input-group-addon#sizing-addon2 dbFireBaseID
+            input.form-control(type="text", name="dbFireBaseID" aria-describedby="sizing-addon", value=obj.key, readonly)
+            br
+
+      div.col-md-5(style="margin-bottom:20px;")
         div.input-group.input-group-lg
-          span.input-group-addon#sizing-addon2 userToken
-          input.form-control(type="text", name="userFirebaseToken" aria-describedby="sizing-addon", value=obj.firebaseUID, readonly)
+          span.input-group-addon#sizing-addon2 userFirebaseUID
+          input.form-control(type="text", name="firebaseUID" aria-describedby="sizing-addon", value=obj.firebaseUID, readonly)
           br
 
-      div.col-md-6(style="margin-bottom:20px; padding-right:0px;")
+      div.col-md-4(style="margin-bottom:20px; padding-right:0px;")
         a(href='#')
           div.input-group.input-group-lg
             span.input-group-addon#sizing-addon2 userName
-            input.form-control(type="text", name="userName" aria-describedby="sizing-addon", value=obj.byUserName, readonly)
+            input.form-control(type="text", name="byUserName" aria-describedby="sizing-addon", value=obj.byUserName, readonly)
             br
-
 
       div.input-group.input-group-lg
         span.input-group-addon#sizing-addon2 cardToken
-        input.form-control(type="text", name="cardToken" aria-describedby="sizing-addon", value=obj.token, readonly)
+        input.form-control(type="text", name="token" aria-describedby="sizing-addon", value=obj.token, readonly)
       br
       div.input-group.input-group-lg
         span.input-group-addon#sizing-addon2 paymentAmount
-        input.form-control(type="text", name="paymentAmount" aria-describedby="sizing-addon", value=obj.amount, readonly)
+        input.form-control(type="text", name="amount" aria-describedby="sizing-addon", value=obj.amount, readonly)
       br
       div.btn-group.btn-group-justified(role="group")
         div.btn-group(role="group")

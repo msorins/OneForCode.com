@@ -569,7 +569,7 @@ function addProjects(firebaseUID, projectObj) {
   var refProjects = db.ref("/").child("projects").child(firebaseUID);
 
   refProjects.once("value", function(snapshot) {
-    userProjects = snapshot.val();
+    userPayments = snapshot.val();
 
     //Add the current project to the database
     db.ref("/").child("projects").child(firebaseUID).child(projectObj.title).update(projectObj);
@@ -641,10 +641,10 @@ function listProjectsByUser(firebaseUID, callback) {
   var refProjects = db.ref("/").child("projects").child(firebaseUID);
 
   refProjects.once("value", function(snapshot) {
-    userProjects = snapshot.val();
+    userPayments = snapshot.val();
 
     //Send the response
-    callback(userProjects);
+    callback(userPayments);
 
   }, function(errorObject) {
     console.log("The read failed: " + errorObject.code);
@@ -655,13 +655,13 @@ function listProjectsByTitle(title, callback) {
   var refProjects = db.ref("/").child("projects");
 
   refProjects.once("value", function(snapshot) {
-    userProjects = snapshot.val();
+    userPayments = snapshot.val();
 
     res = {};
-    for(firebaseUID in userProjects) {
-      for(key in userProjects[firebaseUID]) {
-        if(userProjects[firebaseUID][key]["title"] == title) {
-          res = userProjects[firebaseUID][key];
+    for(firebaseUID in userPayments) {
+      for(key in userPayments[firebaseUID]) {
+        if(userPayments[firebaseUID][key]["title"] == title) {
+          res = userPayments[firebaseUID][key];
           res["byFirebaseUID"] = firebaseUID;
           res["key"] = key;
 
@@ -844,20 +844,20 @@ function deleteNotification(firebaseUID, notificationsObj) {
 
 function addChargeToPaymentsQueue(firebaseUID, byUserName, token, amount) {
   //Add a new payment to the list of payments
-  var refPayments = db.ref("/").child("payments").once("value", function(snapshot) {
+  var refPayments = db.ref("/").child("payments").child(firebaseUID).once("value", function(snapshot) {
     payments = snapshot.val();
 
     //If the payments section does not exist, create it
     if(payments == null) {
       payments = {};
-      db.ref("/").child("payments").set({});
+      db.ref("/").child("payments").child(firebaseUID).set({});
     }
 
     //Get the number of current payments objects
     nrOfPayments = Object.keys(payments).length;
 
     //Add the latest payment requests
-    db.ref("/").child("payments").child(nrOfPayments).set({
+    db.ref("/").child("payments").child(firebaseUID).child(nrOfPayments).set({
       firebaseUID: firebaseUID,
       byUserName: byUserName,
       token: token,
@@ -866,6 +866,26 @@ function addChargeToPaymentsQueue(firebaseUID, byUserName, token, amount) {
     })
 
   });
+}
+
+function listPaymentsOfUser(firebaseUID, callback) {
+    var refPayments = db.ref("/").child("payments").child(firebaseUID);
+
+    refPayments.once("value", function(snapshot) {
+      userPayments = snapshot.val();
+
+      var res = [];
+      for(key in userPayments) {
+        var newObj = userPayments[key];
+        newObj.key = key;
+        res.push(newObj);
+      }
+
+      callback(res);
+
+    }, function(errorObject) {
+      console.log("The read failed: " + errorObject.code);
+    });
 
 }
 

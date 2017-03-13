@@ -49,7 +49,8 @@ export class PaymentsViewComponent implements OnInit{
     }, (status: number, response: any) => {
       if (status === 200) {
         this.message = `Card verification Success! Card token ${response.card.id}.`;
-        this._paymentsService.paymentsGetCh(this._authService.getFirebaseUID(), this._authService.getUserName(), response.card.id, this.paymentSum).subscribe(
+        console.log(JSON.stringify(response));
+        this._paymentsService.paymentsGetCh(this._authService.getFirebaseUID(), this._authService.getUserName(), response.id, this.paymentSum).subscribe(
           data => {
             console.log(data);
           }

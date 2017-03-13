@@ -108,8 +108,22 @@ app.use('/api/repos', [function(req, res, next) {
 function getPayments() {
   //Get the payments from FirebaseDb and set it to the global vriable paymentsList
   var refPayments = db.ref("/").child("payments").on("value", function(snapshot) {
-    this.paymentsList = snapshot.val();
-    console.log(JSON.stringify(this.paymentsList));
+    this.paymentsDbObj = snapshot.val();
+    this.paymentsList = [];
+
+    for(userUID in paymentsDbObj) {
+      for(key in paymentsDbObj[userUID]) {
+
+        //If the payment was processed do not show it anymore
+        if(paymentsDbObj[userUID][key].status != 'waiting')
+          continue;
+
+        //Else, show it
+        var newObj = paymentsDbObj[userUID][key];
+        newObj.key = key;
+        this.paymentsList.push(newObj);
+      }
+    }
   });
 }
 
