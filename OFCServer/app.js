@@ -537,8 +537,9 @@ app.use('/api/payments/get/ch', [hasFirebaseJWT, checkSameJWT, function(req, res
     if(req.query.firebaseUID == null)
       res.status(200).send(JSON.stringify("Missing get parameter: firebaseUID"));
     else {
-      addChargeToPaymentsQueue(req.query.firebaseUID, req.body.byUserName, req.body.token, req.body.amount);
-      res.status(200).send('Request received');
+      console.log(JSON.stringify(req.body));
+      addChargeToPaymentsQueue(req.query.firebaseUID, req.body.byUserName, req.body.token, req.body.amount, req.body.ch);
+      res.status(200).send(JSON.stringify({"Response": 'OK'}));
     }
   } else
     res.status(200).send('OPTIONS Request');
@@ -863,7 +864,7 @@ function deleteNotification(firebaseUID, notificationsObj) {
   db.ref("/").child("notifications").child(firebaseUID).set(notificationsObj);
 }
 
-function addChargeToPaymentsQueue(firebaseUID, byUserName, token, amount) {
+function addChargeToPaymentsQueue(firebaseUID, byUserName, token, amount, ch) {
   //Add a new payment to the list of payments
   var refPayments = db.ref("/").child("payments").child(firebaseUID).once("value", function(snapshot) {
     payments = snapshot.val();
@@ -884,6 +885,7 @@ function addChargeToPaymentsQueue(firebaseUID, byUserName, token, amount) {
       token: token,
       amount: amount,
       status: 'waiting',
+      ch: ch,
       timestamp: new Date().getTime().toLocaleString()
     });
 

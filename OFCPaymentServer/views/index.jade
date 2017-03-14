@@ -28,10 +28,20 @@ mixin thumbnail(key, obj)
         span.input-group-addon#sizing-addon2 cardToken
         input.form-control(type="text", name="token" aria-describedby="sizing-addon", value=obj.token, readonly)
       br
-      div.input-group.input-group-lg
-        span.input-group-addon#sizing-addon2 paymentAmount
-        input.form-control(type="text", name="amount" aria-describedby="sizing-addon", value=obj.amount, readonly)
-      br
+
+      div.col-md-6(style="margin-bottom:20px; padding-left:0px;")
+        div.input-group.input-group-lg
+          span.input-group-addon#sizing-addon2 paymentAmount
+          input.form-control(type="text", name="amount" aria-describedby="sizing-addon", value=obj.amount, readonly)
+        br
+
+      div.col-md-6(style="margin-bottom:20px; padding-right:0px;")
+        div.input-group.input-group-lg
+          span.input-group-addon#sizing-addon2 chReceived
+          input.form-control(type="text", name="ch" aria-describedby="sizing-addon", value=obj.ch, readonly)
+        br
+
+
       div.btn-group.btn-group-justified(role="group")
         div.btn-group(role="group")
           button.btn.btn-default(name="action", value="ok")

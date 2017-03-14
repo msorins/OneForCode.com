@@ -22,8 +22,8 @@ export class PaymentsService  implements  OnChanges, OnInit{
 
   }
 
-  paymentsGetCh(firebaseUID: string, byUserName: string, token: string, amount: number): Observable<string> {
-    let objJSON = JSON.stringify({"token" : token, "amount": amount, "byUserName": byUserName}); // Stringify payload
+  paymentsGetCh(firebaseUID: string, byUserName: string, token: string, euros: number, ch: number): Observable<string> {
+    let objJSON = JSON.stringify({"token" : token, "amount": euros, "ch": ch, "byUserName": byUserName}); // Stringify payload
     let headers = new Headers({ 'Content-Type': 'application/json',
       'x-access-token' : this._authService.getFirebaseAccessToken()
     }); // ... Set content type to JSON

@@ -26,7 +26,8 @@ export class PaymentsViewComponent implements OnInit{
   constructor(private _paymentsService: PaymentsService, private _authService: AuthService) {}
 
   paymentsOption: any = [ {ch: 1, price:4}, {ch: 2, price:7}, {ch: 5, price: 18}, {ch: 10, price: 33}, {ch: 50, price: 132 } ];
-  paymentSum: number = 4;
+  paymentValue: number = 4;
+  paymentCh: number = 0;
   message: string;
 
   ngOnInit() {
@@ -50,7 +51,16 @@ export class PaymentsViewComponent implements OnInit{
       if (status === 200) {
         this.message = `Card verification Success! Card token ${response.card.id}.`;
         console.log(JSON.stringify(response));
-        this._paymentsService.paymentsGetCh(this._authService.getFirebaseUID(), this._authService.getUserName(), response.id, this.paymentSum).subscribe(
+
+        //Get also the number of CH received for that payment valye
+        for(let i = 0; i < this.paymentsOption.length; i++) {
+          if(this.paymentsOption[i].price == this.paymentValue) {
+            this.paymentCh = this.paymentsOption[i].ch;
+            }
+        }
+
+
+        this._paymentsService.paymentsGetCh(this._authService.getFirebaseUID(), this._authService.getUserName(), response.id, this.paymentValue, this.paymentCh).subscribe(
           data => {
             console.log(data);
           }
@@ -62,7 +72,7 @@ export class PaymentsViewComponent implements OnInit{
   }
 
   onPaymentCompute(price: number) {
-    this.paymentSum = price;
+    this.paymentValue = price;
   }
 
 }
