@@ -43,7 +43,7 @@
 
     </div>
 
-    <p *ngIf="crtQuestion.status == 'closed'" class="card-text"><small class="text-muted">Answered {{timeDifference(crtQuestion.answeredTimeStamp)}} </small></p>
+    <p *ngIf="crtQuestion.status == 'closed'" class="card-text"><small class="text-muted">Answered {{_timeDifference.timeDifference(crtQuestion.answeredTimeStamp)}} </small></p>
     <p *ngIf="crtQuestion.status == 'open'" class="card-text"><small class="text-muted">Unanswered</small></p>
   </div>
 </div>

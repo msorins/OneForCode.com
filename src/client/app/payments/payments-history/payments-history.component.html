@@ -6,9 +6,9 @@
           <img *ngIf="crt.status == 'waiting'"  style=" margin-left:5px; margin-right:5%; max-height: 28px; float:left;" class="img-fluid rounded-circle" src="../../../assets/img/waiting.png">
           <img *ngIf="crt.status == 'success'"  style=" margin-left:5px; margin-right:5%; max-height: 28px; float:left;" class="img-fluid rounded-circle" src="../../../assets/img/checked.png">
           <img *ngIf="crt.status == 'error'"  style=" margin-left:5px; margin-right:5%;; max-height: 28px; float:left;" class="img-fluid rounded-circle" src="../../../assets/img/cancel.png">
-          {{crt.amount}} <img style="max-height: 22px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/price-tag.png">
+          {{crt.ch}} <img style="max-height: 22px; display: inline-block" class="img-fluid rounded-circle hidden-xs-down" src="../../../assets/img/euro-green.png">
           converted to
-          x <img style="max-height: 22px; display: inline-block" class="img-fluid rounded-circle hidden-xs-down" src="../../../assets/img/euro.png">
+          {{crt.amount}} <img style="max-height: 22px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/price-tag.png">
         </h5>
       </div>
 
@@ -17,7 +17,7 @@
       </div>
 
       <div [class.col-md-2.col-xs-2]="crt.status == 'error'" [class.col-md-5.col-xs-5]="crt.status != 'error'">
-        <small style="float:right"><span style="text-align: right"> 3 days ago </span> </small>
+        <small style="float:right"><span style="text-align: right"> {{_timeDifference.timeDifference(crt.timestamp)}} </span> </small>
       </div>
     </div>
 

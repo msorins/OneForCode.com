@@ -125,7 +125,7 @@ app.use('/api/projects/new', [hasFirebaseJWT, checkSameJWT, function(req, res, n
 
     addProjects(req.query.firebaseUID, req.body);
 
-    res.status(200).send(JSON.stringify("OK"));
+    res.status(200).send(JSON.stringify({"Response": 'OK'}));
 
   } else
     res.status(200).send('OPTIONS Request SUCCESS');
@@ -138,7 +138,7 @@ app.use('/api/feature-projects/new', [hasFirebaseJWT, checkSameJWT, function(req
 
     addFeature(req.query.firebaseUID, req.query.title, req.body);
 
-    res.status(200).send(JSON.stringify("OK"));
+    res.status(200).send(JSON.stringify({"Response": 'OK'}));
 
   } else
     res.status(200).send('OPTIONS Request SUCCESS');
@@ -151,7 +151,7 @@ app.use('/api/contribution-projects/new', [hasFirebaseJWT, checkSameJWT, functio
 
     addContribution(req.query.firebaseUID, req.query.title, req.body);
 
-    res.status(200).send(JSON.stringify("OK"));
+    res.status(200).send(JSON.stringify({"Response": 'OK'}));
 
   } else
     res.status(200).send('OPTIONS Request SUCCESS');
@@ -431,7 +431,7 @@ app.use('/api/notifications/new', [hasFirebaseJWT, function(req, res, next) {
       res.status(200).send(JSON.stringify("Missing get parameter: firebaseUID"));
     else {
       sendNotifications(req.query.firebaseUID, response);
-      res.status(200).send("OK");
+      res.status(200).send(JSON.stringify({"Response": 'OK'}));
     }
 
   } else
@@ -447,7 +447,7 @@ app.use('/api/notifications/delete', [hasFirebaseJWT, checkSameJWT, function(req
       res.status(200).send(JSON.stringify("Missing get parameter: firebaseUID"));
     else {
       deleteNotification(req.query.firebaseUID, response);
-      res.status(200).send("OK");
+      res.status(200).send(JSON.stringify({"Response": 'OK'}));
     }
 
   } else
@@ -485,7 +485,7 @@ app.post('/api/projects/upload/header', [function(req, res, next) {
     }
 
     // Everything is fine, image uploaded
-    res.status(200).send('OK');
+    res.status(200).send(JSON.stringify({"Response": 'OK'}));
   });
 }]);
 
