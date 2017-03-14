@@ -76,19 +76,19 @@
       }
 
       .carousel-item:nth-child(1) {
-          background-image: url("http://mdbootstrap.com/images/regular/nature/img%20(54).jpg");
+          background-image: url("/assets/img/homepage/1.jpg");
           background-repeat: no-repeat;
           background-size: cover;
       }
 
       .carousel-item:nth-child(2) {
-          background-image: url("http://mdbootstrap.com/images/regular/nature/img%20(4).jpg");
+          background-image: url("/assets/img/homepage/2.jpg");
           background-repeat: no-repeat;
           background-size: cover;
       }
 
       .carousel-item:nth-child(3) {
-          background-image: url("http://mdbootstrap.com/images/regular/nature/img%20(3).jpg");
+          background-image: url("/assets/img/homepage/3.jpg");
           background-repeat: no-repeat;
           background-size: cover;
       }
@@ -123,15 +123,122 @@
         border: 1px solid #DDDDDD;
       }
 
+      #loader {
+        position: relative;
+        top: 55%;
+        left: 50%;
+        margin-top: -2.7em;
+        margin-left: -2.7em;
+        width: 5.4em;
+        height: 5.4em;
+      }
+
+      #hill {
+        position: absolute;
+        width: 7.1em;
+        height: 7.1em;
+        top: 1.7em;
+        left: 1.7em;
+        background-color: transparent;
+        border-left: .25em solid #373a3c;
+        transform: rotate(45deg);
+      }
+
+      #hill:after {
+        content: '';
+        position: absolute;
+        width: 7.1em;
+        height: 7.1em;
+        left: 0;
+        background-color: transparent;
+      }
+
+      #box {
+        position: absolute;
+        left: 0;
+        bottom: -.1em;
+        width: 1em;
+        height: 1em;
+        background-color: transparent;
+        border: .25em solid #373a3c;
+        border-radius: 15%;
+        transform: translate(0, -1em) rotate(-45deg);
+        animation: push 2.5s cubic-bezier(.79, 0, .47, .97) infinite;
+      }
+
+      @keyframes push {
+        0% {
+          transform: translate(0, -1em) rotate(-45deg);
+        }
+        5% {
+          transform: translate(0, -1em) rotate(-50deg);
+        }
+        20% {
+          transform: translate(1em, -2em) rotate(47deg);
+        }
+        25% {
+          transform: translate(1em, -2em) rotate(45deg);
+        }
+        30% {
+          transform: translate(1em, -2em) rotate(40deg);
+        }
+        45% {
+          transform: translate(2em, -3em) rotate(137deg);
+        }
+        50% {
+          transform: translate(2em, -3em) rotate(135deg);
+        }
+        55% {
+          transform: translate(2em, -3em) rotate(130deg);
+        }
+        70% {
+          transform: translate(3em, -4em) rotate(217deg);
+        }
+        75% {
+          transform: translate(3em, -4em) rotate(220deg);
+        }
+        100% {
+          transform: translate(0, -1em) rotate(-225deg);
+        }
+      }
+
+
   </style>
 
+  <link rel="apple-touch-icon" sizes="57x57" href="assets/img/favicon.ico/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="57x57" href="assets/img/favicon.ico/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="assets/img/favicon.ico/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="assets/img/favicon.ico/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="assets/img/favicon.ico/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="assets/img/favicon.ico/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="assets/img/favicon.ico/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="assets/img/favicon.ico/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="assets/img/favicon.ico/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon.ico/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="assets/img/favicon.ico/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon.ico/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.ico/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon.ico/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="assets/img/favicon/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
   <!-- inject:css -->
   <!-- endinject -->
 </head>
 <body>
 
 
-  <sd-app>Loading...</sd-app>
+  <sd-app>
+    <div style="height:49%"></div>
+    <div id="loader">
+      <div id="box"></div>
+      <div id="hill"></div>
+    </div>
+
+
+
+  </sd-app>
 
   <script>
   // Fixes undefined module function in SystemJS bundle
