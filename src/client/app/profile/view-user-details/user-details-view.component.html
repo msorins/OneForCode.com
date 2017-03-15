@@ -1,0 +1,37 @@
+<div *ngIf="editable == false" class="card text-xs-center">
+
+    <img class="card-img-top" src="https://scontent.fotp3-1.fna.fbcdn.net/v/t31.0-8/14138638_749340308502810_280023003163570715_o.jpg?oh=4028dd2fc05ded142c8b4e6d7f74fd6e&oe=5972910A" alt="Card image cap">
+    <div class="card-block">
+      <h4 class="card-title">Mircea Sorin-Sebastian</h4>
+      <hr>
+      <h5 class="card-title">( sorynsoo )</h5>
+      <p class="card-text">About me stuff.</p>
+      <a href="" class="card-text align-text-bottom">http://mirceasorin.ro</a>
+    </div>
+
+</div>
+
+<!--
+<div *ngIf="editable == true" class="card text-xs-center">
+  <div  style="margin-bottom:0px;" class="form-group">
+    <label style="margin-bottom:0px; width:100%;" class="custom-file highlight">
+      <input #fileInput (change)="handleChosenImage($event)" ngFileSelect [options]="options" [events]="inputUploadEvents" (onPreviewData)="handlePreviewData($event)" type="file" id="header" name="header" class="custom-file-input headerImgUpload">
+      <span data-content="DO NOT Choose file..." class="custom-file-control" [class.custom-file-control-empty]="imageHeaderName != ''"> {{imageHeaderName}} </span>
+    </label>
+  </div>
+  <div class="card-header">
+    <h4 class="card-title">
+      <span>{{post?.title}}</span>
+      <img *ngIf="_authService.getFirebaseUID() == post.byFirebaseUID" (click)="editable = false" (click)="save()" style="margin-left:5px; max-height: 25px; display: inline-block; float:right" class="img-fluid rounded-circle" src="../../../assets/img/save.png">
+    </h4>
+
+  </div>
+  <div class="card-block">
+    <h4 contenteditable="true" class="card-text highlight" style="white-space: pre-wrap;" [textContent]="post.description" (input)="post.description=$event.target.textContent">{{post.description}}</h4>
+    <a *ngIf="showDetailsButton != false" [routerLink]="['/project',  post.title ]" class="btn btn-default">Details</a>
+  </div>
+  <div contenteditable="true" class="card-footer text-muted align-middle highlight" [textContent]="post.tags" (input)="post.tags=$event.target.textContent">
+    {{post?.tags}}
+  </div>
+</div>
+-->

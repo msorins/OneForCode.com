@@ -7,6 +7,7 @@ import { ProfileViewComponent } from "./view-profile/profile-view.component";
   imports: [
     RouterModule.forChild([
       { path: 'profile', component: ProfileViewComponent },
+      { path: 'profile/:user', component: ProfileViewComponent },
     ])
   ],
   exports: [RouterModule]

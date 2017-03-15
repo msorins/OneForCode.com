@@ -1,5 +1,6 @@
 import { Component, OnInit  } from '@angular/core';
 import { ProjectsService } from '../../api/projects/projects.service';
+import { ProjectInterface } from "../../projects/project.interface";
 
 @Component({
   moduleId: module.id,
@@ -9,15 +10,17 @@ import { ProjectsService } from '../../api/projects/projects.service';
 })
 
 export class PromoComponent implements OnInit{
-    posts: any[] = [];
+    posts: ProjectInterface[] = [];
 
-    constructor(public projectsService: ProjectsService) {}
+    constructor(public _projectsService: ProjectsService) {}
 
     ngOnInit() {
-        this.projectsService.getOpenProjects()
-          .subscribe(
-            posts => this.posts = posts['data']
-          );
+        this._projectsService.getTopProjects(6).subscribe(
+          data => {
+            this.posts = data;
+            console.log("Receiveeed");
+          }
+        )
     }
 
 }

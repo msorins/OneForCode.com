@@ -530,6 +530,23 @@ app.use('/api/projects/all', [function(req, res, next) {
     res.status(200).send('OPTIONS Request');
 }]);
 
+app.use('/api/projects/top', [function(req, res, next) {
+  if (req.method != 'OPTIONS') {
+    var limit;
+    if(req.query.limit == null)
+      limit = 10;
+    else
+      limit = req.query.limit;
+
+    listTopProjects(limit, function(result) {
+      res.status(200).send(result);
+    });
+
+
+  } else
+    res.status(200).send('OPTIONS Request');
+}]);
+
 app.use('/api/payments/get/ch', [hasFirebaseJWT, checkSameJWT, function(req, res, next) {
 
   if (req.method != 'OPTIONS') {
@@ -720,6 +737,62 @@ function listAllProjects(callback) {
 
       callback(res);
   })
+}
+
+function listTopProjects(limit, callback) {
+  /*
+   Returns through callback a list with the top projects
+   */
+  db.ref("/").child("projects").once("value", function(snapshot) {
+    dbObj = snapshot.val();
+    res = [];
+
+    for(firebaseUID in dbObj) {
+      for(key in dbObj[firebaseUID]) {
+        obj = dbObj[firebaseUID][key]; //Here in the future I can minimise the object size that I send over
+        res["byFirebaseUID"] = firebaseUID;
+        res["key"] = key;
+        res.push(obj);
+      }
+    }
+
+    //Sort the return Object
+    res = sortProjectsTop(res);
+
+    //Splice and return it
+    callback(res.slice(0, limit));
+  })
+}
+
+function sortProjectsTop(obj) {
+  return obj.sort(function(a, b) {
+    var nrA = 0;
+    var nrB = 0;
+
+    if(typeof(a.features) != 'undefined')
+      nrA += Object.keys(a.features).length;
+
+    if(typeof(b.features) != 'undefined')
+      nrB += Object.keys(b.features).length;
+
+
+    if(typeof(a.features) != 'undefined' && typeof(a.features.questions) != 'undefined')
+      nrA += Object.keys(a.features.questions).length;
+
+    if(typeof(b.features) != 'undefined' && typeof(b.features.questions) != 'undefined')
+      nrB += Object.keys(b.features.questions).length;
+
+    if(typeof(a.contributions) != 'undefined')
+      nrA += Object.keys(a.contributions).length;
+    if(typeof(b.contributions) != 'undefined')
+      nrB += Object.keys(b.contributions).length;
+
+
+    if(nrA < nrB)
+      return 1;
+    else
+      return 0;
+  });
 }
 
 function acceptContribution(firebaseUID, projectTitle, gitPullUid, callback) {

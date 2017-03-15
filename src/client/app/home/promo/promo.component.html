@@ -2,21 +2,31 @@
   <div class="row container-full">
     <!--Second column-->
     <div class="col-md-6">
-      <h2 class="h2-responsive flex-item text-center">Contribute & Get PH points</h2>
+      <h2 class="h2-responsive flex-item text-center">Contribute & Get CH <img style="margin-bottom:7px; max-height: 22px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/price-tag.png"></h2>
       <div style="margin-top:20px; margin:5px" class="card-columns">
 
-        <ofc-projectView [post]="post" *ngFor="let post of posts"></ofc-projectView>
+        <div *ngFor="let post of posts">
+          <ofc-projectView [post]="post"></ofc-projectView>
+          <br><br>
+        </div>
+
+      </div>
+
+      <div style="margin-bottom: 20px;" class="center">
+        <a class="btn btn-default btn-lg text-center" routerLink="/find" routerLinkActive="active" >More</a>
       </div>
     </div>
+
+
     <!--/.Second column-->
 
     <hr class="hidden-md-up">
 
     <!--Third column-->
     <div class="col-md-6">
-      <h2 class="h2-responsive flex-item">Hire & Pay with PH points</h2>
+      <h2 class="h2-responsive flex-item">Get help & Pay with CH <img style="margin-bottom:7px; max-height: 22px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/price-tag.png"></h2>
 
-      <div class="center">
+      <div style="margin-top:20%;" class="center">
           <a class="btn btn-default btn-lg text-center" routerLink="/add" routerLinkActive="active" >Add a project</a>
       </div>
     </div>
