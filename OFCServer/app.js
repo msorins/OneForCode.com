@@ -153,7 +153,7 @@ app.use('/api/feature-projects/new', [hasFirebaseJWT, checkSameJWT, function(req
 
 }]);
 
-app.use('/api/contribution-projects/new', [hasFirebaseJWT, checkSameJWT, function(req, res, next) {
+app.use('/api/contribution-projects/new', [hasFirebaseJWT, function(req, res, next) {
   if (req.method != 'OPTIONS') {
     response = req.body;
 
@@ -867,6 +867,11 @@ function acceptContribution(firebaseUID, projectTitle, gitPullUid, callback) {
 
 
   });
+
+
+  //Add CH contributing user
+  
+  /* TO DO */
 
   //Return the list of modified contributions
   listContributionsByTitle(firebaseUID, projectTitle, function(result) {

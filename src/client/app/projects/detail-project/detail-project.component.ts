@@ -26,6 +26,7 @@ export class DetailProjectComponent implements OnInit, OnDestroy{
   private sub: any;
   public test:string = "Test title";
   public userFireBaseObservable: FirebaseObjectObservable<any>;
+  public notLoaded = true;
 
   constructor(private _ActivatedRoute: ActivatedRoute, public _projectsService: ProjectsService, public _authService: AuthService,  public _fireBase: AngularFire, private _paymentsService: PaymentsService) {}
 
@@ -53,6 +54,7 @@ export class DetailProjectComponent implements OnInit, OnDestroy{
     this._projectsService.getProjectByTitle(this.projectTitle).subscribe(
       data => {
         this.projectObj = data;
+        this.notLoaded = false;
 
         //Enable real time listener
         this.initialiseProjectFirebaseListener();

@@ -2,6 +2,7 @@ import {Component, Input, OnChanges, EventEmitter, Output} from '@angular/core';
 import { FeaturesProjectInterface } from "../features-project.interface";
 import {ProjectInterface} from "../project.interface";
 import {QuestionsInterface} from "../questions.interface";
+import {AuthService} from "../../auth/services/auth-service";
 
 
 @Component({
@@ -24,6 +25,7 @@ export class FeatureViewComponent implements OnChanges{
   isFeatureSelected = false;
   selectedFeature: FeaturesProjectInterface;
 
+  constructor(private _authService: AuthService) {}
   ngOnChanges() {
     this.projectTitle = this.project.title;
 

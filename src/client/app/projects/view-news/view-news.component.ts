@@ -22,6 +22,7 @@ export class ViewNewsComponent implements OnInit, OnChanges{
 
   public editable:boolean = false;
   public newsList: any[] = []; // Actually NewsInterface[]
+  public notLoaded: boolean = true;
 
   constructor(public _authService: AuthService, public _projectsService: ProjectsService) {}
 
@@ -31,6 +32,7 @@ export class ViewNewsComponent implements OnInit, OnChanges{
 
   ngOnChanges() {
     this.newsList = this.projectObj.news;
+    this.notLoaded = false;
     if(this.newsList == null || this.newsList.length == 0 ) {
       this.newsList = [];
       this.plusNews();
@@ -40,13 +42,6 @@ export class ViewNewsComponent implements OnInit, OnChanges{
 
   load() {
 
-      this._projectsService.getNews(this._authService.getFirebaseUID(), this.projectObj.title)
-        .subscribe(
-          data=> {
-            console.log(data);
-            this.newsList = data;
-          }
-        )
 
   }
 

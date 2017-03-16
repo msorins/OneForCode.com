@@ -66,7 +66,10 @@ export class SendContributionProjectComponent implements OnInit{
   initialiseProjectPulls() {
     //Get pulls for the current project
     this._projectsService.getPulls(this.projectObj.gitUID, this.projectObj.gitProject).subscribe(
-      data => this.projectPullsObj = this.filterPulls(data)
+      data => {
+        console.log("PULLS:" + JSON.stringify(data));
+        this.projectPullsObj = this.filterPulls(data)
+      }
     )
   }
 

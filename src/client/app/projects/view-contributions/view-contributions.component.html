@@ -19,7 +19,7 @@
     <table style="margin-top:15px;" class="table">
       <thead class="thead-default">
       <tr>
-        <th *ngIf="this.owner == true"></th>
+        <th *ngIf="_authService.getFirebaseUID() == project.byFirebaseUID"></th>
         <th>User</th>
         <th>Feature</th>
         <th>GitHub</th>
@@ -28,7 +28,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let crt of waitingContributions">
-        <td *ngIf="_authService.getFirebaseUID() === project.byFirebaseUID"> <img (click)="selectedContribution = crt.gitPullId" data-toggle="modal" data-target="#confirmAccept" style="margin-left:5px; max-height: 25px; display: inline-block; position: absolute" class="img-fluid rounded-circle" src="../../../assets/img/checked.png"> <img (click)="selectedContribution = crt.gitPullId" data-toggle="modal" data-target="#confirmDeny" style="margin-left:55px; max-height: 25px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/ban.png">  </td>
+        <td *ngIf="_authService.getFirebaseUID() == project.byFirebaseUID"> <img (click)="selectedContribution = crt.gitPullId" data-toggle="modal" data-target="#confirmAccept" style="margin-left:5px; max-height: 25px; display: inline-block; position: absolute" class="img-fluid rounded-circle" src="../../../assets/img/checked.png"> <img (click)="selectedContribution = crt.gitPullId" data-toggle="modal" data-target="#confirmDeny" style="margin-left:55px; max-height: 25px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/ban.png">  </td>
         <td>{{crt.byUserName}}</td>
         <td>{{crt.featureTitle}}</td>
         <td><a href="{{crt.gitHtmlUrl}}">{{crt.gitTitle}}</a></td>
@@ -100,7 +100,7 @@
         <h4 class="modal-title">Confirm contribution</h4>
       </div>
       <div class="modal-body">
-        <ofc-paymentsView></ofc-paymentsView>
+
       </div>
       <div class="modal-footer">
         <button (click)="submitAcceptContribution(selectedContribution)" style="width:100%" type="submit" class="btn btn-default" data-dismiss="modal">Submit</button>
