@@ -15,32 +15,29 @@
         </a>
       </h5>
       <p class="card-text"> {{ userProfile?.bio }}</p>
-      <a href="" class="card-text align-text-bottom">{{userProfile?.blog}}</a>
+      <a href="{{userProfile?.blog}}" class="card-text align-text-bottom">{{userProfile?.blog}}</a>
     </div>
 
 </div>
 
-<!--
 <div *ngIf="editable == true" class="card text-xs-center">
-  <div  style="margin-bottom:0px;" class="form-group">
-    <label style="margin-bottom:0px; width:100%;" class="custom-file highlight">
-      <input #fileInput (change)="handleChosenImage($event)" ngFileSelect [options]="options" [events]="inputUploadEvents" (onPreviewData)="handlePreviewData($event)" type="file" id="header" name="header" class="custom-file-input headerImgUpload">
-      <span data-content="DO NOT Choose file..." class="custom-file-control" [class.custom-file-control-empty]="imageHeaderName != ''"> {{imageHeaderName}} </span>
-    </label>
-  </div>
-  <div class="card-header">
-    <h4 class="card-title">
-      <span>{{post?.title}}</span>
-      <img *ngIf="_authService.getFirebaseUID() == post.byFirebaseUID" (click)="editable = false" (click)="save()" style="margin-left:5px; max-height: 25px; display: inline-block; float:right" class="img-fluid rounded-circle" src="../../../assets/img/save.png">
-    </h4>
 
-  </div>
+  <img class="card-img-top" src="{{userProfile?.avatarUrl}}" alt="{{userProfile?.username}} profile picture">
   <div class="card-block">
-    <h4 contenteditable="true" class="card-text highlight" style="white-space: pre-wrap;" [textContent]="post.bio" (input)="post.bio=$event.target.textContent">{{post.bio}}</h4>
-    <a *ngIf="showDetailsButton != false" [routerLink]="['/project',  post.title ]" class="btn btn-default">Details</a>
+    <h4 class="card-title">{{userProfile?.name}}
+
+      <!--If user is authentificated and it's his profile-->
+      <img *ngIf="_authService.isAuthenticated() && _authService.getUserName() != project?.username" (click) = "editable = false" (click) = "save()" style="float:right; margin-left:5px; margin-right:5px; max-height: 25px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/save.png">
+    </h4>
+    <hr>
+    <h5 class="card-title">
+      <a href="{{userProfile?.githubUrl}}">
+        <img style="margin-left:5px; margin-right:3px; max-height: 22px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/github.png">
+        {{userProfile?.username }}
+      </a>
+    </h5>
+    <p class="card-text" class="highlight"  contenteditable="true" [textContent]="userProfile.bio" (input)="userProfile.bio = $event.target.textContent"> {{ userProfile?.bio }}</p>
+    <a href="{{userProfile?.blog}}"   contenteditable="true" [textContent]="userProfile.blog" (input)="userProfile.blog = $event.target.textContent" class="card-text align-text-bottom highlight">{{userProfile?.blog}}</a>
   </div>
-  <div contenteditable="true" class="card-footer text-muted align-middle highlight" [textContent]="post.tags" (input)="post.tags=$event.target.textContent">
-    {{post?.tags}}
-  </div>
+
 </div>
--->

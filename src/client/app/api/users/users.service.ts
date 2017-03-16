@@ -2,7 +2,7 @@
  * Created by so on 15/03/2017.
  */
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { AuthService } from '../../auth/services/auth-service'
 
@@ -25,6 +25,19 @@ export class UsersService {
       url = 'http://localhost:3000/api/users/get/profile?username=' + username;
 
     return this.http.get(url)
+      .map((res: Response) => res.json())
+      .do(data => console.log('getUserProfile:', data))  // debug
+      .catch(this.handleError);
+  }
+
+  saveUserProfile(firebaseUID: string, userObj: UserProfileInterface): Observable<UserProfileInterface> {
+    let objJSON = JSON.stringify(userObj); // Stringify payload
+    let headers = new Headers({ 'Content-Type': 'application/json',
+      'x-access-token' : this._authService.getFirebaseAccessToken()
+    }); // ... Set content type to JSON
+    let options = new RequestOptions({ headers: headers }); // Create a request option
+
+    return this.http.post('http://localhost:3000/api/users/save/profile?firebaseUID=' + firebaseUID, objJSON, options)
       .map((res: Response) => res.json())
       .do(data => console.log('getUserProfile:', data))  // debug
       .catch(this.handleError);

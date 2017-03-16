@@ -421,8 +421,28 @@ app.use('/api/users/get/profile', [function(req, res, next) {
   }
   else
     res.status(200).send('OPTIONS Request SUCCESS');
-
 }]);
+
+app.use('/api/users/save/profile', [hasFirebaseJWT, checkSameJWT, function(req, res, next) {
+  /*
+   @Input: GET parameter 'gitToken' and 'firebaseUID'
+   @Returns: JSON with Git user info
+   */
+  if (req.method != 'OPTIONS') {
+    if(req.query.firebaseUID != null) {
+
+      saveUserProfile(req.query.firebaseUID, req.body, function(result) {
+        res.status(200).send(result);
+      });
+
+    } else {
+      res.status(200).send("Must provide an firebaseUID GET parameter ");
+    }
+  }
+  else
+    res.status(200).send('OPTIONS Request SUCCESS');
+}]);
+
 
 app.use('/api/projects/setNews', [hasFirebaseJWT, checkSameJWT, function(req, res, next) {
   if (req.method != 'OPTIONS') {
@@ -870,7 +890,7 @@ function acceptContribution(firebaseUID, projectTitle, gitPullUid, callback) {
 
 
   //Add CH contributing user
-  
+
   /* TO DO */
 
   //Return the list of modified contributions
@@ -1070,7 +1090,14 @@ function getUserProfile(name, firebaseUID, callback) {
     })
 
   }
+}
 
+function saveUserProfile(firebaseUID, obj, callback) {
+  /*
+   Updates the user profile
+   */
+
+  db.ref("/").child("users").child(firebaseUID).update(obj);
 }
 
 function filterUserProfile(obj) {
@@ -1093,6 +1120,20 @@ function filterUserProfile(obj) {
     resObject['bio'] = '';
 
   return resObject;
+}
+
+function convertFiltering(obj) {
+  /*
+  Basically inverts the functionality of last function
+   */
+
+  obj['html_url'] = resObject['githubUrl'];
+  obj['avatar_url'] = resObject['avatarUrl'];
+
+  delete(resObject['githubUrl']);
+  delete(resObject['avatarUrl']);
+
+  return obj;
 }
 
 /* ===== SECURITY FUNCTIONS ====== */

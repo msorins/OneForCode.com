@@ -144,7 +144,6 @@ export class ProjectsService  implements  OnChanges{
 
   getPulls(gitUserName: string, gitRepoName: string): Observable<ProjectInterface> {
     return this.http.get('http://localhost:3000/api/projects/getPulls?gitUserName=' + gitUserName + '&gitRepoName=' + gitRepoName)
-      .do(data => console.log('GetPulls', data))
       .map((res:Response) => res.json())
       .do(data => console.log('getPulls', data));// debug
   }
