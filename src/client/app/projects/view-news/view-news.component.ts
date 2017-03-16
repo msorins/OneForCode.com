@@ -65,7 +65,7 @@ export class ViewNewsComponent implements OnInit, OnChanges{
   }
 
   plusNews() {
-    this.newsList.push({title: "Title", "description": "bio", footer:"footer", date:"12.12.2015"});
+    this.newsList.push({title: "Title", "description": "description", footer:"footer", date:"12.12.2015"});
   }
 
 }

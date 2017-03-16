@@ -8,7 +8,7 @@
         <h5 class="mb-1">{{crt.title }}<span contenteditable="true" [textContent]="test" (input)="test=$event.target.textContent"> </span> <img *ngIf="i == 0" (click) = "editable = true"  style="float:right; margin-left:5px; margin-right:5px; max-height: 25px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/edit.png"> </h5>
         <small>3 days ago</small>
       </div>
-      <p class="mb-1">{{crt.bio}}</p>
+      <p class="mb-1">{{crt.description}}</p>
       <small>{{crt.footer}}</small>
     </div>
   </div>
@@ -27,7 +27,7 @@
         </h5>
         <small>3 days ago</small>
       </div>
-      <p contenteditable="true" class="mb-1 highlight" [textContent]="crt.bio" (input)="crt.description = $event.target.textContent">{{crt.bio}}</p>
+      <p contenteditable="true" class="mb-1 highlight" [textContent]="crt.description" (input)="crt.description = $event.target.textContent">{{crt.description}}</p>
       <small contenteditable="true" class="highlight" [textContent]="crt.footer" (input)="crt.footer=$event.target.textContent">{{crt.footer}}.</small>
 
       <img *ngIf="i == newsList.length - 1" (click)="plusNews()" style="margin-bottom:-25px; float:right; margin-left:5px; margin-right:5px; max-height: 25px;" class="img-fluid rounded-circle" src="../../../assets/img/add-button.png">
