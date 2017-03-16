@@ -161,10 +161,16 @@ export class AuthService{
     //Returns through a callback the current firebaseAccessToken
     let auth = this._fireBase.auth.subscribe(
       data => {
-        data.auth.getToken().then( data => this.saveFirebaseAccessToken(data));
+        if(data == null) {
+
+        } else {
+          data.auth.getToken().then( data => this.saveFirebaseAccessToken(data));
+        }
       }
     );
   }
+
+
 
   getFirebaseAccessToken():string {
     return this.firebaseAccessToken;

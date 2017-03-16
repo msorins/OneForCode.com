@@ -123,9 +123,13 @@ app.use('/api/projects/new', [hasFirebaseJWT, checkSameJWT, function(req, res, n
   if (req.method != 'OPTIONS') {
     response = req.body;
 
-    addProjects(req.query.firebaseUID, req.body);
+    if(req.query.firebaseUID == null)
+      res.send(200).send("Must contain a firebaseUID");
+    else {
+      addProjects(req.query.firebaseUID, req.body);
+      res.status(200).send(JSON.stringify({"Response": 'OK'}));
+    }
 
-    res.status(200).send(JSON.stringify({"Response": 'OK'}));
 
   } else
     res.status(200).send('OPTIONS Request SUCCESS');
@@ -136,9 +140,13 @@ app.use('/api/feature-projects/new', [hasFirebaseJWT, checkSameJWT, function(req
   if (req.method != 'OPTIONS') {
     response = req.body;
 
-    addFeature(req.query.firebaseUID, req.query.title, req.body);
+    if(req.query.firebaseUID == null || req.query.title == null)
+      res.send(200).send("Must contain a firebaseUID and a titleparameter");
+    else {
+      addFeature(req.query.firebaseUID, req.query.title, req.body);
+      res.status(200).send(JSON.stringify({"Response": 'OK'}));
+    }
 
-    res.status(200).send(JSON.stringify({"Response": 'OK'}));
 
   } else
     res.status(200).send('OPTIONS Request SUCCESS');
@@ -389,6 +397,33 @@ app.use('/api/users/get/gitToken', [function(req, res, next) {
 
 }]);
 
+
+app.use('/api/users/get/profile', [function(req, res, next) {
+  /*
+   @Input: GET parameter 'gitToken' and 'firebaseUID'
+   @Returns: JSON with Git user info
+   */
+  if (req.method != 'OPTIONS') {
+    if(req.query.username != null) {
+
+      if(req.query.firebaseUID != null)
+        getUserProfile(req.query.username, req.query.firebaseUID, function(result) {
+          res.status(200).send(result);
+        });
+      else
+        getUserProfile(req.query.username, '', function(result) {
+          res.status(200).send(result);
+        });
+
+    } else {
+      res.status(200).send("Must provide an username GET parameter ");
+    }
+  }
+  else
+    res.status(200).send('OPTIONS Request SUCCESS');
+
+}]);
+
 app.use('/api/projects/setNews', [hasFirebaseJWT, checkSameJWT, function(req, res, next) {
   if (req.method != 'OPTIONS') {
     response = req.body;
@@ -607,10 +642,12 @@ function addProjects(firebaseUID, projectObj) {
   //Adds it to the firebase database
   var refProjects = db.ref("/").child("projects").child(firebaseUID);
 
+  delete projectObj['$key'];
   refProjects.once("value", function(snapshot) {
     userPayments = snapshot.val();
 
     //Add the current project to the database
+    console.log(firebaseUID + " - " + projectObj.title);
     db.ref("/").child("projects").child(firebaseUID).child(projectObj.title).update(projectObj);
 
   }, function(errorObject) {
@@ -986,8 +1023,74 @@ function listPaymentsOfUser(firebaseUID, callback) {
 
 }
 
-/* ===== SECURITY FUNCTIONS ====== */
+function getUserProfile(name, firebaseUID, callback) {
+  /*
+    Return an object with the following properties
+     name: string,
+     username: string,
+     githubUrl: string,
+     avatarUrl: string
+     websiteUrl: string,
+     bio: string
+   */
 
+  var resObject = {};
+
+  //If the firebaseUID property does exist than directly get the user data
+  if(firebaseUID != '') {
+    db.ref("/").child("users").child(firebaseUID).once("value", function(snapshot) {
+      user = snapshot.val();
+      //Return the filtered object
+      callback(filterUserProfile(user));
+    });
+  } else {
+    //Otherwise must loop through all the users and get the
+    db.ref("/").child("users").once("value", function(snapshot) {
+      console.log('THAT IS OKAY');
+      user = snapshot.val();
+
+      var found = false;
+      for(var key in user) {
+        if(user[key]['login'] == name) {
+          console.log("FOUND");
+          found = true;
+          callback(filterUserProfile(user[key]));
+          break;
+        }
+      }
+      if(!found) {
+        callback(filterUserProfile({}));
+      }
+
+    })
+
+  }
+
+}
+
+function filterUserProfile(obj) {
+  /*
+  Receives all the users object and only outputs what is needed for profile
+   */
+  var resObject = {};
+
+  resObject['name'] = obj['name'];
+  resObject['username'] = obj['login'];
+  resObject['githubUrl'] = obj['html_url'];
+  resObject['avatarUrl'] = obj['avatar_url'];
+  resObject['blog'] = obj['blog'];
+  resObject['bio'] = obj['bio'];
+
+  if(resObject['blog'] == null)
+    resObject['blog'] = '';
+
+  if(resObject['bio'] == null)
+    resObject['bio'] = '';
+
+  return resObject;
+}
+
+/* ===== SECURITY FUNCTIONS ====== */
 function hasFirebaseJWT(req, res, next) {
   var token = req.headers['x-access-token'];
 

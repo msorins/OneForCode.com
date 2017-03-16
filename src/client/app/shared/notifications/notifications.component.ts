@@ -22,7 +22,7 @@ export class NotificationsComponent implements OnInit{
 
   ngOnInit() {
     //When user is logged call the getNotifications function
-    this._authService.loggedInEvent.subscribe(
+    this._authService.canGetFirebaseAccessToken.subscribe(
       data => {
         this.getNotifications();
       }

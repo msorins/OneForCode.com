@@ -1,12 +1,21 @@
 <div *ngIf="editable == false" class="card text-xs-center">
 
-    <img class="card-img-top" src="https://scontent.fotp3-1.fna.fbcdn.net/v/t31.0-8/14138638_749340308502810_280023003163570715_o.jpg?oh=4028dd2fc05ded142c8b4e6d7f74fd6e&oe=5972910A" alt="Card image cap">
+    <img class="card-img-top" src="{{userProfile?.avatarUrl}}" alt="{{userProfile?.username}} profile picture">
     <div class="card-block">
-      <h4 class="card-title">Mircea Sorin-Sebastian</h4>
+      <h4 class="card-title">{{userProfile?.name}}
+
+        <!--If user is authentificated and it's his profile-->
+        <img *ngIf="_authService.isAuthenticated() && _authService.getUserName() != project?.username" (click) = "editable = true" style="float:right; margin-left:5px; margin-right:5px; max-height: 25px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/edit-black.png">
+      </h4>
       <hr>
-      <h5 class="card-title">( sorynsoo )</h5>
-      <p class="card-text">About me stuff.</p>
-      <a href="" class="card-text align-text-bottom">http://mirceasorin.ro</a>
+      <h5 class="card-title">
+        <a href="{{userProfile?.githubUrl}}">
+          <img style="margin-left:5px; margin-right:3px; max-height: 22px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/github.png">
+          {{userProfile?.username }}
+        </a>
+      </h5>
+      <p class="card-text"> {{ userProfile?.bio }}</p>
+      <a href="" class="card-text align-text-bottom">{{userProfile?.blog}}</a>
     </div>
 
 </div>
@@ -27,7 +36,7 @@
 
   </div>
   <div class="card-block">
-    <h4 contenteditable="true" class="card-text highlight" style="white-space: pre-wrap;" [textContent]="post.description" (input)="post.description=$event.target.textContent">{{post.description}}</h4>
+    <h4 contenteditable="true" class="card-text highlight" style="white-space: pre-wrap;" [textContent]="post.bio" (input)="post.bio=$event.target.textContent">{{post.bio}}</h4>
     <a *ngIf="showDetailsButton != false" [routerLink]="['/project',  post.title ]" class="btn btn-default">Details</a>
   </div>
   <div contenteditable="true" class="card-footer text-muted align-middle highlight" [textContent]="post.tags" (input)="post.tags=$event.target.textContent">

@@ -1,8 +1,9 @@
 /**
  * Created by so on 15/03/2017.
  */
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {AuthService} from "../../auth/services/auth-service";
+import {UserProfileInterface} from "../user-profile.interface";
 
 
 @Component({
@@ -13,6 +14,8 @@ import {AuthService} from "../../auth/services/auth-service";
 })
 
 export class UserDetailsComponent {
+  @Input('userProfile') userProfile: UserProfileInterface;
+
   public editable:boolean = false;
   public post:any;
 

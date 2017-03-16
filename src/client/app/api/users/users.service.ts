@@ -6,7 +6,8 @@ import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { AuthService } from '../../auth/services/auth-service'
 
-import 'rxjs/add/operator/do';  // for debugging
+import 'rxjs/add/operator/do';
+import {UserProfileInterface} from "../../profile/user-profile.interface";  // for debugging
 
 
 @Injectable()
@@ -15,11 +16,17 @@ export class UsersService {
 
   constructor(private http: Http, private _authService: AuthService) {}
 
-  getUserDataByName(username: string): Observable<string[]> {
-    /* TO DO */
-    return this.http.get('http://localhost:3000/api/users?username=' + username)
+  getUserProfile(username: string, firebaseUID?: string): Observable<UserProfileInterface> {
+    let url: string;
+
+    if(firebaseUID)
+      url = 'http://localhost:3000/api/users/get/profile?username=' + username+'&firebaseUID=' + firebaseUID;
+    else
+      url = 'http://localhost:3000/api/users/get/profile?username=' + username;
+
+    return this.http.get(url)
       .map((res: Response) => res.json())
-      .do(data => console.log('getUserRepos:', data))  // debug
+      .do(data => console.log('getUserProfile:', data))  // debug
       .catch(this.handleError);
   }
 

@@ -49,6 +49,7 @@ export class ProjectViewComponent implements  OnChanges{
     if(this.imageHeaderName != '')
       this.post.hasHeader = true;
 
+    console.log("POST: " + JSON.stringify(this.post));
     this._projectsService.addNewProject(this._authService.getFirebaseUID(), this.post)
       .subscribe(
         data => {
