@@ -102,6 +102,15 @@ export class ProjectConfig extends SeedConfig {
       }
     });
 
+    this.addPackageBundles({
+      name: 'google-chart',
+      path: 'node_modules/angular2-google-chart',
+      packageMeta: {
+        main: 'directives/angular2-google-chart.directive.js',
+        defaultExtension: 'js'
+      }
+    });
+
     // Add packages (e.g. lodash)
     // let additionalPackages: ExtendPackages[] = [{
     //   name: 'lodash',
