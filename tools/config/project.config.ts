@@ -93,6 +93,15 @@ export class ProjectConfig extends SeedConfig {
       }
     });
 
+    this.addPackageBundles({
+      name: 'ngx-uploader',
+      path: 'node_modules/ngx-uploader',
+      packageMeta: {
+        main: 'bundle/ngx-uploader.umd.js',
+        defaultExtension: 'js'
+      }
+    });
+
     // Add packages (e.g. lodash)
     // let additionalPackages: ExtendPackages[] = [{
     //   name: 'lodash',

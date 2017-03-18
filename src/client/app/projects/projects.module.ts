@@ -16,7 +16,7 @@ import {FeatureViewComponent} from "./view-features/view-features.component";
 import {ContributionViewComponent} from "./view-contributions/view-contributions.component";
 import {ViewNewsComponent} from "./view-news/view-news.component";
 import {FileSelectDirective, FileUploader} from "ng2-file-upload/ng2-file-upload";
-import { NgUploaderModule } from 'ngx-uploader/ngx-uploader';
+import { NgUploaderModule } from 'ngx-uploader';
 import { DetailFeatureComponent } from './detail-feature/index';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { QuestionsViewComponent } from './view-questions/index';

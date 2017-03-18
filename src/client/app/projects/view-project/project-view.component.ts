@@ -1,7 +1,7 @@
 import {Component, Input, ElementRef, ViewChild, NgZone, Inject, OnChanges, EventEmitter} from '@angular/core';
 import { AuthService } from "../../auth/services/auth-service";
 import { ProjectsService } from "../../api/projects/projects.service";
-import { NgUploaderOptions } from "ngx-uploader/ngx-uploader";
+import { NgUploaderOptions } from "ngx-uploader";
 
 @Component({
   moduleId: module.id,

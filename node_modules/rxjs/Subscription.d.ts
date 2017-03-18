@@ -25,6 +25,7 @@ export declare class Subscription implements ISubscription {
      * @type {boolean}
      */
     closed: boolean;
+    private _subscriptions;
     /**
      * @param {function(): void} [unsubscribe] A function describing how to
      * perform the disposal of resources when the `unsubscribe` method is called.
@@ -63,4 +64,10 @@ export declare class Subscription implements ISubscription {
      * @return {void}
      */
     remove(subscription: Subscription): void;
+}
+export declare class ChildSubscription extends Subscription {
+    private _innerSub;
+    private _parent;
+    constructor(_innerSub: ISubscription, _parent: Subscription);
+    _unsubscribe(): void;
 }
