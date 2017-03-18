@@ -9,8 +9,6 @@ import {UserDetailsComponent} from "./view-user-details/index";
 import {ChartsViewComponent} from "./view-charts/charts-view.component";
 
 
-
-
 @NgModule({
   imports: [ReactiveFormsModule, ProfileRoutingModule, SharedModule, PaymentsModule],
   declarations: [ProfileViewComponent, UserDetailsComponent, ChartsViewComponent],
