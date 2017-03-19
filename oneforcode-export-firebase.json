@@ -1,0 +1,488 @@
+{
+  "activities" : {
+    "klIuaK2mH4Xr0RX6O017NZ5MNQI3" : [ {
+      "message" : "Registered on OFC :)",
+      "timestamp" : "1489916996090",
+      "url" : "profile/msorynsoo"
+    } ]
+  },
+  "notifications" : {
+    "iaLnLByEfxV6AOFh0wkCC5z0GHF2" : [ {
+      "id" : 4,
+      "message" : "msorynsoo asked a question on MyAndroidGame/MainActivity",
+      "timestamp" : "1488963990372",
+      "url" : "project/MyAndroidGame"
+    }, {
+      "id" : 4,
+      "message" : "msorynsoo asked a question on MyAndroidGame/MainActivity",
+      "timestamp" : "1488964004183",
+      "url" : "project/MyAndroidGame"
+    }, {
+      "id" : 4,
+      "message" : "msorynsoo asked a question on MyAndroidGame/MainActivity",
+      "timestamp" : "1488964007055",
+      "url" : "project/MyAndroidGame"
+    }, {
+      "id" : 1,
+      "message" : "2ch points were added to your account (payment)",
+      "timestamp" : "1489421606541",
+      "url" : "/get/ch"
+    }, {
+      "id" : 1,
+      "message" : "5ch points were added to your account (payment)",
+      "timestamp" : "1489425245018",
+      "url" : "/get/ch"
+    }, {
+      "id" : 1,
+      "message" : "1ch points were added to your account (payment)",
+      "timestamp" : "1489503896235",
+      "url" : "/get/ch"
+    }, {
+      "id" : 1,
+      "message" : "5ch points were added to your account (payment)",
+      "timestamp" : "1489503955381",
+      "url" : "/get/ch"
+    }, {
+      "id" : 1,
+      "message" : "10ch points were added to your account (payment)",
+      "timestamp" : "1489503968477",
+      "url" : "/get/ch"
+    }, {
+      "id" : 4,
+      "message" : "msorynsoo asked a question on MyAndroidGame/MainActivity",
+      "timestamp" : "1489613714988",
+      "url" : "project/MyAndroidGame"
+    }, {
+      "id" : 4,
+      "message" : "msorynsoo asked a question on MyAndroidGame/MainActivity",
+      "timestamp" : "1489659918422",
+      "url" : "project/MyAndroidGame"
+    }, {
+      "id" : 4,
+      "message" : "msorynsoo asked a question on MyAndroidGame/MainActivity",
+      "timestamp" : "1489659942302",
+      "url" : "project/MyAndroidGame"
+    }, {
+      "id" : 1,
+      "message" : "msorynsoo contributed to IronCodersV2",
+      "timestamp" : "1489671094091",
+      "url" : "project/IronCodersV2"
+    }, {
+      "id" : 4,
+      "message" : "msorynsoo asked a question on IronCodersV2/Evaluator",
+      "timestamp" : "1489739580416",
+      "url" : "project/IronCodersV2"
+    } ]
+  },
+  "payments" : {
+    "iaLnLByEfxV6AOFh0wkCC5z0GHF2" : [ {
+      "amount" : 4,
+      "byUserName" : "sorynsoo",
+      "ch" : 1,
+      "firebaseUID" : "iaLnLByEfxV6AOFh0wkCC5z0GHF2",
+      "status" : "success",
+      "timestamp" : "1489503253037",
+      "token" : "tok_19xH2OKMNeHyI7YCHnKl2PPN"
+    }, {
+      "amount" : "18",
+      "byUserName" : "sorynsoo",
+      "ch" : 5,
+      "firebaseUID" : "iaLnLByEfxV6AOFh0wkCC5z0GHF2",
+      "status" : "success",
+      "timestamp" : "1489503315703",
+      "token" : "tok_19xH3PKMNeHyI7YCPj1i4agE"
+    }, {
+      "amount" : "33",
+      "byUserName" : "sorynsoo",
+      "ch" : 10,
+      "firebaseUID" : "iaLnLByEfxV6AOFh0wkCC5z0GHF2",
+      "status" : "waiting",
+      "timestamp" : "1489503360905",
+      "token" : "tok_19xH48KMNeHyI7YC1wqGyn5t"
+    }, {
+      "amount" : "18",
+      "byUserName" : "sorynsoo",
+      "ch" : 5,
+      "firebaseUID" : "iaLnLByEfxV6AOFh0wkCC5z0GHF2",
+      "status" : "waiting",
+      "timestamp" : "1489503458943",
+      "token" : "tok_19xH5iKMNeHyI7YCUo8qAw2K"
+    }, {
+      "amount" : "7",
+      "byUserName" : "sorynsoo",
+      "ch" : 2,
+      "firebaseUID" : "iaLnLByEfxV6AOFh0wkCC5z0GHF2",
+      "status" : "waiting",
+      "timestamp" : "1489503524795",
+      "token" : "tok_19xH6lKMNeHyI7YCzd6tPs1k"
+    }, {
+      "amount" : "18",
+      "byUserName" : "sorynsoo",
+      "ch" : 5,
+      "firebaseUID" : "iaLnLByEfxV6AOFh0wkCC5z0GHF2",
+      "status" : "waiting",
+      "timestamp" : "1489503559459",
+      "token" : "tok_19xH7KKMNeHyI7YC9wIMTDqA"
+    }, {
+      "amount" : "33",
+      "byUserName" : "sorynsoo",
+      "ch" : 10,
+      "firebaseUID" : "iaLnLByEfxV6AOFh0wkCC5z0GHF2",
+      "status" : "waiting",
+      "timestamp" : "1489503584472",
+      "token" : "tok_19xH7kKMNeHyI7YCcIuBtF6i"
+    }, {
+      "amount" : "33",
+      "byUserName" : "sorynsoo",
+      "ch" : 10,
+      "firebaseUID" : "iaLnLByEfxV6AOFh0wkCC5z0GHF2",
+      "status" : "success",
+      "timestamp" : "1489503624853",
+      "token" : "tok_19xH8OKMNeHyI7YC2PFFSWol"
+    } ]
+  },
+  "projects" : {
+    "iaLnLByEfxV6AOFh0wkCC5z0GHF2" : {
+      "ABC" : {
+        "byFirebaseUID" : "iaLnLByEfxV6AOFh0wkCC5z0GHF2",
+        "byUserName" : "sorynsoo",
+        "ch" : "",
+        "creationTimeStamp" : "1489431262059",
+        "description" : "121313",
+        "gitProject" : "",
+        "gitUID" : "sorynsoo",
+        "hasHeader" : false,
+        "tags" : "111223",
+        "title" : "ABC"
+      },
+      "AndroidApp" : {
+        "byFirebaseUID" : "iaLnLByEfxV6AOFh0wkCC5z0GHF2",
+        "byUserName" : "sorynsoo",
+        "ch" : "",
+        "creationTimeStamp" : "1489410029207",
+        "description" : "blabla",
+        "gitProject" : "",
+        "gitUID" : "sorynsoo",
+        "hasHeader" : false,
+        "tags" : "JAVA, ANDROID",
+        "title" : "AndroidApp"
+      },
+      "DEF" : {
+        "byFirebaseUID" : "iaLnLByEfxV6AOFh0wkCC5z0GHF2",
+        "byUserName" : "sorynsoo",
+        "ch" : "",
+        "creationTimeStamp" : "1489431325359",
+        "description" : "ASDA",
+        "gitProject" : "",
+        "gitUID" : "sorynsoo",
+        "hasHeader" : false,
+        "tags" : "121",
+        "title" : "DEF"
+      },
+      "IronCoders" : {
+        "byFirebaseUID" : "iaLnLByEfxV6AOFh0wkCC5z0GHF2",
+        "byUserName" : "sorynsoo",
+        "ch" : "",
+        "creationTimeStamp" : "1489670420539",
+        "description" : "Educational platform...",
+        "features" : {
+          "New Evaluator" : {
+            "ch" : 3,
+            "description" : "I need help configuring the PYTHON eval....",
+            "largeDescription" : "<p>A more in depth description...</p>\n",
+            "status" : "open",
+            "title" : "New Evaluator"
+          }
+        },
+        "gitProject" : "",
+        "gitUID" : "sorynsoo",
+        "hasHeader" : false,
+        "news" : [ {
+          "date" : "12.12.2015",
+          "description" : "description1",
+          "footer" : "footer",
+          "title" : "Title1"
+        }, {
+          "date" : "12.12.2015",
+          "description" : "description2",
+          "footer" : "footer2",
+          "title" : "Title2"
+        }, {
+          "date" : "12.12.2015",
+          "description" : "description3",
+          "footer" : "footer3",
+          "title" : "Title3"
+        } ],
+        "tags" : "PHP, JAVASCRIPT",
+        "title" : "IronCoders"
+      },
+      "IronCodersV2" : {
+        "byFirebaseUID" : "iaLnLByEfxV6AOFh0wkCC5z0GHF2",
+        "byUserName" : "sorynsoo",
+        "ch" : "",
+        "contributions" : {
+          "111067333" : {
+            "byFirebaseUID" : "RPnbVQL5Aiffu06soOSnz0vatJr2",
+            "byUserName" : "msorynsoo",
+            "ch" : "2",
+            "featureTitle" : "IDE",
+            "gitApiUrl" : "https://api.github.com/repos/sorynsoo/ASC/pulls/1",
+            "gitHtmlUrl" : "https://github.com/sorynsoo/ASC/pull/1",
+            "gitPullId" : "111067333",
+            "gitTitle" : "Did that and that",
+            "status" : "waiting"
+          }
+        },
+        "creationTimeStamp" : "1489670644948",
+        "description" : "A project dedicated to...",
+        "features" : {
+          "Evaluator" : {
+            "ch" : 3,
+            "description" : "Evaluator running too slow, must....",
+            "largeDescription" : "<p>dsadad</p>\n",
+            "questions" : [ {
+              "answer" : "waiting for answer1",
+              "answeredTimeStamp" : "1489739585102",
+              "askedTimeStamp" : "1489739579917",
+              "byFirebaseUID" : "RPnbVQL5Aiffu06soOSnz0vatJr2",
+              "byUserName" : "msorynsoo",
+              "editable" : false,
+              "edited" : true,
+              "question" : "Question1",
+              "status" : "closed"
+            } ],
+            "status" : "open",
+            "title" : "Evaluator"
+          },
+          "IDE" : {
+            "ch" : 19,
+            "description" : "I want a new language to be...",
+            "largeDescription" : "<p>A more in depth detail</p>\n",
+            "status" : "open",
+            "title" : "IDE"
+          }
+        },
+        "gitProject" : "ASC",
+        "gitUID" : "sorynsoo",
+        "hasHeader" : false,
+        "news" : [ {
+          "date" : "12.12.2015",
+          "description" : "description",
+          "footer" : "footer",
+          "title" : "Title"
+        }, {
+          "date" : "12.12.2015",
+          "description" : "description",
+          "footer" : "footer",
+          "title" : "Title2"
+        }, {
+          "date" : "12.12.2015",
+          "description" : "description",
+          "footer" : "footer",
+          "title" : "Title3"
+        }, {
+          "date" : "12.12.2015",
+          "description" : "description4",
+          "footer" : "footer4",
+          "title" : "Title4"
+        } ],
+        "tags" : "PHP,JAVA",
+        "title" : "IronCodersV2"
+      },
+      "JavaGame" : {
+        "byFirebaseUID" : "iaLnLByEfxV6AOFh0wkCC5z0GHF2",
+        "byUserName" : "sorynsoo",
+        "ch" : "",
+        "creationTimeStamp" : "1489409972916",
+        "description" : "A game written in Java",
+        "gitProject" : "",
+        "gitUID" : "sorynsoo",
+        "hasHeader" : false,
+        "tags" : "Java",
+        "title" : "JavaGame"
+      },
+      "LATEST" : {
+        "byFirebaseUID" : "iaLnLByEfxV6AOFh0wkCC5z0GHF2",
+        "byUserName" : "sorynsoo",
+        "ch" : "",
+        "creationTimeStamp" : "1489431824268",
+        "description" : "SASDAD",
+        "gitProject" : "Planificator-Traseu-RATBV",
+        "gitUID" : "sorynsoo",
+        "hasHeader" : false,
+        "tags" : "1223",
+        "title" : "LATEST"
+      },
+      "MyAndroidGame" : {
+        "byFirebaseUID" : "iaLnLByEfxV6AOFh0wkCC5z0GHF2",
+        "byUserName" : "sorynsoo",
+        "ch" : "",
+        "creationTimeStamp" : "1488963638632",
+        "description" : "dsadabb",
+        "features" : {
+          "MainActivity" : {
+            "ch" : "",
+            "description" : "I need a redesign",
+            "largeDescription" : "<p>@@To do this and this and this and that...!!!!!</p>\n",
+            "questions" : [ {
+              "answer" : "waiting for answer",
+              "askedTimeStamp" : "1489659942139",
+              "byFirebaseUID" : "RPnbVQL5Aiffu06soOSnz0vatJr2",
+              "byUserName" : "msorynsoo",
+              "editable" : false,
+              "edited" : false,
+              "question" : "Question6",
+              "status" : "open"
+            }, {
+              "answer" : "answer5",
+              "answeredTimeStamp" : "1489659949695",
+              "askedTimeStamp" : "1489659918258",
+              "byFirebaseUID" : "RPnbVQL5Aiffu06soOSnz0vatJr2",
+              "byUserName" : "msorynsoo",
+              "editable" : false,
+              "edited" : true,
+              "question" : "Question5",
+              "status" : "closed"
+            }, {
+              "answer" : "waiting for answer4",
+              "answeredTimeStamp" : "1489613841923",
+              "askedTimeStamp" : "1489613714824",
+              "byFirebaseUID" : "RPnbVQL5Aiffu06soOSnz0vatJr2",
+              "byUserName" : "msorynsoo",
+              "editable" : false,
+              "edited" : true,
+              "question" : "Question4",
+              "status" : "closed"
+            }, {
+              "answer" : "waiting for answer",
+              "answeredTimeStamp" : "1489505669668",
+              "askedTimeStamp" : "1488964006874",
+              "byFirebaseUID" : "RPnbVQL5Aiffu06soOSnz0vatJr2",
+              "byUserName" : "msorynsoo",
+              "editable" : false,
+              "edited" : true,
+              "question" : "Question3",
+              "status" : "closed"
+            } ],
+            "status" : "open",
+            "title" : "MainActivity"
+          }
+        },
+        "gitProject" : "",
+        "gitUID" : "sorynsoo",
+        "hasHeader" : true,
+        "key" : "MyAndroidGame",
+        "news" : [ {
+          "date" : "12.12.2015",
+          "description" : "d1",
+          "footer" : "footer1",
+          "title" : "Title1"
+        }, {
+          "date" : "12.12.2015",
+          "description" : "d2",
+          "footer" : "footer2",
+          "title" : "Title2"
+        }, {
+          "date" : "12.12.2015",
+          "description" : "d3",
+          "footer" : "footer3",
+          "title" : "Title3"
+        }, {
+          "date" : "12.12.2015",
+          "description" : "d4",
+          "footer" : "footer4",
+          "title" : "Title4"
+        } ],
+        "tags" : "Java,Android, C#",
+        "title" : "MyAndroidGame"
+      },
+      "abc" : {
+        "byFirebaseUID" : "iaLnLByEfxV6AOFh0wkCC5z0GHF2",
+        "byUserName" : "sorynsoo",
+        "ch" : "",
+        "creationTimeStamp" : "1489739525543",
+        "description" : "BLAL",
+        "gitProject" : "FP-Y1S1",
+        "gitUID" : "sorynsoo",
+        "hasHeader" : false,
+        "tags" : "CSS",
+        "title" : "abc"
+      },
+      "tralala" : {
+        "byFirebaseUID" : "iaLnLByEfxV6AOFh0wkCC5z0GHF2",
+        "byUserName" : "sorynsoo",
+        "ch" : "",
+        "creationTimeStamp" : "1489431331232",
+        "description" : "12131",
+        "gitProject" : "",
+        "gitUID" : "sorynsoo",
+        "hasHeader" : false,
+        "tags" : "sadad",
+        "title" : "tralala"
+      }
+    }
+  },
+  "users" : {
+    "iaLnLByEfxV6AOFh0wkCC5z0GHF2" : {
+      "avatarUrl" : "https://avatars1.githubusercontent.com/u/4971463?v=3",
+      "avatar_url" : "https://avatars1.githubusercontent.com/u/4971463?v=3",
+      "bio" : "=43221=",
+      "blog" : "https://mirceasorin.ro",
+      "ch" : 91,
+      "created_at" : "2013-07-09T07:51:17Z",
+      "events_url" : "https://api.github.com/users/sorynsoo/events{/privacy}",
+      "followers" : 1,
+      "followers_url" : "https://api.github.com/users/sorynsoo/followers",
+      "following" : 1,
+      "following_url" : "https://api.github.com/users/sorynsoo/following{/other_user}",
+      "gists_url" : "https://api.github.com/users/sorynsoo/gists{/gist_id}",
+      "githubUrl" : "https://github.com/sorynsoo",
+      "gravatar_id" : "",
+      "hireable" : true,
+      "html_url" : "https://github.com/sorynsoo",
+      "id" : 4971463,
+      "location" : "Romania, Brasov",
+      "login" : "sorynsoo",
+      "name" : "Mircea Sorin Sebastian",
+      "organizations_url" : "https://api.github.com/users/sorynsoo/orgs",
+      "public_gists" : 1,
+      "public_repos" : 9,
+      "received_events_url" : "https://api.github.com/users/sorynsoo/received_events",
+      "repos_url" : "https://api.github.com/users/sorynsoo/repos",
+      "site_admin" : false,
+      "starred_url" : "https://api.github.com/users/sorynsoo/starred{/owner}{/repo}",
+      "subscriptions_url" : "https://api.github.com/users/sorynsoo/subscriptions",
+      "type" : "User",
+      "updated_at" : "2017-03-05T20:33:57Z",
+      "url" : "https://api.github.com/users/sorynsoo",
+      "username" : "sorynsoo"
+    },
+    "klIuaK2mH4Xr0RX6O017NZ5MNQI3" : {
+      "avatar_url" : "https://avatars3.githubusercontent.com/u/24612645?v=3",
+      "ch" : 1,
+      "created_at" : "2016-12-16T19:16:12Z",
+      "events_url" : "https://api.github.com/users/msorynsoo/events{/privacy}",
+      "followers" : 0,
+      "followers_url" : "https://api.github.com/users/msorynsoo/followers",
+      "following" : 0,
+      "following_url" : "https://api.github.com/users/msorynsoo/following{/other_user}",
+      "gists_url" : "https://api.github.com/users/msorynsoo/gists{/gist_id}",
+      "gravatar_id" : "",
+      "html_url" : "https://github.com/msorynsoo",
+      "id" : 24612645,
+      "login" : "msorynsoo",
+      "name" : "Gigel",
+      "organizations_url" : "https://api.github.com/users/msorynsoo/orgs",
+      "public_gists" : 0,
+      "public_repos" : 3,
+      "received_events_url" : "https://api.github.com/users/msorynsoo/received_events",
+      "repos_url" : "https://api.github.com/users/msorynsoo/repos",
+      "site_admin" : false,
+      "starred_url" : "https://api.github.com/users/msorynsoo/starred{/owner}{/repo}",
+      "subscriptions_url" : "https://api.github.com/users/msorynsoo/subscriptions",
+      "type" : "User",
+      "updated_at" : "2017-03-19T09:29:08Z",
+      "url" : "https://api.github.com/users/msorynsoo"
+    }
+  }
+}

@@ -112,7 +112,7 @@ export class AuthService{
     //this.authState.github.uid
     return this.http.get('http://localhost:3000/api/users/get/gitUID?gitUID=' + gitUid + '&firebaseUID=' + firebaseUID)
       .map((res:Response) => res.json())
-      .do(data => console.log('getByGitUserID:', data))  // debug
+      .do(data => console.log('getByGitUserID:', data)); // debug
 
   }
 
@@ -121,7 +121,7 @@ export class AuthService{
     //this.authState.github.accessToken
     return this.http.get('http://localhost:3000/api/users/get/gitToken?gitToken=' + gitToken + '&firebaseUID=' + firebaseUID)
       .map((res:Response) => res.json())
-      .do(data => console.log('getByGitToken:', data))  // debug
+      .do(data => console.log('getByGitToken:', data));  // debug
   };
 
   signIn(provider: number): firebase.Promise<FirebaseAuthState> {

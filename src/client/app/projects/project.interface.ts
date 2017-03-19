@@ -17,5 +17,6 @@ export interface ProjectInterface {
   byFirebaseUID: string,
   byUserName: string,
   hasHeader: boolean,
-  creationTimeStamp: string
+  creationTimeStamp: string,
+  new?: boolean
 }

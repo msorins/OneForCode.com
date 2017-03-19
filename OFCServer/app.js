@@ -635,6 +635,7 @@ app.use('/api/payments/getHistory', [hasFirebaseJWT, checkSameJWT, function(req,
 
 //  ==== FUNCTIONS PART ====
 function addUserDataToDb(firebaseUID, userObj) {
+  //Function is called just when a new user registers on the WEBSITE
   //Receives the firebaseUID and an object containing userInfo (from github)
   //Adds specific proprieties to that value if it doesn't exists
   getUserDB(firebaseUID, function(value) {
@@ -642,6 +643,13 @@ function addUserDataToDb(firebaseUID, userObj) {
 
     if(value != null && value.hasOwnProperty("ch"))
       userObj["ch"] = value["ch"];
+
+    //Prepare and send the activity object
+    var activityObj = {};
+    activityObj["message"] = "Registered on OFC :)";
+    activityObj["url"] = "profile/" + userObj["login"];
+    activityObj["timeline"] = true;
+    addActivity(firebaseUID, activityObj);
 
     db.ref("/users").child(firebaseUID).update(userObj);
   });
@@ -663,22 +671,28 @@ function addProjects(firebaseUID, projectObj) {
   var refProjects = db.ref("/").child("projects").child(firebaseUID);
 
   delete projectObj['$key'];
-  refProjects.once("value", function(snapshot) {
-    userPayments = snapshot.val();
 
-    //Add the current project to the database
-    console.log(firebaseUID + " - " + projectObj.title);
-    db.ref("/").child("projects").child(firebaseUID).child(projectObj.title).update(projectObj);
+  //Create or update the firebase database section
+  db.ref("/").child("projects").child(firebaseUID).child(projectObj.title).update(projectObj);
 
-  }, function(errorObject) {
-    console.log("The read failed: " + errorObject.code);
-  });
-
+  //Add a new activity
+  var activityObj = {};
+  activityObj["message"] = projectObj["title"] + " project was created";
+  activityObj["url"] = "project/" + projectObj["title"];
+  activityObj["timeline"] = true;
+  addActivity(firebaseUID, activityObj);
 }
 
 function addFeature(firebaseUID, projectName, featureObj) {
   //Adds received feature to FfireBase
   db.ref("/").child("projects").child(firebaseUID).child(projectName).child("features").child(featureObj.title).update(featureObj);
+
+  //Add a new activity
+  var activityObj = {};
+  activityObj["message"] = "Feature " + featureObj["title"] + " was added on project " + projectName;
+  activityObj["url"] = "project/" + projectName;
+  activityObj["timeline"] = true;
+  addActivity(firebaseUID, activityObj);
 
 }
 
@@ -693,8 +707,14 @@ function addContribution(firebaseUID, projectName, featureObj) {
     "url": "project/" + projectName
 
   };
+  sendNotifications(firebaseUID, notificationObject)
 
- sendNotifications(firebaseUID, notificationObject)
+  //Add a new activity for the user who added the contribution
+  var activityObj = {};
+  activityObj["message"] = "Added a contribution on feature " + featureObj["featureTitle"] + " of the project "  + projectName;
+  activityObj["url"] = "project/" + projectName;
+  activityObj["timeline"] = true;
+  addActivity(featureObj.byFirebaseUID, activityObj);
 }
 
 function listFeaturesByTitle(firebaseUID, projectTitle, callback) {
@@ -868,8 +888,8 @@ function acceptContribution(firebaseUID, projectTitle, gitPullUid, callback) {
 
   });
 
-  //Prepare and send the notification
-  //First get the userName of the owner of the project
+  // ## Send Notifications and Add Activity ##
+  // First get the userName of the owner of the project
   getUserDB(firebaseUID, function(result) {
 
     var notificationObject = {
@@ -880,12 +900,28 @@ function acceptContribution(firebaseUID, projectTitle, gitPullUid, callback) {
     };
 
     //Next get the firebaseUID of the one whose contribution got accepted
-    db.ref("/").child("projects").child(firebaseUID).child(projectTitle).child("contributions").child(gitPullUid).child("byFirebaseUID").once("value", function(snapshot) {
+    db.ref("/").child("projects").child(firebaseUID).child(projectTitle).child("contributions").child(gitPullUid).once("value", function(snapshot) {
+      var contributionObject = snapshot.val();
+
       //Send the actual notification
-      sendNotifications(snapshot.val(), notificationObject)
+      sendNotifications(contributionObject["byFirebaseUID"], notificationObject);
+
+      //Add a new activity for the user whose contribution got accepted
+      var activityObj = {};
+      activityObj["message"] = "I completed the feature " + contributionObject["featureTitle"] +" of the project "  + projectTitle;
+      activityObj["ch"] = contributionObject["ch"];
+      activityObj["url"] = "project/" + projectTitle;
+      activityObj["timeline"] = true;
+      addActivity(contributionObject["byFirebaseUID"], activityObj);
+
+      //Add a new activity for the owner of the project
+      activityObj = {};
+      activityObj["message"] = "Feature " + contributionObject["featureTitle"] + " got completed by " + contributionObject["byUserName"];
+      activityObj["ch"] = contributionObject["ch"];
+      activityObj["url"] = "project/" + projectTitle;
+      activityObj["timeline"] = true;
+      addActivity(firebaseUID, activityObj);
     });
-
-
   });
 
 
@@ -1135,6 +1171,26 @@ function convertFiltering(obj) {
 
   return obj;
 }
+
+function addActivity(firebaseUID, activityObject) {
+  /*
+    Adds a new activity to user with given firebaseUID
+   */
+  var refActivities = db.ref("/").child("activities").child(firebaseUID);
+
+  refActivities.once("value", function(snapshot) {
+    var snapshotValue = snapshot.val();
+
+    if(snapshotValue == null)
+      snapshotValue = [];
+
+    activityObject["timestamp"] = new Date().getTime().toLocaleString();
+    snapshotValue.push(activityObject);
+    db.ref("/").child("activities").child(firebaseUID).set(snapshotValue);
+
+  });
+}
+
 
 /* ===== SECURITY FUNCTIONS ====== */
 function hasFirebaseJWT(req, res, next) {

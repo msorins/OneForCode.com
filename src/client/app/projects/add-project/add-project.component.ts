@@ -25,7 +25,7 @@ export class AddProjectComponent implements OnInit{
         //Get the list of repos
         if(this._authService.getUserName() == '') {
           this._authService.canGetUserName.subscribe(
-            data => {
+            (data: any) => {
               this.getUserRepos();
             }
           );
@@ -57,6 +57,7 @@ export class AddProjectComponent implements OnInit{
         value.byUserName = this._authService.getUserName();
         value.hasHeader = false;
         value.creationTimeStamp = new Date().getTime().toString();
+        value.new = true;
 
         this._projectsService.addNewProject(this._authService.getFirebaseUID(), value)
           .subscribe(
