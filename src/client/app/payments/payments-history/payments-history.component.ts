@@ -6,7 +6,7 @@ import { FormGroup, FormControl } from "@angular/forms";
 import { Validators } from '@angular/forms';
 import {PaymentsService} from "../../api/payments/payments.service";
 import {AuthService} from "../../auth/services/auth-service";
-import {TimeDifferenceService} from "../../tools/time-difference/time-difference.service";
+import {TimeService} from "../../tools/time-difference/time.service";
 
 @Component({
   moduleId: module.id,
@@ -19,7 +19,7 @@ import {TimeDifferenceService} from "../../tools/time-difference/time-difference
 export class PaymentsHistoryComponent implements OnInit{
   public paymentsHistoryList:any = [];
 
-  constructor(private _authService: AuthService, private _paymentsService: PaymentsService, private _timeDifference: TimeDifferenceService) { }
+  constructor(private _authService: AuthService, private _paymentsService: PaymentsService, private _timeDifference: TimeService) { }
 
   ngOnInit() {
     //If user is authentificated get the history directly

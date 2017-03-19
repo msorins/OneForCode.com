@@ -9,7 +9,7 @@ import {ProjectsService} from "../../api/projects/projects.service";
 import {FeaturesProjectInterface} from "../features-project.interface";
 import {NotificationsService} from "../../api/notifications/notifications.service";
 import {NotificationsInterface} from "../../api/notifications/notifications.interface";
-import {TimeDifferenceService} from "../../tools/time-difference/time-difference.service";
+import {TimeService} from "../../tools/time-difference/time.service";
 
 
 @Component({
@@ -30,7 +30,7 @@ export class QuestionsViewComponent implements OnChanges{
   currentPage = 1;
   numberOfQuestionsPerPage = 3;
 
-  constructor(public _authService: AuthService, public _projectService: ProjectsService, public _notificationService: NotificationsService,  private _timeDifference: TimeDifferenceService) {
+  constructor(public _authService: AuthService, public _projectService: ProjectsService, public _notificationService: NotificationsService,  private _timeDifference: TimeService) {
     this.emptyQuestion = {byFirebaseUID: this._authService.getFirebaseUID(), byUserName: this._authService.getUserName(), answer: 'waiting for answer', question: 'Question', askedTimeStamp: new Date().getTime().toString(), status: 'open' }
   }
 

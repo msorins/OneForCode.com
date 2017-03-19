@@ -7,16 +7,16 @@
 
 .timeline .line {
   position: absolute;
-  width: 4px;
+  width: 2px;
   display: block;
-  background: currentColor;
+  background: #2BBBAD;
   top: 0px;
   bottom: 0px;
   margin-left: 30px;
 }
 
 .timeline .separator {
-  border-top: 1px solid currentColor;
+  border-top: 1px solid #2BBBAD;
   padding: 5px;
   padding-left: 40px;
   font-style: italic;
@@ -35,7 +35,7 @@
   height: 12px;
   display: block;
   border-radius: 50%;
-  background: currentColor;
+  background: #2BBBAD;
 }
 
 .timeline .panel {

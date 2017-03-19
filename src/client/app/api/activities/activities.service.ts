@@ -24,7 +24,16 @@ export class ActivitiesService  implements  OnChanges{
 
   }
 
+  getUserActivties(firebaseUID: string):  Observable<NotificationsInterface[]> {
+    let headers = new Headers({ 'Content-Type': 'application/json',
+      'x-access-token' : this._authService.getFirebaseAccessToken()
+    }); // ... Set content type to JSON
+    let options = new RequestOptions({ headers: headers }); // Create a request option
 
+    return this.http.get('http://localhost:3000/api/activities/get?firebaseUID=' + firebaseUID,options) // ...using post request
+      .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
+      .do(data => console.log('getUserActivities:', data))
+  }
 
   private handleError (error: any) {
     // In a real world app, we might use a remote logging infrastructure

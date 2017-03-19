@@ -3,6 +3,8 @@ import {ActivatedRoute, Params} from "@angular/router";
 import {AuthService} from "../../auth/services/auth-service";
 import {UsersService} from "../../api/users/users.service";
 import {UserProfileInterface} from "../user-profile.interface";
+import {ActivitiesInterface} from "../activities.interface";
+import {ActivitiesService} from "../../api/activities/activities.service";
 
 
 @Component({
@@ -16,8 +18,9 @@ export class ProfileViewComponent implements OnInit{
   public userName:string;
   public firebaseUID: string;
   public userProfile: UserProfileInterface;
+  public activitiesObj: ActivitiesInterface[];
 
-  constructor(private _authService: AuthService, private _activatedRoute: ActivatedRoute, private _usersService: UsersService) { }
+  constructor(private _authService: AuthService, private _activatedRoute: ActivatedRoute, private _usersService: UsersService, private _activitiesService: ActivitiesService) { }
 
   ngOnInit() {
     this.computeParams();
@@ -33,6 +36,7 @@ export class ProfileViewComponent implements OnInit{
 
           this.userName = this._authService.getUserName();
           this.getUserData(this.userName);
+          this.getUserActivities(this._authService.getFirebaseUID());
 
         } else {
 
@@ -42,6 +46,12 @@ export class ProfileViewComponent implements OnInit{
               this.getUserData(this.userName);
             }
           );
+
+          this._authService.loggedInEvent.subscribe(
+            (data: string) => {
+              this.getUserActivities((this._authService.getFirebaseUID()));
+            }
+          )
 
       }
 
@@ -69,7 +79,14 @@ export class ProfileViewComponent implements OnInit{
         }
       )
     }
+  }
 
+  getUserActivities(firebaseUID: string) {
+    this._activitiesService.getUserActivties(this._authService.getFirebaseUID()).subscribe(
+      data => {
+        this.activitiesObj = data;
+      }
+    )
   }
 }
 

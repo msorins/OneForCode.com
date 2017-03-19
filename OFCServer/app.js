@@ -632,6 +632,22 @@ app.use('/api/payments/getHistory', [hasFirebaseJWT, checkSameJWT, function(req,
     res.status(200).send('OPTIONS Request');
 }]);
 
+app.use('/api/activities/get', [function(req, res, next) {
+  if (req.method != 'OPTIONS') {
+
+    if(req.query.firebaseUID == null)
+      res.status(200).send(JSON.stringify("Missing get parameter: firebaseUID"));
+    else {
+
+      getActivities(req.query.firebaseUID, function(result) {
+        res.status(200).send(result);
+      });
+
+    }
+  } else
+    res.status(200).send('OPTIONS Request');
+}]);
+
 
 //  ==== FUNCTIONS PART ====
 function addUserDataToDb(firebaseUID, userObj) {
@@ -1188,6 +1204,17 @@ function addActivity(firebaseUID, activityObject) {
     snapshotValue.push(activityObject);
     db.ref("/").child("activities").child(firebaseUID).set(snapshotValue);
 
+  });
+}
+
+function getActivities(firebaseUID, callback) {
+  var refActivities = db.ref("/").child("activities").child(firebaseUID);
+
+  refActivities.once("value", function(snapshot) {
+    var snapshotValue = snapshot.val();
+
+    //Return the value
+    callback(snapshotValue);
   });
 }
 
