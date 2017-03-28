@@ -721,8 +721,8 @@ function addContribution(firebaseUID, projectName, featureObj) {
     "id": 1,
     "message": featureObj.byUserName + " contributed to " + projectName,
     "url": "project/" + projectName
-
   };
+
   sendNotifications(firebaseUID, notificationObject)
 
   //Add a new activity for the user who added the contribution
@@ -730,6 +730,7 @@ function addContribution(firebaseUID, projectName, featureObj) {
   activityObj["message"] = "Added a contribution on feature " + featureObj["featureTitle"] + " of the project "  + projectName;
   activityObj["url"] = "project/" + projectName;
   activityObj["timeline"] = true;
+  activityObj["type"] = "Icontributed";
   addActivity(featureObj.byFirebaseUID, activityObj);
 }
 
@@ -928,6 +929,7 @@ function acceptContribution(firebaseUID, projectTitle, gitPullUid, callback) {
       activityObj["ch"] = contributionObject["ch"];
       activityObj["url"] = "project/" + projectTitle;
       activityObj["timeline"] = true;
+      activityObj["type"] = "ICompletedFeature";
       addActivity(contributionObject["byFirebaseUID"], activityObj);
 
       //Add a new activity for the owner of the project

@@ -8,4 +8,5 @@ export interface ActivitiesInterface {
   timestamp: string,
   url: string,
   ch?: number
+  type?: string
 }
