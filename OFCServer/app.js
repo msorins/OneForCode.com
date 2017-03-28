@@ -510,6 +510,27 @@ app.use('/api/notifications/delete', [hasFirebaseJWT, checkSameJWT, function(req
 
 }]);
 
+app.use('/api/user/get/awards', [ function(req, res, next) {
+  /*
+   @Input: GET parameter 'firebaseUID'
+   @Returns: JSON with user awards
+   */
+  if (req.method != 'OPTIONS') {
+    if(req.query.firebaseUID != null) {
+
+      getUserAwards(req.query.firebaseUID, function(result) {
+        res.status(200).send(result);
+      });
+
+    } else {
+      res.status(200).send("Must provide an firebaseUID GET parameter ");
+    }
+  }
+  else
+    res.status(200).send('OPTIONS Request SUCCESS');
+}]);
+
+
 
 //Multer configuration for saving project headers
 var storage = multer.diskStorage({
@@ -1123,6 +1144,7 @@ function getUserProfile(name, firebaseUID, callback) {
      avatarUrl: string
      websiteUrl: string,
      bio: string
+     firebaseUID: string
    */
 
   var resObject = {};
@@ -1132,7 +1154,7 @@ function getUserProfile(name, firebaseUID, callback) {
     db.ref("/").child("users").child(firebaseUID).once("value", function(snapshot) {
       user = snapshot.val();
       //Return the filtered object
-      callback(filterUserProfile(user));
+      callback(filterUserProfile(firebaseUID, user));
     });
   } else {
     //Otherwise must loop through all the users and get the
@@ -1145,12 +1167,12 @@ function getUserProfile(name, firebaseUID, callback) {
         if(user[key]['login'] == name) {
           console.log("FOUND");
           found = true;
-          callback(filterUserProfile(user[key]));
+          callback(filterUserProfile(key, user[key]));
           break;
         }
       }
       if(!found) {
-        callback(filterUserProfile({}));
+        callback(filterUserProfile('', {}));
       }
 
     })
@@ -1166,7 +1188,7 @@ function saveUserProfile(firebaseUID, obj, callback) {
   db.ref("/").child("users").child(firebaseUID).update(obj);
 }
 
-function filterUserProfile(obj) {
+function filterUserProfile(firebaseUID, obj) {
   /*
   Receives all the users object and only outputs what is needed for profile
    */
@@ -1178,6 +1200,7 @@ function filterUserProfile(obj) {
   resObject['avatarUrl'] = obj['avatar_url'];
   resObject['blog'] = obj['blog'];
   resObject['bio'] = obj['bio'];
+  resObject['firebaseUID'] = firebaseUID;
 
   if(resObject['blog'] == null)
     resObject['blog'] = '';
@@ -1314,6 +1337,22 @@ function giveUserAward(firebaseUID, award) {
     }
 
   });
+}
+
+function getUserAwards(firebaseUID, callback) {
+  db.ref("/").child("awards").child(firebaseUID).once("value", function(snapshot) {
+    var awardsObj = snapshot.val();
+
+    var res = [];
+    for(key in awardsObj) {
+      var newObj = awardsObj[key];
+
+      if(newObj != null)
+        res.push(newObj);
+    }
+
+    callback(JSON.stringify(res));
+  })
 }
 
 giveUsersAwards();

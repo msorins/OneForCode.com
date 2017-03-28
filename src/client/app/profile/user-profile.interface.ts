@@ -7,5 +7,6 @@ export interface UserProfileInterface {
   githubUrl: string,
   avatarUrl: string,
   blog: string,
-  bio: string
+  bio: string,
+  firebaseUID: string
 }

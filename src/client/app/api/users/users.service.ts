@@ -7,7 +7,8 @@ import { Observable } from 'rxjs/Observable';
 import { AuthService } from '../../auth/services/auth-service'
 
 import 'rxjs/add/operator/do';
-import {UserProfileInterface} from "../../profile/user-profile.interface";  // for debugging
+import {UserProfileInterface} from "../../profile/user-profile.interface";
+import {AwardsInterface} from "../../profile/awards.interface";  // for debugging
 
 
 @Injectable()
@@ -40,6 +41,18 @@ export class UsersService {
     return this.http.post('http://localhost:3000/api/users/save/profile?firebaseUID=' + firebaseUID, objJSON, options)
       .map((res: Response) => res.json())
       .do(data => console.log('getUserProfile:', data))  // debug
+      .catch(this.handleError);
+  }
+
+  getUserAwards(firebaseUID: string): Observable<AwardsInterface[]> {
+    let headers = new Headers({ 'Content-Type': 'application/json',
+      'x-access-token' : this._authService.getFirebaseAccessToken()
+    }); // ... Set content type to JSON
+    let options = new RequestOptions({ headers: headers }); // Create a request option
+
+    return this.http.get('http://localhost:3000/api/user/get/awards?firebaseUID=' + firebaseUID, options)
+      .map((res: Response) => res.json())
+      .do(data => console.log('getUserAwards:', data))  // debug
       .catch(this.handleError);
   }
 

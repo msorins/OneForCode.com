@@ -5,6 +5,7 @@ import {UsersService} from "../../api/users/users.service";
 import {UserProfileInterface} from "../user-profile.interface";
 import {ActivitiesInterface} from "../activities.interface";
 import {ActivitiesService} from "../../api/activities/activities.service";
+import {AwardsInterface} from "../awards.interface";
 
 
 @Component({
@@ -19,6 +20,7 @@ export class ProfileViewComponent implements OnInit{
   public firebaseUID: string;
   public userProfile: UserProfileInterface;
   public activitiesObj: ActivitiesInterface[];
+  public awardsObj: AwardsInterface[];
 
   constructor(private _authService: AuthService, private _activatedRoute: ActivatedRoute, private _usersService: UsersService, private _activitiesService: ActivitiesService) { }
 
@@ -36,7 +38,6 @@ export class ProfileViewComponent implements OnInit{
 
           this.userName = this._authService.getUserName();
           this.getUserData(this.userName);
-          this.getUserActivities(this._authService.getFirebaseUID());
 
         } else {
 
@@ -50,6 +51,7 @@ export class ProfileViewComponent implements OnInit{
           this._authService.loggedInEvent.subscribe(
             (data: string) => {
               this.getUserActivities((this._authService.getFirebaseUID()));
+              this.getUserAwards(this._authService.getFirebaseUID());
             }
           )
 
@@ -70,21 +72,35 @@ export class ProfileViewComponent implements OnInit{
       this._usersService.getUserProfile(name, this._authService.getFirebaseUID()).subscribe(
         (data: UserProfileInterface) => {
           this.userProfile = data;
+          this.getUserActivities(this.userProfile.firebaseUID);
+          this.getUserAwards(this.userProfile.firebaseUID);
         }
       )
     } else {
       this._usersService.getUserProfile(name).subscribe(
         (data: UserProfileInterface) => {
           this.userProfile = data;
+          this.getUserActivities(this.userProfile.firebaseUID);
+          this.getUserAwards(this.userProfile.firebaseUID);
+
         }
       )
     }
   }
 
   getUserActivities(firebaseUID: string) {
-    this._activitiesService.getUserActivties(this._authService.getFirebaseUID()).subscribe(
+    this._activitiesService.getUserActivties(firebaseUID).subscribe(
       data => {
         this.activitiesObj = data;
+      }
+    )
+  }
+
+  getUserAwards(firebaseUID: string) {
+    this._usersService.getUserAwards(firebaseUID).subscribe(
+      data => {
+        this.awardsObj = data;
+        console.log("AWARDS " + JSON.stringify(this.awardsObj));
       }
     )
   }
