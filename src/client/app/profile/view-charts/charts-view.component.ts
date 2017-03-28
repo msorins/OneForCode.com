@@ -53,8 +53,8 @@ export class ChartsViewComponent implements OnInit, OnChanges{
 
         for(let i = 0; i < this.line_ChartData.length; i++) {
           if(this.line_ChartData[i][0] == month) {
-            if(this.line_ChartData[i][1] == this.line_ChartData[i][2])
-              this.line_ChartData[i][1] += 0.3;
+            //if(this.line_ChartData[i][1] == this.line_ChartData[i][2])
+            //  this.line_ChartData[i][1] += 0.1;
 
             this.line_ChartData[i][1] += 1;
           }

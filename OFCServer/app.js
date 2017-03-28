@@ -648,6 +648,18 @@ app.use('/api/activities/get', [function(req, res, next) {
     res.status(200).send('OPTIONS Request');
 }]);
 
+app.use('/api/admin/updateAwards', [function(req, res, next) {
+  if (req.method != 'OPTIONS') {
+
+    //Force the
+    giveUsersAwards();
+    res.status(200).send({"Response": 'OK'});
+
+  } else
+    res.status(200).send('OPTIONS Request');
+}]);
+
+
 
 //  ==== FUNCTIONS PART ====
 function addUserDataToDb(firebaseUID, userObj) {
@@ -1219,6 +1231,92 @@ function getActivities(firebaseUID, callback) {
     callback(snapshotValue);
   });
 }
+
+function giveUsersAwards() {
+  db.ref("/").child("users").once("value", function(snapshot) {
+    users = snapshot.val();
+
+    //For every user get his activity and computes its awards
+    for(var keyUsers in users) {
+
+
+      //Parse user activities for contributions type awards
+      getActivities(keyUsers, function(activity) {
+
+        var contributions = 0;
+        var acceptedContributions = 0;
+
+        for(var keyActivity in activity) {
+
+          if(activity[keyActivity]["type"] == "Icontributed") {
+              contributions++;
+          }
+
+          if(activity[keyActivity]["type"] == "ICompletedFeature") {
+              acceptedContributions++;
+          }
+
+        }
+
+
+        if(contributions >= 1) {
+          var award = {};
+          award.title = "Novice Contributor";
+          award.id = "1";
+          award.timestamp = new Date().getTime().toLocaleString();
+
+          giveUserAward(keyUsers, award);
+        }
+
+        if(acceptedContributions >= 1) {
+          var award = {};
+          award.title = "Little helper";
+          award.id = "2";
+          award.timestamp = new Date().getTime().toLocaleString();
+
+          giveUserAward(keyUsers, award);
+        }
+
+        if(contributions >= 20) {
+          var award = {};
+          award.title = "Veteran";
+          award.id = "3";
+          award.timestamp = new Date().getTime().toLocaleString();
+
+          giveUserAward(keyUsers, award);
+        }
+
+        if(acceptedContributions >= 10) {
+          var award = {};
+          award.title = "Always Trusted";
+          award.id = "4";
+          award.timestamp = new Date().getTime().toLocaleString();
+
+          giveUserAward(keyUsers, award);
+        }
+
+      });
+    }
+
+  })
+}
+
+function giveUserAward(firebaseUID, award) {
+  var refActivities = db.ref("/").child("awards").child(firebaseUID).child(award.id);
+
+  refActivities.once("value", function(snapshot) {
+    var snapshotValue = snapshot.val();
+
+    //User hasn't received this award yet
+    if(snapshotValue == null) {
+
+      db.ref("/").child("awards").child(firebaseUID).child(award.id).set(award);
+    }
+
+  });
+}
+
+giveUsersAwards();
 
 
 /* ===== SECURITY FUNCTIONS ====== */
