@@ -18,24 +18,17 @@
       <!-- /Separator -->
 
       <!-- Panel -->
-      <div style="margin-left:50px;" class="jumbotron jumbotron-fluid">
-        <div class="container">
-            <!-- Icon -->
-            <div class="panel-heading icon">
-              <!--<img style="margin-left:7px; max-height:25px;" class="img-fluid rounded-circle" src="../../../assets/img/checked-black.png">-->
-            </div>
-            <!-- /Icon -->
 
-            <!-- Body -->
-            <div class="panel-body">
-              <h5>{{crt.message}}</h5>
-            </div>
-            <!-- /Body -->
+      <div style="margin-left:7%" class="card">
+        <div class="card-block card-blockquote">
+          <div style="padding-top:5px; padding-left:15px; padding-bottom: 18px;">
+            <p class="card-text">{{crt.message}} <small style="float:right; padding-right:15px;" class="text-muted">{{_timeService.timeDifference(crt.timestamp)}}</small></p>
 
-          <time>{{_timeService.timeDifference(crt.timestamp)}}</time>
+          </div>
 
         </div>
       </div>
+
 
       <!-- /Panel -->
     </div>

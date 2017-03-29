@@ -1067,19 +1067,10 @@ function sendNotifications(firebaseUID, notificationObject) {
 
    */
 
-  var refNews = db.ref("/").child("notifications").child(firebaseUID);
+  notificationObject["timestamp"] = new Date().getTime().toLocaleString();
 
-  refNews.once("value", function(snapshot) {
-    var snapshotValue = snapshot.val();
-
-    if(snapshotValue == null)
-      snapshotValue = [];
-
-    notificationObject["timestamp"] = new Date().getTime().toLocaleString();
-    snapshotValue.push(notificationObject);
-    db.ref("/").child("notifications").child(firebaseUID).set(snapshotValue);
-
-  })
+  console.log(notificationObject);
+  db.ref("/").child("notifications").child(firebaseUID).push(notificationObject);
 }
 
 function deleteNotification(firebaseUID, notificationsObj) {
@@ -1333,7 +1324,19 @@ function giveUserAward(firebaseUID, award) {
     //User hasn't received this award yet
     if(snapshotValue == null) {
 
+      console.log(award.title + " SET ");
       db.ref("/").child("awards").child(firebaseUID).child(award.id).set(award);
+
+      //Also send a notification
+
+      var notificationObject = {
+        "id": 6,
+        "message": award.title + " award received",
+        "url": "profile/"
+
+      };
+
+      sendNotifications(firebaseUID, notificationObject);
     }
 
   });

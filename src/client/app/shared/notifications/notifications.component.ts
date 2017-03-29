@@ -33,9 +33,21 @@ export class NotificationsComponent implements OnInit{
     //Subscribe to the notifications service
     this._notificationService.subscribeToNotifications().subscribe(
       data => {
-        this.notifications = data;
+        this.notifications = this.toArray(data);
+        console.log("NOTIFICATIONS + " + JSON.stringify(data));
       }
     )
+  }
+
+  toArray(obj:any) {
+    let res:NotificationsInterface[] = [];
+    for(let key in obj) {
+       if(key == "$key" || key == "$exists")
+         continue;
+       res.push(obj[key]);
+    }
+
+    return res;
   }
 
   numberOfNotifications():string {
