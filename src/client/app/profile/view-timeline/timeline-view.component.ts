@@ -1,7 +1,7 @@
 /**
  * Created by so on 19/03/2017.
  */
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, OnChanges} from '@angular/core';
 import {ActivatedRoute, Params} from "@angular/router";
 import {AuthService} from "../../auth/services/auth-service";
 import {UsersService} from "../../api/users/users.service";
@@ -18,25 +18,35 @@ import {TimeService} from "../../tools/time-difference/time.service";
   styleUrls: ['timeline-view.component.css']
 })
 
-export class TimelineViewComponent implements OnInit{
+export class TimelineViewComponent implements OnInit, OnChanges{
   @Input("activities") activitiesObj: ActivitiesInterface[];
-
+  activitiesObjSorted: ActivitiesInterface[];
   constructor(private _timeService: TimeService) {}
 
   ngOnInit() {
 
   }
 
+  ngOnChanges() {
+    this.activitiesObjSorted = this.sortActivitiesByDate(this.activitiesObj);
+  }
+
   sortActivitiesByDate(obj: ActivitiesInterface[]) {
-    if(!obj)
-      return obj;
+    if(obj == null)
+        return null;
     else
-    return obj.sort(function(a:ActivitiesInterface, b:ActivitiesInterface) {
-      if(a.timestamp < b.timestamp)
-        return 1;
-      return 0;
-    });
+      return obj.sort(function(a:ActivitiesInterface, b:ActivitiesInterface) {
+
+        if(parseInt(a.timestamp) < parseInt(b.timestamp)) {
+          console.log(a.timestamp + " (1) " + b.timestamp);
+          return 1;
+        } else {
+          console.log(a.timestamp + " (0) " + b.timestamp);
+          return 0;
+        }
+
+
+      });
   }
 
 }
-

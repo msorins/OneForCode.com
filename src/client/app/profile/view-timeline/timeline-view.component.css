@@ -16,6 +16,7 @@
 }
 
 .timeline .separator {
+  width:2px;
   border-top: 1px solid #2BBBAD;
   padding: 5px;
   padding-left: 40px;
