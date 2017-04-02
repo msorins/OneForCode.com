@@ -983,7 +983,17 @@ function acceptContribution(firebaseUID, projectTitle, gitPullUid, callback) {
       addActivity(firebaseUID, activityObj);
 
       //Also substract reserved CH from the owner of the project
-      changeUserReservedCH(firebaseUID, -contributionObject["ch"], "project " + projectTitle + ", feature" + contributionObject["featureTitle"]);
+      changeUserReservedCH(firebaseUID, - contributionObject["ch"], "project " + projectTitle + ", feature" + contributionObject["featureTitle"]);
+
+      //Now give back to user those extra CH (if the accepted bid is lower)
+      db.ref("/").child("projects").child(firebaseUID).child(projectTitle).child("features").child(contributionObject["featureTitle"]).once("value", function(snapshot) {
+        var featureObj = snapshot.val();
+
+        var diff = parseInt(featureObj["ch"] - contributionObject["ch"]);
+        if(diff > 0) {
+          changeUserCH(firebaseUID, contributionObject["ch"], "refund, project " + projectTitle + ", feature" + contributionObject["featureTitle"]);
+        }
+      })
     });
   });
 
@@ -1023,7 +1033,7 @@ function changeUserCH(firebaseUID, ch, info) {
   if(ch > 0)
     notificationObject["message"] = ch +"ch points were added to your account (" + info + ")";
   else
-    notificationObject["message"] = ch +"ch points were substracted from your account (" + info + ")";
+    notificationObject["message"] = -ch +"ch points were substracted from your account (" + info + ")";
 
   sendNotifications(firebaseUID, notificationObject);
 }
@@ -1056,7 +1066,7 @@ function changeUserReservedCH(firebaseUID, ch, info) {
   if(ch > 0)
     notificationObject["message"] = ch +"ch points were marked as reserved (" + info + ")";
   else
-    notificationObject["message"] = ch +"ch points were deleted from reserve (" + info + ")";
+    notificationObject["message"] = -ch +"ch points were deleted from reserve (" + info + ")";
 
   sendNotifications(firebaseUID, notificationObject);
 }
