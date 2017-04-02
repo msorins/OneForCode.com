@@ -743,6 +743,12 @@ function addFeature(firebaseUID, projectName, featureObj) {
   activityObj["timeline"] = true;
   addActivity(firebaseUID, activityObj);
 
+  //Also substract reserved CH from the owner of the project
+  changeUserCH(firebaseUID, -featureObj["ch"], "project " + projectName + ", feature" + featureObj["title"]);
+
+  //And add that amount to reserved
+  changeUserReservedCH(firebaseUID, featureObj["ch"], "project " + projectName + ", feature" + featureObj["title"]);
+
 }
 
 function addContribution(firebaseUID, projectName, featureObj) {
@@ -756,7 +762,7 @@ function addContribution(firebaseUID, projectName, featureObj) {
     "url": "project/" + projectName
   };
 
-  sendNotifications(firebaseUID, notificationObject)
+  sendNotifications(firebaseUID, notificationObject);
 
   //Add a new activity for the user who added the contribution
   var activityObj = {};
@@ -965,6 +971,9 @@ function acceptContribution(firebaseUID, projectTitle, gitPullUid, callback) {
       activityObj["type"] = "ICompletedFeature";
       addActivity(contributionObject["byFirebaseUID"], activityObj);
 
+      //Also add CH to the user who completed the contribution
+      changeUserCH(contributionObject["byFirebaseUID"], contributionObject["ch"], "contribution accepted, project " + projectTitle + ", feature" + contributionObject["featureTitle"]);
+
       //Add a new activity for the owner of the project
       activityObj = {};
       activityObj["message"] = "Feature " + contributionObject["featureTitle"] + " got completed by " + contributionObject["byUserName"];
@@ -972,6 +981,9 @@ function acceptContribution(firebaseUID, projectTitle, gitPullUid, callback) {
       activityObj["url"] = "project/" + projectTitle;
       activityObj["timeline"] = true;
       addActivity(firebaseUID, activityObj);
+
+      //Also substract reserved CH from the owner of the project
+      changeUserReservedCH(firebaseUID, -contributionObject["ch"], "project " + projectTitle + ", feature" + contributionObject["featureTitle"]);
     });
   });
 
@@ -986,6 +998,70 @@ function acceptContribution(firebaseUID, projectTitle, gitPullUid, callback) {
   });
 
 }
+
+function changeUserCH(firebaseUID, ch, info) {
+  var plusCH = 0;
+
+
+  db.ref("/").child("users").child(firebaseUID).child("ch").once("value", function(snapshot) {
+    //Get current CH value
+    var chDb = snapshot.val();
+    chDb = parseInt(chDb);
+
+    //Increase or decrease it
+    db.ref("/").child("users").child(firebaseUID).child("ch").set(chDb + ch);
+  });
+
+
+  //Send a notification to user
+  var notificationObject = {
+    "id": 1,
+    "url": "/get/ch",
+    "type": "virtualCurrency"
+  };
+
+  if(ch > 0)
+    notificationObject["message"] = ch +"ch points were added to your account (" + info + ")";
+  else
+    notificationObject["message"] = ch +"ch points were substracted from your account (" + info + ")";
+
+  sendNotifications(firebaseUID, notificationObject);
+}
+
+function changeUserReservedCH(firebaseUID, ch, info) {
+  console.log("changeUserReserevCH called " + firebaseUID + "  " + ch + "  " + info);
+  var plusCH = 0;
+
+
+  db.ref("/").child("users").child(firebaseUID).child("reservedCh").once("value", function(snapshot) {
+    //Get current CH value
+    var chDb = snapshot.val();
+    if(chDb == null)
+      chDb = 0;
+    else
+      chDb = parseInt(chDb);
+
+    //Increase or decrease it
+    db.ref("/").child("users").child(firebaseUID).child("reservedCh").set(chDb + ch);
+  });
+
+
+  //Send a notification to user
+  var notificationObject = {
+    "id": 1,
+    "url": "/get/ch",
+    "type": "virtualCurrency"
+  };
+
+  if(ch > 0)
+    notificationObject["message"] = ch +"ch points were marked as reserved (" + info + ")";
+  else
+    notificationObject["message"] = ch +"ch points were deleted from reserve (" + info + ")";
+
+  sendNotifications(firebaseUID, notificationObject);
+}
+
+
 
 function denyContribution(firebaseUID, projectTitle, gitPullUid, callback) {
   db.ref("/").child("projects").child(firebaseUID).child(projectTitle).child("contributions").child(gitPullUid).child("status").set("denied");
