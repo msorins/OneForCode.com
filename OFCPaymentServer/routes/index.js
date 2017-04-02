@@ -106,17 +106,7 @@ function sendNotifications(firebaseUID, notificationObject) {
 
    */
 
-  var refNews = db.ref("/").child("notifications").child(firebaseUID);
+  notificationObject["timestamp"] = new Date().getTime().toLocaleString();
+  db.ref("/").child("notifications").child(firebaseUID).push(notificationObject);
 
-  refNews.once("value", function(snapshot) {
-    var snapshotValue = snapshot.val();
-
-    if(snapshotValue == null)
-      snapshotValue = [];
-
-    notificationObject["timestamp"] = new Date().getTime().toLocaleString();
-    snapshotValue.push(notificationObject);
-    db.ref("/").child("notifications").child(firebaseUID).set(snapshotValue);
-
-  })
 }

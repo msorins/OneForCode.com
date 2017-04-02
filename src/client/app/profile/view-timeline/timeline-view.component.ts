@@ -27,5 +27,16 @@ export class TimelineViewComponent implements OnInit{
 
   }
 
+  sortActivitiesByDate(obj: ActivitiesInterface[]) {
+    if(!obj)
+      return obj;
+    else
+    return obj.sort(function(a:ActivitiesInterface, b:ActivitiesInterface) {
+      if(a.timestamp < b.timestamp)
+        return 1;
+      return 0;
+    });
+  }
+
 }
 

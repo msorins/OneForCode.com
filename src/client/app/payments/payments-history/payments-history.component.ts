@@ -28,7 +28,7 @@ export class PaymentsHistoryComponent implements OnInit{
     else {
       //Else wait for logged in events
       this._authService.canGetFirebaseAccessToken.subscribe(
-        data => {
+        (data: any) => {
           this.getHistoryOfPayments();
         }
       );
@@ -40,10 +40,21 @@ export class PaymentsHistoryComponent implements OnInit{
   getHistoryOfPayments() {
     this._paymentsService.getPaymentsByUser(this._authService.getFirebaseUID()).subscribe(
       data => {
-        this.paymentsHistoryList = data;
+        this.paymentsHistoryList = this.sortPaymentsByDate(data);
         console.log(JSON.stringify(this.paymentsHistoryList));
       }
     )
+  }
+
+  sortPaymentsByDate(obj: any[]) {
+    if(!obj)
+      return obj;
+    else
+      return obj.sort(function(a:any, b:any) {
+        if(a.timestamp < b.timestamp)
+          return 1;
+        return 0;
+      });
   }
 
 }

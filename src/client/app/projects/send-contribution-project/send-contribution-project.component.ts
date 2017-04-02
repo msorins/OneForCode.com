@@ -1,7 +1,7 @@
 /**
  * Created by so on 03/02/2017.
  */
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, OnChanges} from '@angular/core';
 import { ProjectsService } from '../../api/projects/projects.service';
 
 import { FormGroup, FormControl } from "@angular/forms";
@@ -19,7 +19,7 @@ import {ContributionInterface} from "../contribution.interface";
   styleUrls: ['send-contribution-project.component.css']
 })
 
-export class SendContributionProjectComponent implements OnInit{
+export class SendContributionProjectComponent implements OnInit, OnChanges{
   private sub: any;
   public projectName: string;
   public projectObj:ProjectInterface;
@@ -28,6 +28,7 @@ export class SendContributionProjectComponent implements OnInit{
   public sendContributionForm: FormGroup;
   public chosenFeature: string = '';
   public ok:any;
+  public maxCh: number = 0;
 
   constructor(public _authService: AuthService,  public _projectsService: ProjectsService, private _activatedRoute: ActivatedRoute) {}
 
@@ -50,6 +51,11 @@ export class SendContributionProjectComponent implements OnInit{
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+  }
+
+  ngOnChanges() {
+    console.log("FEATURES BLABLA BLA " + this.projectFeaturesObj);
+    this.maxCh = this.projectFeaturesObj.ch;
   }
 
   initialiseProject() {
@@ -90,6 +96,7 @@ export class SendContributionProjectComponent implements OnInit{
     this._projectsService.getFeaturesByTitle(this.projectObj.byFirebaseUID, this.projectObj.title).subscribe(
       data => {
         this.projectFeaturesObj = this.filterFeatures(data);
+        this.maxCh = parseInt(this.projectFeaturesObj[0].ch);
       }
     )
   }
@@ -134,6 +141,8 @@ export class SendContributionProjectComponent implements OnInit{
 
     }
   }
+
+
 
 
 

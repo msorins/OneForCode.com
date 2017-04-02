@@ -38,7 +38,7 @@
           <h4>III) <img style="max-height: 25px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/price-tag.png"> Maximum offer</h4>
           <div class="form-group">
             <div>
-              <input formControlName="ch" style="width:99%" type="range" min="1" max="{{_authService.getUserCh()}}" value="1">
+              <input formControlName="ch" style="width:99%" type="range" min="1" max="{{maxCh}}" value="1">
             </div>
           </div>
         </div>
@@ -49,5 +49,6 @@
   </form>
 </div>
 
+{{maxCh}}
 {{ sendContributionForm.value | json }}
 <ofc-footer></ofc-footer>

@@ -4,6 +4,7 @@
 </div>
 <!-- /Page header -->
 
+
 <div class="container">
   <!-- Timeline -->
   <div class="timeline">
@@ -11,7 +12,7 @@
     <!-- Line component -->
     <div class="line text-muted"></div>
 
-    <div *ngFor="let crt of activitiesObj">
+    <div *ngFor="let crt of sortActivitiesByDate(activitiesObj)">
       <!-- Separator -->
       <div class="separator text-muted">
       </div>
