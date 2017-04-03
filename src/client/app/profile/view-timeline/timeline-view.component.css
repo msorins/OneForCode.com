@@ -16,10 +16,10 @@
 }
 
 .timeline .separator {
-  width:2px;
+  width:0px;
   border-top: 1px solid #2BBBAD;
   padding: 5px;
-  padding-left: 40px;
+  padding-left: 11px;
   font-style: italic;
   font-size: .9em;
   margin-left: 30px;

@@ -22,6 +22,11 @@ export class AddProjectComponent implements OnInit{
     constructor(public _reposService: ReposService, public _projectsService: ProjectsService, public _authService: AuthService, private _router: Router) {}
 
     ngOnInit() {
+      this._authService.loggedInEvent.subscribe(
+        (data: any) => {
+
+        }
+      );
         //Get the list of repos
         if(this._authService.getUserName() == '') {
           this._authService.canGetUserName.subscribe(
@@ -35,11 +40,10 @@ export class AddProjectComponent implements OnInit{
 
         //Create the form
         this.addProjectForm = new FormGroup({
-          title: new FormControl('', [Validators.minLength(3)]),
-          gitProject: new FormControl(''),
-          tags: new FormControl(''),
-          description: new FormControl(''),
-          ch: new FormControl('')
+          title: new FormControl('', [Validators.required, Validators.minLength(5)]),
+          gitProject: new FormControl('', [Validators.required]),
+          tags: new FormControl('', [Validators.required]),
+          description: new FormControl('', [Validators.required])
         });
     }
 

@@ -12,3 +12,7 @@
   font-family: inherit;
   display:inline-block;
 }
+
+.not-valid{
+  background-color:#55595c;
+}

@@ -12,5 +12,5 @@
   </div>
 </li>
 <li *ngIf="auth.getUserName() == ''" class="nav-item active">
-    <button *ngIf="auth.getUserName() == ''" class="sign-in__button btn-default" (click)="signInWithGithub()" type="button"><h5>GitHub Login</h5></button>
+    <button *ngIf="auth.getUserName() == ''" class="sign-in__button btn-default" (click)="signInWithGithub()" type="button"><h5><img style="float:left; margin-left:2px; margin-right:15px; max-height: 25px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/github-white.png"> Login</h5></button>
 </li>
