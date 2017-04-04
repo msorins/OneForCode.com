@@ -268,6 +268,19 @@ app.use('/api/projects/byTitle', [function(req, res, next) {
 
 }]);
 
+app.use('/api/projects/justTitle', [function(req, res, next) {
+  if (req.method != 'OPTIONS') {
+    response = req.body;
+
+    listProjectsTitle(function(result) {
+      res.status(200).send(JSON.stringify(result));
+    });
+
+  }
+  else
+    res.status(200).send('OPTIONS Request');
+}]);
+
 app.use('/api/projects/getPulls', [function(req, res, next) {
   /*
    @Input: GET parameter 'gitUserName' and 'gitRepoName'
@@ -397,7 +410,6 @@ app.use('/api/users/get/gitToken', [function(req, res, next) {
 
 }]);
 
-
 app.use('/api/users/get/profile', [function(req, res, next) {
   /*
    @Input: GET parameter 'gitToken' and 'firebaseUID'
@@ -442,7 +454,6 @@ app.use('/api/users/save/profile', [hasFirebaseJWT, checkSameJWT, function(req, 
   else
     res.status(200).send('OPTIONS Request SUCCESS');
 }]);
-
 
 app.use('/api/projects/setNews', [hasFirebaseJWT, checkSameJWT, function(req, res, next) {
   if (req.method != 'OPTIONS') {
@@ -827,19 +838,39 @@ function listProjectsByTitle(title, callback) {
   var refProjects = db.ref("/").child("projects");
 
   refProjects.once("value", function(snapshot) {
-    userPayments = snapshot.val();
+    userProjects = snapshot.val();
 
     res = {};
-    for(firebaseUID in userPayments) {
-      for(key in userPayments[firebaseUID]) {
-        if(userPayments[firebaseUID][key]["title"] == title) {
-          res = userPayments[firebaseUID][key];
+    for(firebaseUID in userProjects) {
+      for(key in userProjects[firebaseUID]) {
+        if(userProjects[firebaseUID][key]["title"] == title) {
+          res = userProjects[firebaseUID][key];
           res["byFirebaseUID"] = firebaseUID;
           res["key"] = key;
 
           break;
         }
 
+      }
+    }
+
+    callback(res);
+
+  }, function(errorObject) {
+    console.log("The read failed: " + errorObject.code);
+  });
+}
+
+function listProjectsTitle(callback) {
+  var refProjects = db.ref("/").child("projects");
+
+  refProjects.once("value", function(snapshot) {
+    userProjects = snapshot.val();
+
+    res = [];
+    for(firebaseUID in userProjects) {
+      for(key in userProjects[firebaseUID]) {
+        res.push(key);
       }
     }
 

@@ -22,22 +22,24 @@
     <div class="col-md-12">
 
       <div class="form-group">
-        <h5>Project Title</h5>
+        <h5>Project Title<span *ngIf="addProjectForm.get('title').errors?.minlength || addProjectForm.get('title').errors?.required" style="color: red">*</span></h5>
         <input formControlName="title" type="text" class="form-control" id="" aria-describedby="ProjectTitle" placeholder="Enter the title you want">
         <!--<small id="emailHelp" class="form-text text-muted">To find it more easily</small>-->
+        <div *ngIf="addProjectForm.get('title').errors?.nameAlreadyExists" class="alert alert-warning" role="alert">
+          <h5>Title already exists</h5>
+        </div>
+
       </div>
-
-
 
     </div>
 
     <div class="col-md-6">
 
       <div class="form-group">
-        <h5>GIT project</h5>
+        <h5>GIT project<span *ngIf="addProjectForm.get('gitProject').errors?.required" style="color: red">*</span></h5>
         <select  formControlName="gitProject" class="form-control" id="exampleSelect1">
-          <option disabled selected [selected]="1">...</option>
-          <option *ngFor="let repo of reposList">{{repo.name}}</option>
+          <option disabled selected [selected]="1" value="...">...</option>
+          <option *ngFor="let repo of reposList" value="{{repo.name}}">{{repo.name}}</option>
         </select>
       </div>
 
@@ -45,7 +47,7 @@
 
     <div class="col-md-6">
       <div class="form-group">
-        <h5>Tags</h5>
+        <h5>Tags <span *ngIf="addProjectForm.get('tags').errors?.required" style="color: red">*</span></h5>
         <input formControlName="tags" type="text" class="form-control" id="" aria-describedby="ProjectTags" placeholder="Ex: CSS, JAVA, JAVASCRIPT">
         <!--<small id="emailHelp" class="form-text text-muted">To find it more easily</small>-->
       </div>
@@ -56,7 +58,7 @@
 
     <div class="col-md-12">
       <div class="form-group">
-        <h5>Job Description</h5>
+        <h5>Job Description <span *ngIf="addProjectForm.get('description').errors?.required" style="color: red">*</span></h5>
         <textarea  formControlName="description" class="form-control" id="exampleTextarea" rows="5"></textarea>
       </div>
     </div>

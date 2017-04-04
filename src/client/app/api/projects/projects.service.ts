@@ -187,6 +187,12 @@ export class ProjectsService  implements  OnChanges{
       .do(data => console.log('getTopProjects', data));  // debug
   }
 
+  getProjectsTitle(): Observable<string[]> {
+    return this.http.get('http://localhost:3000/api/projects/justTitle')
+      .map((res:Response) => res.json())
+      .do(data => console.log('getProjectsTitle:', JSON.stringify(data)));  // debug
+  }
+
   private handleError (error: any) {
     // In a real world app, we might use a remote logging infrastructure
     // We'd also dig deeper into the error to get a better message

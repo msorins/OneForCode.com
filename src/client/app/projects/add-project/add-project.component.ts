@@ -1,5 +1,5 @@
 import {Component, OnInit, Input} from '@angular/core';
-import { Validators } from '@angular/forms';
+import {AbstractControl, ValidatorFn, Validators} from '@angular/forms';
 import { ReposService } from '../../api/repos/repos.service';
 import { ProjectsService } from '../../api/projects/projects.service';
 import { ProjectInterface } from '../project.interface'
@@ -18,15 +18,14 @@ export class AddProjectComponent implements OnInit{
     @Input('header') header: string;
     reposList :string[] ;
     addProjectForm: FormGroup;
+    projectsTitle: string[] = ['LEMN'];
 
     constructor(public _reposService: ReposService, public _projectsService: ProjectsService, public _authService: AuthService, private _router: Router) {}
 
     ngOnInit() {
-      this._authService.loggedInEvent.subscribe(
-        (data: any) => {
+        //Get the List of all projects title
+        this.getProjectsTitle();
 
-        }
-      );
         //Get the list of repos
         if(this._authService.getUserName() == '') {
           this._authService.canGetUserName.subscribe(
@@ -38,13 +37,26 @@ export class AddProjectComponent implements OnInit{
           this.getUserRepos();
         }
 
-        //Create the form
-        this.addProjectForm = new FormGroup({
-          title: new FormControl('', [Validators.required, Validators.minLength(5)]),
-          gitProject: new FormControl('', [Validators.required]),
-          tags: new FormControl('', [Validators.required]),
-          description: new FormControl('', [Validators.required])
-        });
+        this.createForm();
+
+    }
+
+    createForm() {
+      this.addProjectForm = new FormGroup({
+        title: new FormControl('', [Validators.required, Validators.minLength(3), existingNameValidator(this.projectsTitle)]),
+        gitProject: new FormControl('', [Validators.required]),
+        tags: new FormControl('', [Validators.required]),
+        description: new FormControl('', [Validators.required])
+      });
+    }
+
+    getProjectsTitle() {
+      this._projectsService.getProjectsTitle().subscribe(
+        data => {
+          this.projectsTitle = data;
+          this.createForm();
+        }
+      )
     }
 
     getUserRepos() {
@@ -80,4 +92,19 @@ export class AddProjectComponent implements OnInit{
       this._router.navigate(['/request-features', postTitle])
     }
 
+}
+
+
+export function existingNameValidator(projectsTitle: string[]): ValidatorFn {
+  return (control: AbstractControl): {[key: string]: any} => {
+    const name = control.value;
+    if(projectsTitle == null)
+        return null;
+
+    for(let i = 0; i < projectsTitle.length; i++)
+        if(projectsTitle[i] == name)
+          return {'nameAlreadyExists': {name}};
+
+        return null;
+  };
 }
