@@ -1,60 +1,69 @@
 <div *ngIf="isFeatureSelected == false">
 
   <!-- Nav tabs -->
-  <ul class="nav nav-tabs " role="tablist">
-    <li class="nav-item">
-      <a class="nav-link" href="#home" aria-controls="home" role="tab" data-toggle="tab"><span class="ofc-light-green">Open</span></a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#profile" aria-controls="profile" role="tab" data-toggle="tab"><span class="ofc-light-green">Completed</span></a>
-    </li>
-  </ul>
+  <div *ngIf="openFeatures.length || openFeatures.length">
+    <ul class="nav nav-tabs " role="tablist">
+      <li class="nav-item">
+        <a class="nav-link" href="#home" aria-controls="home" role="tab" data-toggle="tab"><span class="ofc-light-green">Open</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#profile" aria-controls="profile" role="tab" data-toggle="tab"><span class="ofc-light-green">Completed</span></a>
+      </li>
+    </ul>
 
 
-  <!-- Tab panes -->
-  <div class="tab-content table-hover">
-    <div role="tabpanel" class="tab-pane active" id="home">
+    <!-- Tab panes -->
+    <div class="tab-content table-hover">
+      <div role="tabpanel" class="tab-pane active" id="home">
 
-      <table style="margin-top:15px;" class="table">
-        <thead class="thead-default">
-        <tr>
-          <th *ngIf="_authService.getFirebaseUID() != project.byFirebaseUID"></th>
-          <th>Title</th>
-          <th>Description</th>
-          <th>CodeHours</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let crt of openFeatures" class='clickable-row' (click)="featureSelected(crt)">
-          <a  *ngIf="_authService.getFirebaseUID() != project.byFirebaseUID" [routerLink]="['/send',  projectTitle, crt.title]"> <th><img style="max-height: 25px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/terminal.png"></th> </a>
-          <td>{{crt.title}}</td>
-          <td>{{crt.description}}</td>
-          <td>{{crt.ch}}  <img style="max-height: 25px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/price-tag.png"> </td>
-        </tr>
-        </tbody>
-      </table>
+        <table style="margin-top:15px;" class="table">
+          <thead class="thead-default">
+          <tr>
+            <th *ngIf="_authService.getFirebaseUID() != project.byFirebaseUID"></th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>CodeHours</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let crt of openFeatures" class='clickable-row' (click)="featureSelected(crt)">
+            <a  *ngIf="_authService.getFirebaseUID() != project.byFirebaseUID" [routerLink]="['/send',  projectTitle, crt.title]"> <th><img style="max-height: 25px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/terminal.png"></th> </a>
+            <td>{{crt.title}}</td>
+            <td>{{crt.description}}</td>
+            <td>{{crt.ch}}  <img style="max-height: 25px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/price-tag.png"> </td>
+          </tr>
+          </tbody>
+        </table>
 
-    </div>
+      </div>
 
-    <div role="tabpanel" class="tab-pane table-hover" id="profile">
-      <table style="margin-top:15px;" class="table">
-        <thead class="thead-default">
-        <tr>
-          <th>Title</th>
-          <th>Description</th>
-          <th>Solver</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let crt of completedFeatures">
-          <td>{{crt.title}}</td>
-          <td>{{crt.description}}</td>
-          <td>{{crt.ch}}  <img style="max-height: 25px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/price-tag.png"> </td>
-        </tr>
-        </tbody>
-      </table>
+      <div role="tabpanel" class="tab-pane table-hover" id="profile">
+        <table style="margin-top:15px;" class="table">
+          <thead class="thead-default">
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Solver</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let crt of completedFeatures">
+            <td>{{crt.title}}</td>
+            <td>{{crt.description}}</td>
+            <td>{{crt.ch}}  <img style="max-height: 25px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/price-tag.png"> </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
+
+
+  <div *ngIf="!openFeatures.length && !openFeatures.length" style="text-align:center">
+    <h5>No activity yet, come back later</h5>
+    <img style="max-height: 35px; display: inline-block; margin-left: auto; margin-right: auto" class="img-fluid rounded-circle" src="../../../assets/img/comeback.png">
+  </div>
+
 
 </div>
 

@@ -1,131 +1,135 @@
-<!-- Nav tabs -->
-<ul class="nav nav-tabs" role="tablist">
-  <li class="nav-item">
-    <a class="nav-link" href="#waiting" aria-controls="waiting" role="tab" data-toggle="tab"><span class="ofc-light-green">Waiting</span></a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#accepted" aria-controls="accepted" role="tab" data-toggle="tab"><span class="ofc-light-green">Accepted</span></a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#denied" aria-controls="denied" role="tab" data-toggle="tab"><span class="ofc-light-green">Denied</span></a>
-  </li>
-</ul>
+<div *ngIf="waitingContributions.length || acceptedContributions.length || deniedContributions.length">
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link" href="#waiting" aria-controls="waiting" role="tab" data-toggle="tab"><span class="ofc-light-green">Waiting</span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#accepted" aria-controls="accepted" role="tab" data-toggle="tab"><span class="ofc-light-green">Accepted</span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#denied" aria-controls="denied" role="tab" data-toggle="tab"><span class="ofc-light-green">Denied</span></a>
+    </li>
+  </ul>
 
-<!-- Tab panes -->
+  <!-- Tab panes -->
 
-<div class="tab-content">
-  <div role="tabpanel" class="tab-pane active" id="waiting">
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="waiting">
 
-    <table style="margin-top:15px;" class="table">
-      <thead class="thead-default">
-      <tr>
-        <th *ngIf="_authService.getFirebaseUID() == project.byFirebaseUID"></th>
-        <th>User</th>
-        <th>Feature</th>
-        <th>GitHub</th>
-        <th>CodeHours</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let crt of waitingContributions">
-        <td *ngIf="_authService.getFirebaseUID() == project.byFirebaseUID"> <img (click)="selectedContribution = crt.gitPullId" data-toggle="modal" data-target="#confirmAccept" style="margin-left:5px; max-height: 25px; display: inline-block; position: absolute" class="img-fluid rounded-circle" src="../../../assets/img/checked.png"> <img (click)="selectedContribution = crt.gitPullId" data-toggle="modal" data-target="#confirmDeny" style="margin-left:55px; max-height: 25px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/ban.png">  </td>
-        <td>{{crt.byUserName}}</td>
-        <td>{{crt.featureTitle}}</td>
-        <td><a href="{{crt.gitHtmlUrl}}">{{crt.gitTitle}}</a></td>
-        <td>{{crt.ch}}  <img style="max-height: 25px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/price-tag.png"> </td>
-      </tr>
-      </tbody>
-    </table>
+      <table style="margin-top:15px;" class="table">
+        <thead class="thead-default">
+        <tr>
+          <th *ngIf="_authService.getFirebaseUID() == project.byFirebaseUID"></th>
+          <th>User</th>
+          <th>Feature</th>
+          <th>GitHub</th>
+          <th>CodeHours</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let crt of waitingContributions">
+          <td *ngIf="_authService.getFirebaseUID() == project.byFirebaseUID"> <img (click)="selectedContribution = crt.gitPullId" data-toggle="modal" data-target="#confirmAccept" style="margin-left:5px; max-height: 25px; display: inline-block; position: absolute" class="img-fluid rounded-circle" src="../../../assets/img/checked.png"> <img (click)="selectedContribution = crt.gitPullId" data-toggle="modal" data-target="#confirmDeny" style="margin-left:55px; max-height: 25px; display: inline-block;" class="img-fluid rounded-circle" src="../../../assets/img/ban.png">  </td>
+          <td>{{crt.byUserName}}</td>
+          <td>{{crt.featureTitle}}</td>
+          <td><a href="{{crt.gitHtmlUrl}}">{{crt.gitTitle}}</a></td>
+          <td>{{crt.ch}}  <img style="max-height: 25px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/price-tag.png"> </td>
+        </tr>
+        </tbody>
+      </table>
 
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="accepted">
+
+      <table style="margin-top:15px;" class="table">
+        <thead class="thead-default">
+        <tr>
+          <th>User</th>
+          <th>Feature</th>
+          <th>GitHub</th>
+          <th>CodeHours</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let crt of acceptedContributions">
+          <td>{{crt.byUserName}}</td>
+          <td>{{crt.featureTitle}}</td>
+          <td><a href="{{crt.gitHtmlUrl}}">{{crt.gitTitle}}</a></td>
+          <td>{{crt.ch}}  <img style="max-height: 25px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/price-tag.png"> </td>
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="denied">
+
+      <table style="margin-top:15px;" class="table">
+        <thead class="thead-default">
+        <tr>
+          <th>User</th>
+          <th>Feature</th>
+          <th>GitHub</th>
+          <th>CodeHours</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let crt of deniedContributions">
+          <td>{{crt.byUserName}}</td>
+          <td>{{crt.featureTitle}}</td>
+          <td><a href="{{crt.gitHtmlUrl}}">{{crt.gitTitle}}</a></td>
+          <td>{{crt.ch}}  <img style="max-height: 25px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/price-tag.png"> </td>
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
   </div>
 
-  <div role="tabpanel" class="tab-pane" id="accepted">
-
-    <table style="margin-top:15px;" class="table">
-      <thead class="thead-default">
-      <tr>
-        <th>User</th>
-        <th>Feature</th>
-        <th>GitHub</th>
-        <th>CodeHours</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let crt of acceptedContributions">
-        <td>{{crt.byUserName}}</td>
-        <td>{{crt.featureTitle}}</td>
-        <td><a href="{{crt.gitHtmlUrl}}">{{crt.gitTitle}}</a></td>
-        <td>{{crt.ch}}  <img style="max-height: 25px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/price-tag.png"> </td>
-      </tr>
-      </tbody>
-    </table>
-
-  </div>
-
-  <div role="tabpanel" class="tab-pane" id="denied">
-
-    <table style="margin-top:15px;" class="table">
-      <thead class="thead-default">
-      <tr>
-        <th>User</th>
-        <th>Feature</th>
-        <th>GitHub</th>
-        <th>CodeHours</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let crt of deniedContributions">
-        <td>{{crt.byUserName}}</td>
-        <td>{{crt.featureTitle}}</td>
-        <td><a href="{{crt.gitHtmlUrl}}">{{crt.gitTitle}}</a></td>
-        <td>{{crt.ch}}  <img style="max-height: 25px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/price-tag.png"> </td>
-      </tr>
-      </tbody>
-    </table>
-
-  </div>
-</div>
 
 
 
 
 
+  <!-- Confirm Accept Modal -->
+  <div class="modal fade" id="confirmAccept" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Confirm contribution</h4>
+        </div>
+        <div class="modal-body">
 
-<!-- Confirm Accept Modal -->
-<div class="modal fade" id="confirmAccept" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Confirm contribution</h4>
+        </div>
+        <div class="modal-footer">
+          <button (click)="submitAcceptContribution(selectedContribution)" style="width:100%" type="submit" class="btn btn-default" data-dismiss="modal">Submit</button>
+        </div>
       </div>
-      <div class="modal-body">
+    </div>
+  </div>
 
-      </div>
-      <div class="modal-footer">
-        <button (click)="submitAcceptContribution(selectedContribution)" style="width:100%" type="submit" class="btn btn-default" data-dismiss="modal">Submit</button>
+  <!-- Confirm Delete Modal -->
+  <div class="modal fade" id="confirmDeny" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Deny contribution</h4>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button (click)="submitDenyContribution(selectedContribution)" style="width:100%" type="submit" class="btn btn-default" data-dismiss="modal">Submit</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Confirm Delete Modal -->
-<div class="modal fade" id="confirmDeny" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Deny contribution</h4>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button (click)="submitDenyContribution(selectedContribution)" style="width:100%" type="submit" class="btn btn-default" data-dismiss="modal">Submit</button>
-      </div>
-    </div>
-  </div>
+<div *ngIf="!waitingContributions.length && !acceptedContributions.length && !deniedContributions.length" style="text-align:center">
+  <h5>No activity yet, come back later</h5>
+  <img style="max-height: 35px; display: inline-block; margin-left: auto; margin-right: auto" class="img-fluid rounded-circle" src="../../../assets/img/comeback.png">
 </div>
-
-
-

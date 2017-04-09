@@ -42,9 +42,9 @@ export class RequestFeaturesProjectComponent implements OnInit{
 
     //Create the form
     this.requestFeaturesForm = new FormGroup({
-      title: new FormControl('', [Validators.minLength(3)]),
-      description: new FormControl(''),
-      ch: new FormControl('')
+      title: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      description: new FormControl('', [Validators.required]),
+      ch: new FormControl('', [Validators.required])
     });
   }
 

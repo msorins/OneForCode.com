@@ -4,7 +4,7 @@
 import {Component, OnInit, Input, OnChanges} from '@angular/core';
 import { ProjectsService } from '../../api/projects/projects.service';
 
-import { FormGroup, FormControl } from "@angular/forms";
+import {FormGroup, FormControl, Validators} from "@angular/forms";
 import { AuthService } from '../../auth/services/auth-service';
 import { ProjectInterface } from '../project.interface';
 import { ActivatedRoute } from "@angular/router";
@@ -43,7 +43,7 @@ export class SendContributionProjectComponent implements OnInit, OnChanges{
 
     //Initialise the form
     this.sendContributionForm = new FormGroup({
-      featureTitle: new FormControl(this.chosenFeature),
+      featureTitle: new FormControl(this.chosenFeature, [Validators.required]),
       gitPullId: new FormControl(''),
       ch: new FormControl('')
     })

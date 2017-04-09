@@ -11,7 +11,7 @@
           <hr>
 
           <br>
-          <h4 style="margin-top:15px">II) Choose completed feature</h4>
+          <h4 style="margin-top:15px">II) Choose completed feature <span *ngIf="sendContributionForm.get('featureTitle').errors?.minlength" style="color: red">*</span><</h4>
             <div class="form-group">
               <select *ngIf="chosenFeature == null" formControlName="featureTitle" class="form-control">
                 <option disabled selected [selected]="1"></option>

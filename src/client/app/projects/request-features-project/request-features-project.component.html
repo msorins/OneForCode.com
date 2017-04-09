@@ -1,6 +1,20 @@
 <ofc-header-shared></ofc-header-shared>
 
-<div class="container">
+
+<div *ngIf="!_authService.isAuthenticated()"  class="container">
+  <br><br><br>
+  <h3 style="text-align:center;">Opsi, login first, and then you can add a feature to your project </h3>
+
+  <br>
+  <div style="width:100%; max-width:500px; margin-left:auto; margin-right:auto" class="card card-inverse">
+    <img style="max-width:100%; margin-left:auto; margin-right:auto" src="../../../assets/img/open.jpg" alt="..." class="rounded center card-img">
+    <div class="card-img-overlay">
+
+    </div>
+  </div>
+</div>
+
+<div *ngIf="_authService.isAuthenticated()" class="container">
   <br>
   <h3> Features for  <a class="" [routerLink]="['/project/',  projectName]" routerLinkActive="active" >{{projectName}}</a></h3>
   <br>
@@ -9,7 +23,7 @@
     <div class="col-md-6">
 
       <div class="form-group">
-        <h5>Feature Title</h5>
+        <h5>Feature Title <span *ngIf="requestFeaturesForm.get('title').errors?.minlength || requestFeaturesForm.get('title').errors?.required" style="color: red">*</span></h5>
         <input formControlName="title" type="text" class="form-control" id="" aria-describedby="ProjectTitle" placeholder="Enter the title you want">
         <!--<small id="emailHelp" class="form-text text-muted">To find it more easily</small>-->
       </div>
@@ -18,7 +32,7 @@
     <div class="col-md-6">
       <div class="form-group">
         <div>
-          <h5><img style="max-height: 25px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/price-tag.png"> Maximum offer</h5>
+          <h5><img style="max-height: 25px; display: inline-block" class="img-fluid rounded-circle" src="../../../assets/img/price-tag.png"> Maximum offer <span *ngIf="requestFeaturesForm.get('ch').errors?.required" style="color: red">*</span></h5>
           <input style="width:99%" type="range" min="1" max="{{_authService.getUserCh()}}" value="1" formControlName="ch">
         </div>
       </div>
@@ -28,7 +42,7 @@
 
     <div class="col-md-12">
       <div class="form-group">
-        <h5>Short description</h5>
+        <h5>Short description <span *ngIf="requestFeaturesForm.get('description').errors?.minlength || requestFeaturesForm.get('description').errors?.required" style="color: red">*</span></h5>
         <textarea  formControlName="description" class="form-control" id="exampleTextarea" rows="5"></textarea>
       </div>
     </div>
@@ -46,7 +60,7 @@
       </div>
     </div>
 
-    <button style="width:100%" type="submit" class="btn btn-default">Submit</button>
+    <button [disabled]="requestFeaturesForm.status == 'INVALID'"  style="width:100%" type="submit" class="btn btn-default">Submit</button>
 
   </form>
 
