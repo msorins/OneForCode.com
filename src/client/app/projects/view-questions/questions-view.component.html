@@ -47,3 +47,9 @@
     <p *ngIf="crtQuestion.status == 'open'" class="card-text"><small class="text-muted">Unanswered</small></p>
   </div>
 </div>
+
+
+<div *ngIf="!questions.length" style="text-align:center">
+  <h5>No questions yet</h5>
+  <img style="max-height: 35px; display: inline-block; margin-left: auto; margin-right: auto" class="img-fluid rounded-circle" src="../../../assets/img/noquestions.png">
+</div>
