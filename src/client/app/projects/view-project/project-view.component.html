@@ -2,9 +2,10 @@
   <img *ngIf="post == null || post?.hasHeader == true" class="card-img-top" src="../../../assets/img/projects/header/{{post?.title}}.jpg" alt="{{post?.title}} header image">
   <img *ngIf="post != null && post?.hasHeader == false" class="card-img-top" src="../../../assets/img/preview.jpeg" alt="{{post?.title}} header image">
   <div class="card-header">
-    <h3 style="margin-left:25px;" class="card-title">
+    <h3 style="margin-left:25px; text-align:center;" class="card-title">
       <span>{{post.title}}</span>
       <img *ngIf="_authService.getFirebaseUID() == post.byFirebaseUID" (click)="editable = true" style="margin-left:5px; max-height: 25px; display: inline-block; float:right;" class="img-fluid rounded-circle" src="../../../assets/img/edit-black.png">
+      <h6 *ngIf="showDetailsButton == false" style="margin-bottom: -15px;"><a [routerLink]="['/profile',  post.byUserName]"> by {{post.byUserName}}</a></h6>
     </h3>
   </div>
   <div class="card-block">
@@ -21,6 +22,7 @@
     <label style="margin-bottom:0px; width:100%;" class="custom-file highlight">
       <input #fileInput (change)="handleChosenImage($event)" ngFileSelect [options]="options" [events]="inputUploadEvents" (onPreviewData)="handlePreviewData($event)" type="file" id="header" name="header" class="custom-file-input headerImgUpload">
       <span data-content="DO NOT Choose file..." class="custom-file-control" [class.custom-file-control-empty]="imageHeaderName != ''"> {{imageHeaderName}} </span>
+      <h6 *ngIf="showDetailsButton == false" style="margin-bottom: -15px;"><a [routerLink]="['/profile',  post.byUserName]"> by {{post.byUserName}}</a></h6>
     </label>
   </div>
   <div class="card-header">
