@@ -12,9 +12,8 @@
 
 [Link to PDF Presentation](https://github.com/msorins/OneForCode.com/blob/master/OFC-Presentation.pdf?raw=true)
 
-It’s logo is ‘One for all’ and you are probably now thinking at the popular proverb
-‘One for all ... all for one’ ... and yes, they are related, you’ll convince yourselves of
-that in a few minutes.
+Its logo is ‘One for all’ and you are probably now thinking at the popular proverb
+‘One for all ... all for one’ ... and yes, they are related, you’ll convince yourselves of that in a few minutes.
 
 ## Idea / Concept
 
@@ -28,7 +27,7 @@ the catch is that in order to receive help from others, at first, they must give
 >
 >Also,
 >I’m very proficient in the back-end part, more specifically, databases. I
->really want to build my app but I do not have the entire know how ... 
+>really want to build my app but I do not have the entire know-how ... 
 > 
 > I can
 >use OneForCode, invest a part of my time to help other devs that need my
@@ -36,7 +35,7 @@ the catch is that in order to receive help from others, at first, they must give
 >do not now to others .
 
 ## Currency
-The inn-platform currency is the *CODE-HOUR* which will be a bridge to and from real money and it’s mechanism works in the following way.
+The inn-platform currency is the *CODE-HOUR* which will be a bridge to and from real money and its mechanism works in the following way:
 
 When a task is delegated, the creator allocates a maximum number of Code-Hours he wants to invest (code-hours that he could have been gathered by first working on other users tasks, or by paying real money )
 
@@ -51,7 +50,7 @@ The creator of the task chooses the best code, and the payments and code transfe
 automatically done
 
 
-Also, due to the fact that 1 *CODE HOUR* of a senior programmer is not equal to 1 *CODE HOUR* of a junior one, I belive that this ‘virtual currency’ value is going to auto-balanced by itself and with the
+Also, due to the fact that 1 *CODE HOUR* of a senior programmer is not equal to 1 *CODE HOUR* of a junior one, I believe that this ‘virtual currency’ value is going to auto-balanced by itself and with the
 help of some future machine learning algorithms.
 
 ## Other use cases
@@ -60,7 +59,6 @@ platform you can also skip to other use cases:
 * You can just make money by working on other people projects
 * You can just invest money for your project / startup and get the help you need using your
 platform
-
 
 ## Money
 How my business will generate money?
@@ -84,7 +82,7 @@ How my business will generate money?
 * Stripe for payments
 
 ---
-## How to start
+## How to run
 
 ```bash
 $ npm install
